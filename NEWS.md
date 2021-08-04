@@ -1,5 +1,7 @@
 # gophr 3.0.0
 * clone ICPIutilities absorb under USAID-OHA-SI org
+* remove all depricated functions
+* replace README with USAID-OHA-SI standard
 
 # ICPIutilities 2.2.2
 * resolve bug with `reshape_msd()` causing issues with period naming and dropping of periods
