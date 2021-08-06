@@ -14,15 +14,26 @@ read_msd(file, save_rds = FALSE, remove_txt = FALSE)
 \item{remove_txt}{should the txt file be removed, default = FALSE}
 }
 \description{
-This function imports a stored ICPI MER/ER Structured Datasets and coverts it from a .txt to an .Rds to significantly limit file size
+`read_msd` imports a stored ICPI MER/ER Structured Datasets and
+coverts it from a .txt to an .Rds to significantly limit file size.
+}
+\details{
+The benefit of `read_msd` is that it will read in a MSD, Genie, or Financial
+PEPFAR dataset, ensuring the column types are correct. The user has the
+ability to store the txt file as a rds, significantly saving storage space
+on the computer (and can then remove the txt file after importing).
+
+Most of USAID/OHA processes and analyses rely on the use of the MSD file
+being read in via `read_msd`
 }
 \examples{
 
-\dontrun{#convert Q1 clean PSNU file from txt to Rds
+\dontrun{
+#convert Q1 clean PSNU file from txt to Rds
 #read in file for use
  path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
  df_psnu <- read_msd(path)
 #convert to RDS and delete the original txt file
- read_msd(path, save_rds = TRUE, remove_txt = TRUE)}
+ read_msd(path, save_rds = TRUE, remove_txt = TRUE) }
 
 }

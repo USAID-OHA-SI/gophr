@@ -7,8 +7,10 @@
 rename_msd(file)
 }
 \arguments{
-\item{file}{enter the full path to the MSD/ERSD file, eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"}
+\item{file}{enter the full path to the MSD/ERSD file,
+eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"}
 }
 \description{
 Rename MSD file when importing
 }
+\keyword{internal}

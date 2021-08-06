@@ -7,7 +7,8 @@
 convert_oldformat(df)
 }
 \arguments{
-\item{df}{data frame from read_msd()}
+\item{df}{data frame from read_msd()
+@keywords internal}
 }
 \description{
 Convert any old MSDs to new format

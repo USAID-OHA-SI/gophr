@@ -1,6 +1,16 @@
 #' Import ICPI MER Structured Datasets .txt into R and covert to .rds
 #'
-#' This function imports a stored ICPI MER/ER Structured Datasets and coverts it from a .txt to an .Rds to significantly limit file size
+#' `read_msd` imports a stored ICPI MER/ER Structured Datasets and
+#' coverts it from a .txt to an .Rds to significantly limit file size.
+#'
+#' The benefit of `read_msd` is that it will read in a MSD, Genie, or Financial
+#' PEPFAR dataset, ensuring the column types are correct. The user has the
+#' ability to store the txt file as a rds, significantly saving storage space
+#' on the computer (and can then remove the txt file after importing).
+#'
+#' Most of USAID/OHA processes and analyses rely on the use of the MSD file
+#' being read in via `read_msd`
+#'
 #' @export
 #' @param file enter the full path to the MSD/FSD file
 #' @param save_rds save the Structured Dataset as an rds file, default = FALSE
@@ -8,12 +18,13 @@
 #'
 #' @examples
 #'
-#'\dontrun{#convert Q1 clean PSNU file from txt to Rds
+#'\dontrun{
+#'#convert Q1 clean PSNU file from txt to Rds
 #'#read in file for use
 #'  path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
 #'  df_psnu <- read_msd(path)
 #'#convert to RDS and delete the original txt file
-#'  read_msd(path, save_rds = TRUE, remove_txt = TRUE)}
+#'  read_msd(path, save_rds = TRUE, remove_txt = TRUE) }
 #'
 read_msd <-
   function(file,
@@ -77,7 +88,10 @@ read_msd <-
 
 #' Rename MSD file when importing
 #'
-#' @param file enter the full path to the MSD/ERSD file, eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
+#' @param file enter the full path to the MSD/ERSD file,
+#' eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
+#'
+#' @keywords internal
 
 rename_msd <- function(file){
 
@@ -105,6 +119,7 @@ rename_msd <- function(file){
 #' Convert any old MSDs to new format
 #'
 #' @param df data frame from read_msd()
+#'  @keywords internal
 
 convert_oldformat <- function(df){
 
