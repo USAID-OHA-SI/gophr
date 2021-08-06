@@ -1,14 +1,16 @@
-#' Adorn Achievement
+#' Adorn Achievement - Percent and Color
 #'
-#' Function to calculate target achievement (cumulative and/or quarterly) for a
-#' standard MSD or one reshaped using reshape_msd() as well as to apply achievement
-#' group labels and colors.
+#' `adorn_achievement` calculate target achievement (cumulative and/or quarterly) for a
+#' standard MSD or one reshaped using `reshape_msd`()` as well as to apply achievement
+#' group labels and colors. It will run `calc_achievement` if an achievement column
+#' does not exist in the dataset.
 #'
 #' @param df data frame as standrd MSD or one from reshape_msd()
 #' @param qtr if using standard MSD, need to provide the most recent quarter,
 #' ideally using identifypd(df_msd, pd_type = "quarter")
 #'
 #' @return data frame with achievement values, labels, and colors
+#' @family achievement
 #' @export
 #'
 #' @examples
@@ -52,9 +54,16 @@ adorn_achievement <- function(df, qtr = NULL){
 
 #' Calculate Achievement
 #'
+#' `calc_achievement` creates a target achievement column standard to many PEPFAR
+#' analyses. It can calculate achievement from a normal MSD or one reshaped using
+#' `reshape_msd`.
+#'
 #' @param df MSD based dataframe
 #'
-#' @return one or two additional columns that calculate achievement and/or quarterly achievement
+#' @return one or two additional columns that calculate achievement and/or
+#'   quarterly achievement
+#' @family achievement
+#' @seealso [reshape_msd()]
 #' @export
 #'
 #' @examples
@@ -111,6 +120,7 @@ calc_achievement <- function(df){
 #' @param input_type whether to handle 'achievement' or 'achievement_qtrly'
 #'
 #' @return dataframe with achievement colors and labels
+#' @keywords internal
 #'
 color_achievement <- function(df, curr_qtr = NULL){
 
@@ -160,6 +170,7 @@ color_achievement <- function(df, curr_qtr = NULL){
 #' @param curr_qtr quarter for current fiscal year (if standard MSD)
 #'
 #' @return data frame with a quarter column
+#' @keywords internal
 #'
 assign_quarter <- function(df, curr_qtr = 4){
 

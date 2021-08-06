@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_achievement.R
 \name{adorn_achievement}
 \alias{adorn_achievement}
-\title{Adorn Achievement}
+\title{Adorn Achievement - Percent and Color}
 \usage{
 adorn_achievement(df, qtr = NULL)
 }
@@ -16,9 +16,10 @@ ideally using identifypd(df_msd, pd_type = "quarter")}
 data frame with achievement values, labels, and colors
 }
 \description{
-Function to calculate target achievement (cumulative and/or quarterly) for a
-standard MSD or one reshaped using reshape_msd() as well as to apply achievement
-group labels and colors.
+`adorn_achievement` calculate target achievement (cumulative and/or quarterly) for a
+standard MSD or one reshaped using `reshape_msd`()` as well as to apply achievement
+group labels and colors. It will run `calc_achievement` if an achievement column
+does not exist in the dataset.
 }
 \examples{
 \dontrun{
@@ -42,3 +43,8 @@ df_msd_agg \%>\%
  reshape_msd("quarters", qtrs_keep_cumulative = TRUE) \%>\%
  adorn_achievement() }
 }
+\seealso{
+Other achievement: 
+\code{\link{calc_achievement}()}
+}
+\concept{achievement}

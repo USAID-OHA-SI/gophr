@@ -19,3 +19,4 @@ dataframe with achievement colors and labels
 \description{
 Color and label achievement
 }
+\keyword{internal}

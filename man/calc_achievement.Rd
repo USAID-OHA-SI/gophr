@@ -10,10 +10,13 @@ calc_achievement(df)
 \item{df}{MSD based dataframe}
 }
 \value{
-one or two additional columns that calculate achievement and/or quarterly achievement
+one or two additional columns that calculate achievement and/or
+  quarterly achievement
 }
 \description{
-Calculate Achievement
+`calc_achievement` creates a target achievement column standard to many PEPFAR
+analyses. It can calculate achievement from a normal MSD or one reshaped using
+`reshape_msd`.
 }
 \examples{
 \dontrun{
@@ -33,3 +36,10 @@ df_msd_agg \%>\%
  reshape_msd("quarters") \%>\%
  calc_achievement() }
 }
+\seealso{
+[reshape_msd()]
+
+Other achievement: 
+\code{\link{adorn_achievement}()}
+}
+\concept{achievement}
