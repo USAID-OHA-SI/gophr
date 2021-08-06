@@ -1,5 +1,10 @@
 #' Export a single dataset into multiple files by group
 #'
+#' `split_save` breaks a dataset by the groups provided and then exports those
+#' individual frames as separate csv files. This process can be useful when
+#' working with data across multiple partners and then creating datasets to
+#' be sent to each of them with their own data.
+#'
 #' @param df dataframe to split
 #' @param group_var grouping variable to split the dataset by, eg operatingunit, fundingagency
 #' @param folderpath directory where you want to store the files

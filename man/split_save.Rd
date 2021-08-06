@@ -18,7 +18,10 @@ split_save(df, group_var, folderpath, filename_stub, include_date = FALSE)
 \item{include_date}{include date after filenamestub? default = FALSE, eg "20180913"}
 }
 \description{
-Export a single dataset into multiple files by group
+`split_save` breaks a dataset by the groups provided and then exports those
+individual frames as separate csv files. This process can be useful when
+working with data across multiple partners and then creating datasets to
+be sent to each of them with their own data.
 }
 \examples{
 \dontrun{
