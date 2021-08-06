@@ -119,7 +119,7 @@ rename_msd <- function(file){
 #' Convert any old MSDs to new format
 #'
 #' @param df data frame from read_msd()
-#'  @keywords internal
+#' @keywords internal
 
 convert_oldformat <- function(df){
 
