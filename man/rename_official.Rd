@@ -2,7 +2,7 @@
 % Please edit documentation in R/rename_official.R
 \name{rename_official}
 \alias{rename_official}
-\title{Cleanup Mechanism and Partner Names to their Official Names}
+\title{Apply the latest mechanism and partner names from DATIM}
 \usage{
 rename_official(df)
 }
@@ -10,7 +10,10 @@ rename_official(df)
 \item{df}{identify the MER Structured DataSet to clean}
 }
 \description{
-Some mechanisms and partners are recorded in FACTSInfo with multiple names over different time period. This function replaces all partner and mechanism names the most recent name for each mechanism ID pulling from a DATIM SQL View.
+Some mechanisms and partners are recorded in FACTSInfo with multiple
+names over different time period. This function replaces all partner and
+mechanism names the most recent name for each mechanism ID pulling from a
+DATIM SQL View.
 }
 \examples{
 \dontrun{

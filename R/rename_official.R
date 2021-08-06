@@ -1,11 +1,11 @@
-
-#' Cleanup Mechanism and Partner Names to their Official Names
+#' Apply the latest mechanism and partner names from DATIM
 #'
-#' Some mechanisms and partners are recorded in FACTSInfo with multiple names over different time period. This function replaces all partner and mechanism names the most recent name for each mechanism ID pulling from a DATIM SQL View.
+#' Some mechanisms and partners are recorded in FACTSInfo with multiple
+#' names over different time period. This function replaces all partner and
+#' mechanism names the most recent name for each mechanism ID pulling from a
+#' DATIM SQL View.
 #'
 #' @param df identify the MER Structured DataSet to clean
-#'
-#' @importFrom dplyr %>%
 #'
 #' @export
 #'

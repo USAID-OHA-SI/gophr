@@ -1,12 +1,15 @@
-#' Extract lastest period of dataset
-#' @description This function is pulled from the achafetz/PartnerProgress repo
+#' Extract Current Reporting Period
+#'
+#' `identifypd` uses the information from the raw MSD structure to identify
+#' the current reporting period (fiscal year and/or quarter). This function
+#' can be used to make other inputs in your code more dynamic. Originally,
+#' `identifypd` was developed for use in achafetz/PartnerProgress
+#'
 #' @param df dataset to use to find latest period
 #' @param pd_type what is returned? (a) full, eg fy2018q1; (b)year, eg 2018; (c) quarter, eg 1
 #' @param pd_prior do you want the last period returned (instead of the current); default = FALSE
 #'
 #' @export
-#'
-#' @importFrom dplyr %>%
 #'
 #' @examples
 #' \dontrun{

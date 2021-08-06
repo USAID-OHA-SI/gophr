@@ -2,7 +2,7 @@
 % Please edit documentation in R/identifypd.R
 \name{identifypd}
 \alias{identifypd}
-\title{Extract lastest period of dataset}
+\title{Extract Current Reporting Period}
 \usage{
 identifypd(df, pd_type = "full", pd_prior = FALSE)
 }
@@ -14,7 +14,10 @@ identifypd(df, pd_type = "full", pd_prior = FALSE)
 \item{pd_prior}{do you want the last period returned (instead of the current); default = FALSE}
 }
 \description{
-This function is pulled from the achafetz/PartnerProgress repo
+`identifypd` uses the information from the raw MSD structure to identify
+the current reporting period (fiscal year and/or quarter). This function
+can be used to make other inputs in your code more dynamic. Originally,
+`identifypd` was developed for use in achafetz/PartnerProgress
 }
 \examples{
 \dontrun{
