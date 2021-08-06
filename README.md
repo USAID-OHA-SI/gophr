@@ -1,3 +1,9 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/USAID-OHA-SI/gophr/workflows/R-CMD-check/badge.svg)](https://github.com/USAID-OHA-SI/gophr/actions)
+<!-- badges: end -->
+
+# gophr <img src='man/figures/logo.png' align="right" height="120" />
+
 ## gophr
 MER Structured Dataset utilities package
 
