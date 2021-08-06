@@ -14,6 +14,8 @@ A list of all snapshot indicators
 data(snapshot_ind)
 }
 \description{
-List of indicators in the MER that are snapshot
+List of indicators in the MER that are snapshot indicators, eg TX_CURR,
+as opposed to a cumulative one, like HTS_TST. Snapshot indicators are handled
+differently for calculating cumulative values and target achievement.
 }
 \keyword{datasets}

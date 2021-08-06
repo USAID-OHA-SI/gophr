@@ -31,7 +31,7 @@ reshape, makes the whole dataset long by period, but other options
 include wide to match the original MSD, semi-wide for a separate column
 for targets, cumulative, and results, and then a quarterly one which keeps
 the targets (and cumulative) in their own columsn but makes the quarters
-long. Reshaping tidy is key for much of OHA/SI processes and analysis.
+long. Reshaping tidy is key for much of OHA/SI processes and analysis. %>%
 }
 \examples{
 \dontrun{
