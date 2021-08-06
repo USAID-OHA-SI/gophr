@@ -2,7 +2,7 @@
 % Please edit documentation in R/reshape_msd.R
 \name{reshape_msd}
 \alias{reshape_msd}
-\title{Reshape Semi-Wide MSD}
+\title{Reshape MSD}
 \usage{
 reshape_msd(
   df,
@@ -14,15 +14,24 @@ reshape_msd(
 \arguments{
 \item{df}{MSD dataset in the semi-wide format}
 
-\item{direction}{direction of reshape, "long" (default), "wide" (original MSD structure),
-"semi-wide" (one column for targets, cumulative, results) or "quarters" (quarters pivoted, but not targets - useful for quarterly achievement))}
+\item{direction}{direction of reshape, "long" (default), "wide" (original
+MSD structure), "semi-wide" (one column for targets, cumulative, results)
+or "quarters" (quarters pivoted, but not targets - useful for quarterly
+achievement)).}
 
-\item{clean}{clean period for graphing, eg(fy2019qtr2 -> FY19Q2) and create a period type (targets, results, cumulative)}
+\item{clean}{clean period for graphing, eg(fy2019qtr2 -> FY19Q2) and create
+a period type (targets, results, cumulative)}
 
-\item{qtrs_keep_cumulative}{whether to keep the cumulative column when using quaters for direction, default = FALSE}
+\item{qtrs_keep_cumulative}{whether to keep the cumulative column when using
+quaters for direction, default = FALSE}
 }
 \description{
-Reshape Semi-Wide MSD
+`reshape_msd` transforms the structure into a tidy format. The default
+reshape, makes the whole dataset long by period, but other options
+include wide to match the original MSD, semi-wide for a separate column
+for targets, cumulative, and results, and then a quarterly one which keeps
+the targets (and cumulative) in their own columsn but makes the quarters
+long. Reshaping tidy is key for much of OHA/SI processes and analysis.
 }
 \examples{
 \dontrun{

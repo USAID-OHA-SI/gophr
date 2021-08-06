@@ -1,10 +1,22 @@
-#' Reshape Semi-Wide MSD
+#' Reshape MSD
+#'
+#' `reshape_msd` transforms the structure into a tidy format. The default
+#' reshape, makes the whole dataset long by period, but other options
+#' include wide to match the original MSD, semi-wide for a separate column
+#' for targets, cumulative, and results, and then a quarterly one which keeps
+#' the targets (and cumulative) in their own columsn but makes the quarters
+#' long. Reshaping tidy is key for much of OHA/SI processes and analysis.
+#'
 #'
 #' @param df MSD dataset in the semi-wide format
-#' @param direction direction of reshape, "long" (default), "wide" (original MSD structure),
-#' "semi-wide" (one column for targets, cumulative, results) or "quarters" (quarters pivoted, but not targets - useful for quarterly achievement))
-#' @param clean clean period for graphing, eg(fy2019qtr2 -> FY19Q2) and create a period type (targets, results, cumulative)
-#' @param qtrs_keep_cumulative whether to keep the cumulative column when using quaters for direction, default = FALSE
+#' @param direction direction of reshape, "long" (default), "wide" (original
+#' MSD structure), "semi-wide" (one column for targets, cumulative, results)
+#' or "quarters" (quarters pivoted, but not targets - useful for quarterly
+#' achievement)).
+#' @param clean clean period for graphing, eg(fy2019qtr2 -> FY19Q2) and create
+#'  a period type (targets, results, cumulative)
+#' @param qtrs_keep_cumulative whether to keep the cumulative column when using
+#'  quaters for direction, default = FALSE
 #'
 #' @export
 #'
