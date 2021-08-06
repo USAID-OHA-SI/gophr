@@ -2,7 +2,7 @@
 #'
 #' @param df data frame
 #' @param vars quoted variable(s)
-#'
+#' @keywords internal
 var_exists <- function(df, vars){
   all(vars %in% names(df))
 }
@@ -11,7 +11,7 @@ var_exists <- function(df, vars){
 #'
 #' @param df data frame
 #' @param vars quoted variable(s)
-#'
+#' @keywords internal
 var_missing <- function(df, vars){
   !any(vars %in% names(df))
 }

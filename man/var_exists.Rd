@@ -14,3 +14,4 @@ var_exists(df, vars)
 \description{
 Check if all variables in list exist
 }
+\keyword{internal}

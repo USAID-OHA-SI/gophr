@@ -14,3 +14,4 @@ var_missing(df, vars)
 \description{
 Check if all variables in list are missing
 }
+\keyword{internal}
