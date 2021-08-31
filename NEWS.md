@@ -1,4 +1,5 @@
 # gophr 3.0.1
+* resolve bug causing issues with `results_cumulative` in `reshape_msd()` resulting when there were cumulative indicators collected semi-annually
 
 # gophr 3.0.0
 * clone ICPIutilities absorb under USAID-OHA-SI org

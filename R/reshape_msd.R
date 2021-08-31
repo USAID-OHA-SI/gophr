@@ -128,7 +128,7 @@ reshape_msd <- function(df, direction = c("long", "wide", "semi-wide", "quarters
         dplyr::mutate(results = ifelse(stringr::str_detect(period, "Q3") & results == 0, NA, results)) %>%
         dplyr::group_by(dplyr::across(var_char)) %>%
         dplyr::arrange(period, .by_group = TRUE) %>%
-        dplyr::mutate(results_cumulative = cumsum(results),
+        dplyr::mutate(results_cumulative = cumsum(tidyr::replace_na(results, 0)),
                       results_cumulative = ifelse(indicator %in% snapshot_ind, results, results_cumulative)) %>%
         tidyr::fill(results_cumulative) %>%
         dplyr::ungroup() %>%
