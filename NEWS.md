@@ -1,4 +1,5 @@
 # gophr 3.0.1
+* update `read_msd` naming for Genie outputs since the datasets now go through FY22 as of FY21Q3c
 * resolve bug causing issues with `results_cumulative` in `reshape_msd()` resulting when there were cumulative indicators collected semi-annually
 
 # gophr 3.0.0

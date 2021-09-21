@@ -106,7 +106,7 @@ rename_msd <- function(file){
       TRUE                                              ~ "PSNU_IM")
     file <- file.path(dirname(file),
                       paste0("MER_Structured_Dataset_GENIE", type,
-                             ifelse(type == "NAT_SUBNAT", "_FY15-21", "_FY18-21"), stringr::str_remove_all(Sys.Date(), "-"),".txt"))
+                             ifelse(type == "NAT_SUBNAT", "_FY15-22", "_FY18-22"), stringr::str_remove_all(Sys.Date(), "-"),".txt"))
   }
 
   file <- stringr::str_replace(file, "(zip|txt)$", "rds")
