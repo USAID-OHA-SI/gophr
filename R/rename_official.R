@@ -31,9 +31,20 @@ rename_official <- function(df) {
 
   #access current mechanism list posted publically to DATIM
     sql_view_url <- "https://www.datim.org/api/sqlViews/fgUtV6e9YIX/data.csv"
-    mech_official <- readr::read_csv(sql_view_url,
+    # mech_official <- readr::read_csv(sql_view_url,
+    #                                  col_types = readr::cols(.default = "c"))
+    temp <- tempfile(fileext = ".csv")
+    r <- httr::GET(sql_view_url, httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
+    if(r$headers$`content-type` == "text/html;charset=UTF-8" && glamr::is_stored("datim")){
+      httr::GET(sql_view_url,
+          httr::authenticate(glamr::datim_user(), glamr::datim_pwd()),
+          httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
+    } else if(r$headers$`content-type` == "text/html;charset=UTF-8" && !glamr::is_stored("datim")){
+      stop("DATIM credentials stored in password manager are required. Use glamr::set_datim() to create.")
+    }
+    mech_official <- readr::read_csv(temp,
                                      col_types = readr::cols(.default = "c"))
-
+    unlink(temp)
   #rename variables to match MSD and remove mechid from mech name
     mech_official <- mech_official %>%
       dplyr::select(mech_code = code,

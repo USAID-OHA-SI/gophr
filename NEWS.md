@@ -1,4 +1,6 @@
 # gophr 3.0.1
+* check mechanism table in DATIM when using `rename_official` to see if credentials
+are needed and provides them if stored in `keyring`
 * update `read_msd` naming for Genie outputs since the datasets now go through FY22 as of FY21Q3c
 * resolve bug causing issues with `results_cumulative` in `reshape_msd()` resulting when there were cumulative indicators collected semi-annually
 
