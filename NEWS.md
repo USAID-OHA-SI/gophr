@@ -1,4 +1,5 @@
 # gophr 3.0.1
+* removes the inclusion of future fiscal year results in `reshape_msd()` (2021-10-07)
 * check mechanism table in DATIM when using `rename_official` to see if credentials
 are needed and provides them if stored in `keyring`
 * update `read_msd` naming for Genie outputs since the datasets now go through FY22 as of FY21Q3c

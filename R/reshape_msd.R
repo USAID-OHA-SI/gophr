@@ -70,7 +70,8 @@ reshape_msd <- function(df, direction = c("long", "wide", "semi-wide", "quarters
 
   #filter future periods
     df <- df %>%
-      dplyr::filter(!(fiscal_year == curr_year & period %in% future_qtrs))
+      dplyr::filter(!(fiscal_year == curr_year & period %in% future_qtrs),
+                    !(fiscal_year > curr_year & period != "targets"))
 
   #clean up period
     df <- df %>%
