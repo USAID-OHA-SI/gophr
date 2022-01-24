@@ -41,11 +41,6 @@ rename_official <- function(df) {
     } else {
       ous <- lst_ous
     }
-  #mech list url (previously public access)
-    sql_view_url <-  paste0("https://www.datim.org/",
-                            "api/sqlViews/fgUtV6e9YIX/data.json?",
-                            "criteria=ou:", ous, "&",
-                            "paging=false")
 
   #ask for credentials if not stored
     if(glamr::is_stored("datim")){
@@ -57,7 +52,7 @@ rename_official <- function(df) {
     }
 
   #access current mechanism list
-    mech_official <- purrr::map_dfr(ou,
+    mech_official <- purrr::map_dfr(ous,
                                     purrr::possibly(~extract_datim_names(.x, datim_user, datim_pwd),
                                                     NULL))
 
