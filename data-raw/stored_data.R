@@ -13,3 +13,26 @@ snapshot_ind <- c("AGYW_PREV",
                   "SC_CURR")
 
 usethis::use_data(snapshot_ind, overwrite = TRUE)
+
+
+## PEPFAR country list
+
+library(tidyverse)
+library(glamr)
+
+curr_fy <- source_info(return = "fiscal_year")
+
+df_msd <- si_path() %>%
+  return_latest("OU_IM") %>%
+  read_rds()
+
+lst_ous <- df_msd %>%
+  filter(fiscal_year == curr_fy,
+         fundingagency %ni% c("Dedup", "Default"),
+         indicator != "TX_NET_NEW") %>%
+  distinct(operatingunit) %>%
+  arrange(operatingunit) %>%
+  pull()
+
+
+usethis::use_data(lst_ous, overwrite = TRUE, internal = TRUE)

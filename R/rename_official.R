@@ -35,8 +35,17 @@ rename_official <- function(df) {
     headers_orig <- names(df)
     df <- dplyr::rename_all(df, tolower)
 
+  #identify what OUs to map over
+    if("operatingunit" %in% names(df)){
+      ous <- unique(df$operatingunit)
+    } else {
+      ous <- lst_ous
+    }
   #mech list url (previously public access)
-    sql_view_url <- "https://www.datim.org/api/sqlViews/fgUtV6e9YIX/data.csv"
+    sql_view_url <-  paste0("https://www.datim.org/",
+                            "api/sqlViews/fgUtV6e9YIX/data.json?",
+                            "criteria=ou:", ous, "&",
+                            "paging=false")
 
   #ask for credentials if not stored
     if(glamr::is_stored("datim")){
@@ -47,15 +56,10 @@ rename_official <- function(df) {
       datim_pwd <- getPass::getPass("DATIM password", forcemask = TRUE)
     }
 
-  #create a temp file location to download to and download the mech file
-    temp <- tempfile(fileext = ".csv")
-    httr::GET(sql_view_url,
-        httr::authenticate(datim_user, datim_pwd),
-        httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
-
   #access current mechanism list
-    mech_official <- readr::read_csv(temp,
-                                     col_types = readr::cols(.default = "c"))
+    mech_official <- purrr::map_dfr(ou,
+                                    purrr::possibly(~extract_datim_names(.x, datim_user, datim_pwd),
+                                                    NULL))
 
   #rename variables to match MSD and remove mechid from mech name
     mech_official <- mech_official %>%
@@ -100,3 +104,32 @@ rename_official <- function(df) {
 
   return(df)
 }
+
+
+
+#' Extract Data from DATIM
+#'
+#' @param url url for query
+#'
+#' @return converts json to data frame
+#' @keywords internal
+#'
+extract_datim_names <- function(ou, username, password){
+
+  sql_view_url <- paste0("https://www.datim.org/",
+                         "api/sqlViews/fgUtV6e9YIX/data.json?",
+                         "criteria=ou:", ou, "&",
+                         "paging=false")
+
+  r <- sql_view_url %>%
+    utils::URLencode() %>%
+    httr::GET(httr::authenticate(username, password)) %>%
+    httr::content("text") %>%
+    jsonlite::fromJSON(flatten = TRUE)
+
+  df <- tibble::as_tibble(x = r$listGrid$rows,
+                           .name_repair = ~ r$listGrid$headers$column)
+
+  return(df)
+}
+
