@@ -7,13 +7,17 @@
 rename_official(df)
 }
 \arguments{
-\item{df}{identify the MER Structured DataSet to clean}
+\item{df}{identify the MER Structured Data Set to clean}
 }
 \description{
 Some mechanisms and partners are recorded in FACTSInfo with multiple
 names over different time period. This function replaces all partner and
 mechanism names the most recent name for each mechanism ID pulling from a
-DATIM SQL View.
+DATIM SQL View. With an DHIS2 update to DATIM in 2021, the DATIM mechanism
+tables requires a password to access. We would recommend using
+`glamr::set_datim()` to store your DATIM credentials securely on your local
+machine. If you don't have them stored, you will be prompted each time to
+enter your password to acces DATIM.
 }
 \examples{
 \dontrun{
