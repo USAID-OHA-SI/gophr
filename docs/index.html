@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.2</span>
       </span>
     </div>
 
@@ -71,34 +73,33 @@
   <div class="contents col-md-9">
 
 
-<div id="gophr-" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gophr-" class="anchor"></a>gophr <img src="reference/figures/logo.png" align="right" height="120">
+<div class="section level2">
+<h2 id="gophr-">gophr <img src="reference/figures/logo.png" align="right" height="120"><a class="anchor" aria-label="anchor" href="#gophr-"></a>
 </h2>
 <p>MER Structured Dataset utilities package</p>
 </div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>The function herewithin are a set of utility functions related to working with the MER Structured Dataset and are complimented by other USAID-OHA-SI packages such as <code>glamr</code>, <code>glitr</code> and <code>gisr</code>. Focal users are analysts in USAID/GH/OHA who are using R to pull data from DATIM or perform the same repeated functions each quarter like creating TX_NET_NEW targets or assessing achievement.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p><code>gophr</code> is not on CRAN, so you will have to install it directly from GitHub using <code>remotes</code>.</p>
-<p>If you do not have <code>remotes</code> installed, you will have to run the <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("remotes")</a></code> line in the code below as well.</p>
+<p>If you do not have <code>remotes</code> installed, you will have to run the <code>install.packages("remotes")</code> line in the code below as well.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## SETUP</span>
 
   <span class="co">#install package with vignettes</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-    <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"USAID-OHA-SI/gophr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+    <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"USAID-OHA-SI/gophr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
     
   <span class="co">#load the package</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gophr</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gophr</span><span class="op">)</span>
 
 <span class="co">## LIST TYPES OF STYLES INCLUDED WITH PACKAGE</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="va">package</span><span class="op">:</span><span class="va">gophr</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="va">package</span><span class="op">:</span><span class="va">gophr</span><span class="op">)</span></code></pre></div>
 <hr>
 <p><em>Disclaimer: The findings, interpretation, and conclusions expressed herein are those of the authors and do not necessarily reflect the views of United States Agency for International Development. All errors remain our own.</em></p>
 </div>
@@ -107,35 +108,47 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing gophr</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Aaron Chafetz <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/USAID-OHA-SI/gophr/actions"><img src="https://github.com/USAID-OHA-SI/gophr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/USAID-OHA-SI/gophr/actions" class="external-link"><img src="https://github.com/USAID-OHA-SI/gophr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Aaron Chafetz.</p>
+  <p></p>
+<p>Developed by Aaron Chafetz.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -143,6 +156,8 @@
 
   
 
+
+  
 
   </body>
 </html>

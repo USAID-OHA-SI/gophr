@@ -1,12 +1,13 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
-Version: 3.0.1
+Version: 3.0.2
 Authors@R: person("Aaron", "Chafetz", email = "achafetz@usaid.gov", role = c("aut", "cre"))
 Description: This packages contains a number of functions for working with the PEPFAR MSD.
 Depends: R (>= 3.4.2)
 License: MIT + file LICENSE
 Imports: 
     curl,
+    getPass,
     dplyr (>= 1.0.0),
     httr,
     knitr,
@@ -23,4 +24,4 @@ Suggests: testthat
 Remotes: USAID-OHA-SI/glamr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

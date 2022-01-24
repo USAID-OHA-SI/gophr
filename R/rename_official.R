@@ -3,9 +3,13 @@
 #' Some mechanisms and partners are recorded in FACTSInfo with multiple
 #' names over different time period. This function replaces all partner and
 #' mechanism names the most recent name for each mechanism ID pulling from a
-#' DATIM SQL View.
+#' DATIM SQL View. With an DHIS2 update to DATIM in 2021, the DATIM mechanism
+#' tables requires a password to access. We would recommend using
+#' `glamr::set_datim()` to store your DATIM credentials securely on your local
+#' machine. If you don't have them stored, you will be prompted each time to
+#' enter your password to acces DATIM.
 #'
-#' @param df identify the MER Structured DataSet to clean
+#' @param df identify the MER Structured Data Set to clean
 #'
 #' @export
 #'
@@ -17,40 +21,49 @@ rename_official <- function(df) {
 
   #check that mechanism exists in MSD before starting (OUxIM or PSNUxIM, not PSNU)
   if(("mech_code" %in% names(df) == FALSE)) {
-    stop('This dataset does not have mechanisms. Make sure it is OUxIM or PSNUxIM')
+    usethis::ui_stop('This dataset does not have mechanisms. Make sure it is OUxIM or PSNUxIM')
   }
 
   #check internet connection
   if(curl::has_internet() == FALSE) {
-    print("No internet connection. Cannot access offical names & rename.")
+    usethis::ui_warn("No internet connection. Cannot access offical names & rename.")
   } else {
+
+    usethis::ui_info("Connecting to DATIM and accessing mechanism table. This will take over a minute to run. Please be patient.")
 
   #store column names (to work for both lower case and camel case) & then covert to lowercase
     headers_orig <- names(df)
     df <- dplyr::rename_all(df, tolower)
 
-  #access current mechanism list posted publically to DATIM
+  #mech list url (previously public access)
     sql_view_url <- "https://www.datim.org/api/sqlViews/fgUtV6e9YIX/data.csv"
-    # mech_official <- readr::read_csv(sql_view_url,
-    #                                  col_types = readr::cols(.default = "c"))
-    temp <- tempfile(fileext = ".csv")
-    r <- httr::GET(sql_view_url, httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
-    if(r$headers$`content-type` == "text/html;charset=UTF-8" && glamr::is_stored("datim")){
-      httr::GET(sql_view_url,
-          httr::authenticate(glamr::datim_user(), glamr::datim_pwd()),
-          httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
-    } else if(r$headers$`content-type` == "text/html;charset=UTF-8" && !glamr::is_stored("datim")){
-      stop("DATIM credentials stored in password manager are required. Use glamr::set_datim() to create.")
+
+  #ask for credentials if not stored
+    if(glamr::is_stored("datim")){
+      datim_user <- glamr::datim_user()
+      datim_pwd <- glamr::datim_pwd()
+    } else {
+      datim_user <- getPass::getPass("DATIM username")
+      datim_pwd <- getPass::getPass("DATIM password", forcemask = TRUE)
     }
+
+  #create a temp file location to download to and download the mech file
+    temp <- tempfile(fileext = ".csv")
+    httr::GET(sql_view_url,
+        httr::authenticate(datim_user, datim_pwd),
+        httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
+
+  #access current mechanism list
     mech_official <- readr::read_csv(temp,
                                      col_types = readr::cols(.default = "c"))
-    unlink(temp)
+
   #rename variables to match MSD and remove mechid from mech name
     mech_official <- mech_official %>%
       dplyr::select(mech_code = code,
                     primepartner_zXz = partner,
                     mech_name_zXz = mechanism) %>%
       dplyr::mutate(mech_name_zXz = stringr::str_remove(mech_name_zXz, "0000[0|1] |[:digit:]+ - "))
+
   #remove award information from mech_name
     mech_official <- mech_official %>%
       dplyr::mutate(mech_name_zXz = stringr::str_remove(mech_name_zXz,
@@ -76,6 +89,13 @@ rename_official <- function(df) {
 
   #reapply original variable casing type
     names(df) <- headers_orig
+
+  #reorder new variables
+    df <- df %>%
+      dplyr::relocate(c(mech_name, primepartner), .after = mech_code)
+
+  #remove temp download
+    unlink(temp)
   }
 
   return(df)
