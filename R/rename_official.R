@@ -52,9 +52,24 @@ rename_official <- function(df) {
     }
 
   #access current mechanism list
-    mech_official <- purrr::map_dfr(ous,
-                                    purrr::possibly(~extract_datim_names(.x, datim_user, datim_pwd),
-                                                    NULL))
+    mech_official <- ous %>%
+      purrr::map_dfr(function(.x) {
+        name <- .x
+        # Exclude apostroph
+        if (stringr::str_detect(name, "\\'")) {
+          pos <- stringr::str_locate(name, "\\'") %>% tibble::as_tibble() %>% dplyr::pull(start)
+          name <- stringr::str_sub(1, pos - 1)
+        }
+
+        # purrr::possibly(extract_datim_names(ou = name,
+        #                                     username = datim_user,
+        #                                     password = datim_pwd), NULL)
+
+        extract_datim_names(ou = name,
+                            end_date = "09-30-2018",
+                            username = glamr::datim_user(),
+                            password = glamr::datim_pwd())
+      })
 
   #rename variables to match MSD and remove mechid from mech name
     mech_official <- mech_official %>%
@@ -102,27 +117,94 @@ rename_official <- function(df) {
 
 #' Extract Data from DATIM
 #'
-#' @param url url for query
+#' @param ou       Operatingunit name
+#' @param end_date Exclude mechs ending by this date
+#' @param base_url url for query
+#' @param username Datim username
+#' @param password Datim password
+#' @param verbose  Show notification during process
 #'
 #' @return converts json to data frame
 #' @keywords internal
 #'
-extract_datim_names <- function(ou, username, password){
+extract_datim_names <- function(ou,
+                                end_date = NULL,
+                                base_url = "https://www.datim.org/",
+                                username,
+                                password,
+                                verbose = FALSE){
 
-  sql_view_url <- paste0("https://www.datim.org/",
+  # Core + OU filter
+  sql_view_url <- paste0(base_url,
                          "api/sqlViews/fgUtV6e9YIX/data.json?",
-                         "criteria=ou:", ou, "&",
-                         "paging=false")
+                         "filter=ou:ilike:", ou)
+  # end date filter
+  if (!is.null(end_date)) {
+    sql_view_url <- paste0(sql_view_url, "&filter=enddate:gt:", end_date)
+  }
 
+  # Remove Pagination
+  sql_view_url <- paste0(sql_view_url, "&paging=false")
+
+  # Notification
+  if (verbose) {
+    usethis::ui_info(base::paste0("Extracting mechanisms details for: ", base::toupper(ou)))
+    usethis::ui_info(sql_view_url)
+  }
+
+  # Run the query
   r <- sql_view_url %>%
     utils::URLencode() %>%
     httr::GET(httr::authenticate(username, password)) %>%
     httr::content("text") %>%
     jsonlite::fromJSON(flatten = TRUE)
 
-  df <- tibble::as_tibble(x = r$listGrid$rows,
+  # Clean response
+  # Keep structure for empty response
+  df <- purrr::map(r$listGrid$headers$column, ~character()) %>%
+    purrr::set_names(r$listGrid$headers$column) %>%
+    tibble::as_tibble()
+
+  # Convert to tibble with name repair
+  if (length(r$listGrid$rows) > 0) {
+    df <- tibble::as_tibble(x = r$listGrid$rows,
                            .name_repair = ~ r$listGrid$headers$column)
+  }
 
   return(df)
 }
 
+# Testing
+# extract_datim_names(ou = "Nigeria",
+#                     end_date = "09-30-2018",
+#                     username = glamr::datim_user(),
+#                     password = glamr::datim_pwd())
+#
+# extract_datim_names(ou = "nigeria",
+#                     end_date = "09-30-2018",
+#                     username = glamr::datim_user(),
+#                     password = glamr::datim_pwd(),
+#                     verbose = T)
+#
+# extract_datim_names(ou = "code d",
+#                     end_date = "09-30-2018",
+#                     username = glamr::datim_user(),
+#                     password = glamr::datim_pwd(),
+#                     verbose = T)
+#
+#
+# c("Nigeria", "South Africa", "Cote d'Ivoire") %>%
+#   purrr::map_dfr(function(.x) {
+#
+#     name <- .x
+#
+#     if (stringr::str_detect(.x, "\\'")) {
+#       pos <- str_locate(.x, "\\'") %>% tibble::as_tibble() %>% pull(start)
+#       name <- stringr::str_sub(.x, 1, pos - 1)
+#     }
+#
+#     extract_datim_names(ou = name,
+#                         end_date = "09-30-2018",
+#                         username = glamr::datim_user(),
+#                         password = glamr::datim_pwd())
+#     })
