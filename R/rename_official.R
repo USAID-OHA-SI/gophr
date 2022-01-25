@@ -93,8 +93,6 @@ rename_official <- function(df) {
     df <- df %>%
       dplyr::relocate(c(mech_name, primepartner), .after = mech_code)
 
-  #remove temp download
-    unlink(temp)
   }
 
   return(df)
