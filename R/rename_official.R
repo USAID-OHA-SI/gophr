@@ -53,10 +53,10 @@ rename_official <- function(df) {
 
   #access current mechanism list
     mech_official <- ous %>%
-      purrr::map_dfr(extract_datim_names(ou = name,
+      purrr::map_dfr(~ extract_datim_names(ou = name,
                                          end_date = "09-30-2018",
-                                         username = glamr::datim_user(),
-                                         password = glamr::datim_pwd())
+                                         username = datim_user,
+                                         password = datim_pwd)
       )
 
   #rename variables to match MSD and remove mechid from mech name
