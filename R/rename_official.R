@@ -35,13 +35,6 @@ rename_official <- function(df) {
     headers_orig <- names(df)
     df <- dplyr::rename_all(df, tolower)
 
-  #identify what OUs to map over
-    if("operatingunit" %in% names(df)){
-      ous <- unique(df$operatingunit)
-    } else {
-      ous <- lst_ous
-    }
-
   #ask for credentials if not stored
     if(glamr::is_stored("datim")){
       datim_user <- glamr::datim_user()
@@ -51,12 +44,19 @@ rename_official <- function(df) {
       datim_pwd <- getPass::getPass("DATIM password", forcemask = TRUE)
     }
 
+  #identify what OUs to map over
+    if("operatingunit" %in% names(df)){
+      ous <- unique(df$operatingunit)
+    } else {
+      ous <- lst_ous
+    }
+
   #access current mechanism list
     mech_official <- ous %>%
       purrr::map_dfr(~ extract_datim_names(ou = name,
-                                         end_date = "09-30-2018",
-                                         username = datim_user,
-                                         password = datim_pwd)
+                                           end_date = "09-30-2018",
+                                           username = datim_user,
+                                           password = datim_pwd)
       )
 
   #rename variables to match MSD and remove mechid from mech name
