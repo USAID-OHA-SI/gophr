@@ -13,11 +13,13 @@ rename_official(df)
 Some mechanisms and partners are recorded in FACTSInfo with multiple
 names over different time period. This function replaces all partner and
 mechanism names the most recent name for each mechanism ID pulling from a
-DATIM SQL View. With an DHIS2 update to DATIM in 2021, the DATIM mechanism
-tables requires a password to access. We would recommend using
-`glamr::set_datim()` to store your DATIM credentials securely on your local
-machine. If you don't have them stored, you will be prompted each time to
-enter your password to acces DATIM.
+DATIM SQL View.  The `mech_code` variable is required in your dataset, and
+having `operatingunit` and `fiscal_year` or `period` are highly recommended
+as they will limit the size of the DATIM queries.With an DHIS2 update to
+DATIM in 2021, the DATIM mechanism tables requires a password to access. We
+would recommend using `glamr::set_datim()` to store your DATIM credentials
+securely on your local machine. If you don't have them stored, you will be
+prompted each time to enter your password to acces DATIM.
 }
 \examples{
 \dontrun{
