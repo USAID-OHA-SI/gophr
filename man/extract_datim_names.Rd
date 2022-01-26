@@ -4,10 +4,27 @@
 \alias{extract_datim_names}
 \title{Extract Data from DATIM}
 \usage{
-extract_datim_names(ou, username, password)
+extract_datim_names(
+  ou,
+  end_date = NULL,
+  base_url = "https://www.datim.org/",
+  username,
+  password,
+  verbose = FALSE
+)
 }
 \arguments{
-\item{url}{url for query}
+\item{ou}{Operatingunit name}
+
+\item{end_date}{Exclude mechs ending by this date}
+
+\item{base_url}{url for query}
+
+\item{username}{Datim username}
+
+\item{password}{Datim password}
+
+\item{verbose}{Show notification during process}
 }
 \value{
 converts json to data frame
