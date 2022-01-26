@@ -29,7 +29,7 @@ rename_official <- function(df) {
     usethis::ui_warn("No internet connection. Cannot access offical names & rename.")
   } else {
 
-    usethis::ui_info("Connecting to DATIM and accessing mechanism table. This will take over a minute to run. Please be patient.")
+    usethis::ui_info("Connecting to DATIM and accessing mechanism table. This may take over a minute to run. Please be patient.")
 
   #store column names (to work for both lower case and camel case) & then covert to lowercase
     headers_orig <- names(df)
@@ -53,23 +53,11 @@ rename_official <- function(df) {
 
   #access current mechanism list
     mech_official <- ous %>%
-      purrr::map_dfr(function(.x) {
-        name <- .x
-        # Exclude apostroph
-        if (stringr::str_detect(name, "\\'")) {
-          pos <- stringr::str_locate(name, "\\'") %>% tibble::as_tibble() %>% dplyr::pull(start)
-          name <- stringr::str_sub(1, pos - 1)
-        }
-
-        # purrr::possibly(extract_datim_names(ou = name,
-        #                                     username = datim_user,
-        #                                     password = datim_pwd), NULL)
-
-        extract_datim_names(ou = name,
-                            end_date = "09-30-2018",
-                            username = glamr::datim_user(),
-                            password = glamr::datim_pwd())
-      })
+      purrr::map_dfr(extract_datim_names(ou = name,
+                                         end_date = "09-30-2018",
+                                         username = glamr::datim_user(),
+                                         password = glamr::datim_pwd())
+      )
 
   #rename variables to match MSD and remove mechid from mech name
     mech_official <- mech_official %>%
@@ -133,6 +121,10 @@ extract_datim_names <- function(ou,
                                 username,
                                 password,
                                 verbose = FALSE){
+
+  #Exclude apostrophe from OU name
+  if (stringr::str_detect(ou, "\\'"))
+    ou <- stringr::str_extract(ou, "^.*(?=\\')")
 
   # Core + OU filter
   sql_view_url <- paste0(base_url,
