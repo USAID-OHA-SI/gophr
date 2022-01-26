@@ -1,4 +1,5 @@
 # gophr 3.0.2
+* adjust `rename_official` to loop over operating units and filter query using a floor date if fiscal year or period are included  in the data frame.
 * update to `rename_official` to remove timeout (due to large file size) and prompt for password if DATIM credentials are not stored via `glamr::set_datim`. (2022-01-24)
 
 # gophr 3.0.1
