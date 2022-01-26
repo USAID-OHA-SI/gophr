@@ -1,7 +1,10 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
 Version: 3.0.2
-Authors@R: person("Aaron", "Chafetz", email = "achafetz@usaid.gov", role = c("aut", "cre"))
+Authors@R: c(
+    person("Aaron", "Chafetz", ,"achafetz@usaid.gov", c("aut", "cre")),
+    person("Baboyma", "Kagniniwa", , "bkagniniwa@usaid.gov", c("aut"))
+   )
 Description: This packages contains a number of functions for working with the PEPFAR MSD.
 Depends: R (>= 3.4.2)
 License: MIT + file LICENSE
