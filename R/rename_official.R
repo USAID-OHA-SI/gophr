@@ -65,9 +65,9 @@ rename_official <- function(df) {
     mech_official <-
       purrr::map_dfr(.x = ous,
                      .f = ~ extract_datim_names(ou = .x,
-                                           end_date = date_floor,
-                                           username = datim_user,
-                                           password = datim_pwd)
+                                                end_date = date_floor,
+                                                username = datim_user,
+                                                password = datim_pwd)
       )
 
   #rename variables to match MSD and remove mechid from mech name
@@ -84,6 +84,12 @@ rename_official <- function(df) {
 
   #merge official names into df
     df <- dplyr::left_join(df, mech_official, by="mech_code")
+
+  #clean up Dedup and AGWY
+    df <- df %>%
+      dplyr::mutate(dplyr::across(c(primepartner_zXz, mech_name_zXz), ~ ifelse(mech_code %in% c("00000", "00001"), "Dedup", .)),
+                    primepartner_zXz = ifelse(mech_code == "HllvX50cXC0", "Default", primepartner_zXz),
+                    mech_name_zXz = ifelse(mech_code == "HllvX50cXC0", "Missing", mech_name_zXz))
 
   #replace prime partner and mech names with official names and then remove
     if(!"mech_name" %in% names(df)){
