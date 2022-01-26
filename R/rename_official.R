@@ -181,38 +181,3 @@ extract_datim_names <- function(ou,
 
   return(df)
 }
-
-# Testing
-# extract_datim_names(ou = "Nigeria",
-#                     end_date = "09-30-2018",
-#                     username = glamr::datim_user(),
-#                     password = glamr::datim_pwd())
-#
-# extract_datim_names(ou = "nigeria",
-#                     end_date = "09-30-2018",
-#                     username = glamr::datim_user(),
-#                     password = glamr::datim_pwd(),
-#                     verbose = T)
-#
-# extract_datim_names(ou = "code d",
-#                     end_date = "09-30-2018",
-#                     username = glamr::datim_user(),
-#                     password = glamr::datim_pwd(),
-#                     verbose = T)
-#
-#
-# c("Nigeria", "South Africa", "Cote d'Ivoire") %>%
-#   purrr::map_dfr(function(.x) {
-#
-#     name <- .x
-#
-#     if (stringr::str_detect(.x, "\\'")) {
-#       pos <- str_locate(.x, "\\'") %>% tibble::as_tibble() %>% pull(start)
-#       name <- stringr::str_sub(.x, 1, pos - 1)
-#     }
-#
-#     extract_datim_names(ou = name,
-#                         end_date = "09-30-2018",
-#                         username = glamr::datim_user(),
-#                         password = glamr::datim_pwd())
-#     })
