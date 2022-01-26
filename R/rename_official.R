@@ -29,14 +29,11 @@ rename_official <- function(df) {
     usethis::ui_warn("No internet connection. Cannot access offical names & rename.")
   } else {
 
-    usethis::ui_info("Connecting to DATIM and accessing mechanism table. This will take over a minute to run. Please be patient.")
+    usethis::ui_info("Connecting to DATIM and accessing mechanism table. This may take over a minute to run. Please be patient.")
 
   #store column names (to work for both lower case and camel case) & then covert to lowercase
     headers_orig <- names(df)
     df <- dplyr::rename_all(df, tolower)
-
-  #mech list url (previously public access)
-    sql_view_url <- "https://www.datim.org/api/sqlViews/fgUtV6e9YIX/data.csv"
 
   #ask for credentials if not stored
     if(glamr::is_stored("datim")){
@@ -47,15 +44,31 @@ rename_official <- function(df) {
       datim_pwd <- getPass::getPass("DATIM password", forcemask = TRUE)
     }
 
-  #create a temp file location to download to and download the mech file
-    temp <- tempfile(fileext = ".csv")
-    httr::GET(sql_view_url,
-        httr::authenticate(datim_user, datim_pwd),
-        httr::write_disk(temp, overwrite = TRUE), httr::timeout(60))
+  #identify what OUs to map over
+    if("operatingunit" %in% names(df)){
+      ous <- unique(df$operatingunit)
+    } else {
+      ous <- lst_ous
+    }
+
+  #if year is present, us that to filter down request
+    if("fiscal_year" %in% names(df)){
+      date_floor <- (min(df$fiscal_year, na.rm = TRUE) - 1) %>% paste0("09-30-", .)
+    } else if("period" %in% names(df)){
+      fy_floor <- min(df$period, na.rm = TRUE) %>% stringr::str_sub(3, 4) %>% as.numeric()
+      date_floor <- paste0("09-30-20", fy_floor-1)
+    } else {
+      date_floor <- NULL
+    }
 
   #access current mechanism list
-    mech_official <- readr::read_csv(temp,
-                                     col_types = readr::cols(.default = "c"))
+    mech_official <-
+      purrr::map_dfr(.x = ous,
+                     .f = ~ extract_datim_names(ou = .x,
+                                                end_date = date_floor,
+                                                username = datim_user,
+                                                password = datim_pwd)
+      )
 
   #rename variables to match MSD and remove mechid from mech name
     mech_official <- mech_official %>%
@@ -71,6 +84,12 @@ rename_official <- function(df) {
 
   #merge official names into df
     df <- dplyr::left_join(df, mech_official, by="mech_code")
+
+  #clean up Dedup and AGWY
+    df <- df %>%
+      dplyr::mutate(dplyr::across(c(primepartner_zXz, mech_name_zXz), ~ ifelse(mech_code %in% c("00000", "00001"), "Dedup", .)),
+                    primepartner_zXz = ifelse(mech_code == "HllvX50cXC0", "Default", primepartner_zXz),
+                    mech_name_zXz = ifelse(mech_code == "HllvX50cXC0", "Missing", mech_name_zXz))
 
   #replace prime partner and mech names with official names and then remove
     if(!"mech_name" %in% names(df)){
@@ -94,8 +113,70 @@ rename_official <- function(df) {
     df <- df %>%
       dplyr::relocate(c(mech_name, primepartner), .after = mech_code)
 
-  #remove temp download
-    unlink(temp)
+  }
+
+  return(df)
+}
+
+
+
+#' Extract Data from DATIM
+#'
+#' @param ou       Operatingunit name
+#' @param end_date Exclude mechs ending by this date
+#' @param base_url url for query
+#' @param username Datim username
+#' @param password Datim password
+#' @param verbose  Show notification during process
+#'
+#' @return converts json to data frame
+#' @keywords internal
+#'
+extract_datim_names <- function(ou,
+                                end_date = NULL,
+                                base_url = "https://www.datim.org/",
+                                username,
+                                password,
+                                verbose = FALSE){
+
+  #Exclude apostrophe from OU name
+  if (stringr::str_detect(ou, "\\'"))
+    ou <- stringr::str_extract(ou, "^.*(?=\\')")
+
+  # Core + OU filter
+  sql_view_url <- paste0(base_url,
+                         "api/sqlViews/fgUtV6e9YIX/data.json?",
+                         "filter=ou:ilike:", ou)
+  # end date filter
+  if (!is.null(end_date))
+    sql_view_url <- paste0(sql_view_url, "&filter=enddate:gt:", end_date)
+
+  # Remove Pagination
+  sql_view_url <- paste0(sql_view_url, "&paging=false")
+
+  # Notification
+  if (verbose) {
+    usethis::ui_info(base::paste0("Extracting mechanisms details for: ", base::toupper(ou)))
+    usethis::ui_info(sql_view_url)
+  }
+
+  # Run the query
+  r <- sql_view_url %>%
+    utils::URLencode() %>%
+    httr::GET(httr::authenticate(username, password)) %>%
+    httr::content("text") %>%
+    jsonlite::fromJSON(flatten = TRUE)
+
+  # Clean response
+  # Keep structure for empty response
+  df <- purrr::map(r$listGrid$headers$column, ~character()) %>%
+    purrr::set_names(r$listGrid$headers$column) %>%
+    tibble::as_tibble()
+
+  # Convert to tibble with name repair
+  if (length(r$listGrid$rows) > 0) {
+    df <- tibble::as_tibble(x = r$listGrid$rows,
+                           .name_repair = ~ r$listGrid$headers$column)
   }
 
   return(df)

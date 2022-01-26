@@ -18,6 +18,9 @@ navbar:
     news:
       text: Changelog
       href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/USAID-OHA-SI/gophr/
 
 reference:
 - title: Structure

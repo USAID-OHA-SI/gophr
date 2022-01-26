@@ -34,7 +34,13 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/USAID-OHA-SI/gophr/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -49,7 +55,8 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.0.2" id="gophr-302">gophr 3.0.2<a class="anchor" aria-label="anchor" href="#gophr-302"></a></h2>
-<ul><li>update to <code>rename_official</code> to remove timeout (due to large file size) and prompt for password if DATIM credentials are not stored via <code><a href="https://rdrr.io/pkg/glamr/man/set_datim.html" class="external-link">glamr::set_datim</a></code>. (2022-01-24)</li>
+<ul><li>adjust <code>rename_official</code> to loop over operating units and filter query using a floor date if fiscal year or period are included in the data frame. (2022-01-26)</li>
+<li>update to <code>rename_official</code> to remove timeout (due to large file size) and prompt for password if DATIM credentials are not stored via <code><a href="https://rdrr.io/pkg/glamr/man/set_datim.html" class="external-link">glamr::set_datim</a></code>. (2022-01-24)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.0.1" id="gophr-301">gophr 3.0.1<a class="anchor" aria-label="anchor" href="#gophr-301"></a></h2>
@@ -75,7 +82,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Aaron Chafetz.</p>
+  <p></p><p>Developed by Aaron Chafetz, Baboyma Kagniniwa.</p>
 </div>
 
 <div class="pkgdown">
