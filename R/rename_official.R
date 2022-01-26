@@ -51,10 +51,21 @@ rename_official <- function(df) {
       ous <- lst_ous
     }
 
+  #if year is present, us that to filter down request
+    if("fiscal_year" %in% names(df)){
+      date_floor <- (min(df$fiscal_year, na.rm = TRUE) - 1) %>% paste0("09-30-", .)
+    } else if("period" %in% names(df)){
+      fy_floor <- min(df$period, na.rm = TRUE) %>% stringr::str_sub(3, 4) %>% as.numeric()
+      date_floor <- paste0("09-30-20", fy_floor-1)
+    } else {
+      date_floor <- NULL
+    }
+
   #access current mechanism list
-    mech_official <- ous %>%
-      purrr::map_dfr(~ extract_datim_names(ou = name,
-                                           end_date = "09-30-2018",
+    mech_official <-
+      purrr::map_dfr(.x = ous,
+                     .f = ~ extract_datim_names(ou = .x,
+                                           end_date = date_floor,
                                            username = datim_user,
                                            password = datim_pwd)
       )
@@ -131,9 +142,8 @@ extract_datim_names <- function(ou,
                          "api/sqlViews/fgUtV6e9YIX/data.json?",
                          "filter=ou:ilike:", ou)
   # end date filter
-  if (!is.null(end_date)) {
+  if (!is.null(end_date))
     sql_view_url <- paste0(sql_view_url, "&filter=enddate:gt:", end_date)
-  }
 
   # Remove Pagination
   sql_view_url <- paste0(sql_view_url, "&paging=false")
