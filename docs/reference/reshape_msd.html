@@ -72,7 +72,7 @@ long. Reshaping tidy is key for much of OHA/SI processes and analysis. <!-- %&gt
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">reshape_msd</span><span class="op">(</span>
   <span class="va">df</span>,
   direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"wide"</span>, <span class="st">"semi-wide"</span>, <span class="st">"quarters"</span><span class="op">)</span>,
-  clean <span class="op">=</span> <span class="cn">TRUE</span>,
+  include_type <span class="op">=</span> <span class="cn">TRUE</span>,
   qtrs_keep_cumulative <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -86,12 +86,12 @@ long. Reshaping tidy is key for much of OHA/SI processes and analysis. <!-- %&gt
 MSD structure), "semi-wide" (one column for targets, cumulative, results)
 or "quarters" (quarters pivoted, but not targets - useful for quarterly
 achievement)).</p></dd>
-<dt>clean</dt>
-<dd><p>clean period for graphing, eg(fy2019qtr2 -&gt; FY19Q2) and create
-a period type (targets, results, cumulative)</p></dd>
+<dt>include_type</dt>
+<dd><p>whether a period_type column (targets, results, cumulative)
+should be included, default = TRUE</p></dd>
 <dt>qtrs_keep_cumulative</dt>
 <dd><p>whether to keep the cumulative column when using
-quaters for direction, default = FALSE</p></dd>
+quarters for direction, default = FALSE</p></dd>
 </dl></div>
 
     <div id="ref-examples">

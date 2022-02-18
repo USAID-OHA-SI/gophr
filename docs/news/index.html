@@ -55,7 +55,8 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.0.2" id="gophr-302">gophr 3.0.2<a class="anchor" aria-label="anchor" href="#gophr-302"></a></h2>
-<ul><li>adjust <code>rename_official</code> to loop over operating units and filter query using a floor date if fiscal year or period are included in the data frame. (2022-01-26)</li>
+<ul><li>adjust parameters for <code>reshape_msd</code>, retiring <code>clean</code> which had more to do with aligning with the old, “wide” versions of the MSDs and replacing it with a param, <code>include_type</code> to exclude the <code>period_type</code> column from the output dataframe. (2022-02-18)</li>
+<li>adjust <code>rename_official</code> to loop over operating units and filter query using a floor date if fiscal year or period are included in the data frame. (2022-01-26)</li>
 <li>update to <code>rename_official</code> to remove timeout (due to large file size) and prompt for password if DATIM credentials are not stored via <code><a href="https://rdrr.io/pkg/glamr/man/set_datim.html" class="external-link">glamr::set_datim</a></code>. (2022-01-24)</li>
 </ul></div>
     <div class="section level2">

@@ -7,7 +7,7 @@
 reshape_msd(
   df,
   direction = c("long", "wide", "semi-wide", "quarters"),
-  clean = TRUE,
+  include_type = TRUE,
   qtrs_keep_cumulative = FALSE
 )
 }
@@ -19,11 +19,11 @@ MSD structure), "semi-wide" (one column for targets, cumulative, results)
 or "quarters" (quarters pivoted, but not targets - useful for quarterly
 achievement)).}
 
-\item{clean}{clean period for graphing, eg(fy2019qtr2 -> FY19Q2) and create
-a period type (targets, results, cumulative)}
+\item{include_type}{whether a period_type column (targets, results, cumulative)
+should be included, default = TRUE}
 
 \item{qtrs_keep_cumulative}{whether to keep the cumulative column when using
-quaters for direction, default = FALSE}
+quarters for direction, default = FALSE}
 }
 \description{
 `reshape_msd` transforms the structure into a tidy format. The default
