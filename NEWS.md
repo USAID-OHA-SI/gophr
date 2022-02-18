@@ -1,4 +1,5 @@
 # gophr 3.0.2
+* adjust parameters for `reshape_msd`, retiring `clean` which had more to do with aligning with the old, "wide" versions of the MSDs and replacing it with a param, `include_type` to exclude the `period_type` column from the output dataframe. (2022-02-18)
 * adjust `rename_official` to loop over operating units and filter query using a floor date if fiscal year or period are included  in the data frame. (2022-01-26)
 * update to `rename_official` to remove timeout (due to large file size) and prompt for password if DATIM credentials are not stored via `glamr::set_datim`. (2022-01-24)
 

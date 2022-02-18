@@ -13,10 +13,10 @@
 #' MSD structure), "semi-wide" (one column for targets, cumulative, results)
 #' or "quarters" (quarters pivoted, but not targets - useful for quarterly
 #' achievement)).
-#' @param clean clean period for graphing, eg(fy2019qtr2 -> FY19Q2) and create
-#'  a period type (targets, results, cumulative)
+#' @param include_type whether a period_type column (targets, results, cumulative)
+#' should be included, default = TRUE
 #' @param qtrs_keep_cumulative whether to keep the cumulative column when using
-#'  quaters for direction, default = FALSE
+#'  quarters for direction, default = FALSE
 #'
 #' @export
 #'
@@ -35,7 +35,7 @@
 #'   }
 
 reshape_msd <- function(df, direction = c("long", "wide", "semi-wide", "quarters"),
-                        clean = TRUE, qtrs_keep_cumulative = FALSE){
+                        include_type = TRUE, qtrs_keep_cumulative = FALSE){
 
   #limit direction to 1 if not specified
     direction <- direction[1]
@@ -89,7 +89,7 @@ reshape_msd <- function(df, direction = c("long", "wide", "semi-wide", "quarters
     }
 
   #clean
-    if((direction == "long" && clean == TRUE) || direction %in% c("semi-wide", "quarters")){
+    if(direction == "long" || direction %in% c("semi-wide", "quarters")){
       df <- df %>%
         dplyr::mutate(period_type = stringr::str_extract(period, "TARGETS|targets|(C|c)umulative") %>% tolower,
                       period_type = ifelse(is.na(period_type), "results", period_type),
@@ -140,6 +140,9 @@ reshape_msd <- function(df, direction = c("long", "wide", "semi-wide", "quarters
       df <- dplyr::mutate(df, fiscal_year = stringr::str_sub(fiscal_year, 3, 4) %>% as.integer() + 2000 %>% as.integer())
     }
 
+    #remove period type
+    if(include_type == FALSE && "period_type" %in% names(df))
+      df <- dplyr::select(df, -period_type)
 
   return(df)
 }
