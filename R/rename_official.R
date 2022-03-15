@@ -76,7 +76,8 @@ rename_official <- function(df) {
     mech_official <- mech_official %>%
       dplyr::select(mech_code = code,
                     primepartner_zXz = partner,
-                    mech_name_zXz = mechanism) %>%
+                    mech_name_zXz = mechanism,
+                    fundingagency_zXz = agency) %>%
       dplyr::mutate(mech_name_zXz = stringr::str_remove(mech_name_zXz, "0000[0|1] |[:digit:]+ - "))
 
   #remove award information from mech_name
@@ -89,8 +90,9 @@ rename_official <- function(df) {
 
   #clean up Dedup and AGWY
     df <- df %>%
-      dplyr::mutate(dplyr::across(c(primepartner_zXz, mech_name_zXz), ~ ifelse(mech_code %in% c("00000", "00001"), "Dedup", .)),
+      dplyr::mutate(dplyr::across(c(primepartner_zXz, mech_name_zXz, fundingagency_zXz), ~ ifelse(mech_code %in% c("00000", "00001"), "Dedup", .)),
                     primepartner_zXz = ifelse(mech_code == "HllvX50cXC0", "Default", primepartner_zXz),
+                    fundingagency_zXz = ifelse(mech_code == "HllvX50cXC0", "Default", fundingagency_zXz),
                     mech_name_zXz = ifelse(mech_code == "HllvX50cXC0", "Missing", mech_name_zXz))
 
   #replace prime partner and mech names with official names and then remove
@@ -102,10 +104,15 @@ rename_official <- function(df) {
       df <- dplyr::mutate(df, primepartner = as.character(NA))
       headers_orig <- c(headers_orig, "primepartner")
     }
+    if(!"fundingagency" %in% names(df)){
+      df <- dplyr::mutate(df, fundingagency = as.character(NA))
+      headers_orig <- c(headers_orig, "fundingagency")
+    }
 
     df <- df %>%
       dplyr::mutate(mech_name = mech_name_zXz,
-                    primepartner = primepartner_zXz) %>%
+                    primepartner = primepartner_zXz,
+                    fundingagency = fundingagency_zXz) %>%
       dplyr::select(-dplyr::ends_with("_zXz"))
 
   #reapply original variable casing type
@@ -113,7 +120,7 @@ rename_official <- function(df) {
 
   #reorder new variables
     df <- df %>%
-      dplyr::relocate(c(mech_name, primepartner), .after = mech_code)
+      dplyr::relocate(c(mech_name, primepartner, fundingagency), .after = mech_code)
 
   }
 
