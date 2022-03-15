@@ -1,3 +1,6 @@
+# gophr 3.0.3
+* update `rename_offical` to include `fundingagency` to work within [`tameDP`](https://usaid-oha-si.github.io/tameDP/). (2022-03-15)
+
 # gophr 3.0.2
 * adjust parameters for `reshape_msd`, retiring `clean` which had more to do with aligning with the old, "wide" versions of the MSDs and replacing it with a param, `include_type` to exclude the `period_type` column from the output dataframe. (2022-02-18)
 * adjust `rename_official` to loop over operating units and filter query using a floor date if fiscal year or period are included  in the data frame. (2022-01-26)
