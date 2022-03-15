@@ -1,4 +1,5 @@
 # gophr 3.0.3
+* allow user to provide DATIM user name and password to `rename_official`, which previously (v3.0.2) look for stored credentials or prompted every time. (2022-03-15)
 * update `rename_offical` to include `fundingagency` to work within [`tameDP`](https://usaid-oha-si.github.io/tameDP/). (2022-03-15)
 
 # gophr 3.0.2

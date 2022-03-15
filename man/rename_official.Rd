@@ -4,10 +4,16 @@
 \alias{rename_official}
 \title{Apply the latest mechanism and partner names from DATIM}
 \usage{
-rename_official(df)
+rename_official(df, datim_user, datim_pwd)
 }
 \arguments{
 \item{df}{identify the MER Structured Data Set to clean}
+
+\item{datim_user}{DATIM username; if missing will look for stored credentials
+first and then prompt for them if not found}
+
+\item{datim_pwd}{DATIM password; if missing will look for stored credentials
+first and then prompt for them if not found}
 }
 \description{
 Some mechanisms and partners are recorded in FACTSInfo with multiple

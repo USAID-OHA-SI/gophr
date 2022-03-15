@@ -12,6 +12,10 @@
 #' prompted each time to enter your password to acces DATIM.
 #'
 #' @param df identify the MER Structured Data Set to clean
+#' @param datim_user DATIM username; if missing will look for stored credentials
+#' first and then prompt for them if not found
+#' @param datim_pwd DATIM password; if missing will look for stored credentials
+#' first and then prompt for them if not found
 #'
 #' @export
 #'
@@ -19,7 +23,7 @@
 #' \dontrun{
 #' df_psnu_im <- rename_official(df_psnu_im) }
 
-rename_official <- function(df) {
+rename_official <- function(df, datim_user, datim_pwd) {
 
   #check that mechanism exists in MSD before starting (OUxIM or PSNUxIM, not PSNU)
   if(("mech_code" %in% names(df) == FALSE)) {
@@ -37,14 +41,21 @@ rename_official <- function(df) {
     headers_orig <- names(df)
     df <- dplyr::rename_all(df, tolower)
 
-  #ask for credentials if not stored
-    if(glamr::is_stored("datim")){
+  #ask for credentials if not stored - username
+    if(glamr::is_stored("datim") && missing(datim_user)){
       datim_user <- glamr::datim_user()
-      datim_pwd <- glamr::datim_pwd()
-    } else {
+    } else if(missing(datim_user)) {
       datim_user <- getPass::getPass("DATIM username")
+    }
+
+  #ask for credentials if not stored - password
+    if(glamr::is_stored("datim") && missing(datim_pwd)){
+      datim_pwd <- glamr::datim_pwd()
+    } else if(missing(datim_pwd)) {
       datim_pwd <- getPass::getPass("DATIM password", forcemask = TRUE)
     }
+
+
 
   #identify what OUs to map over
     if("operatingunit" %in% names(df)){
