@@ -24,11 +24,11 @@ curr_fy <- source_info(return = "fiscal_year")
 
 df_msd <- si_path() %>%
   return_latest("OU_IM") %>%
-  read_rds()
+  read_msd()
 
 lst_ous <- df_msd %>%
   filter(fiscal_year == curr_fy,
-         fundingagency %ni% c("Dedup", "Default"),
+         funding_agency %ni% c("Dedup", "Default"),
          indicator != "TX_NET_NEW") %>%
   distinct(operatingunit) %>%
   arrange(operatingunit) %>%
