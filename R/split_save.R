@@ -6,7 +6,7 @@
 #' be sent to each of them with their own data.
 #'
 #' @param df dataframe to split
-#' @param group_var grouping variable to split the dataset by, eg operatingunit, fundingagency
+#' @param group_var grouping variable to split the dataset by, eg operatingunit, funding_agency
 #' @param folderpath directory where you want to store the files
 #' @param filename_stub generic stub for naming all the files
 #' @param include_date include date after filenamestub? default = FALSE, eg "20180913"

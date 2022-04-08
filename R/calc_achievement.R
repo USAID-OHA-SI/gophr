@@ -19,9 +19,9 @@
 #' df_msd_agg <- df_msd %>%
 #'  filter(operatingunit == "Jupiter"
 #'         indicator %in% c("TX_NEW", "TX_CURR"),
-#'         fundingagency != "Dedup",
+#'         funding_agency != "Dedup",
 #'         standardizeddisaggregate == "Total Numerator") %>%
-#'  group_by(operatingunit, fundingagency, fiscal_year, indicator) %>%
+#'  group_by(operatingunit, funding_agency, fiscal_year, indicator) %>%
 #'  summarise(across(where(is.double), sum, na.rm = TRUE)) %>%
 #'  ungroup()
 #'
@@ -72,9 +72,9 @@ adorn_achievement <- function(df, qtr = NULL){
 #' df_msd_agg <- df_msd %>%
 #'  filter(operatingunit == "Jupiter"
 #'         indicator %in% c("TX_NEW", "TX_CURR"),
-#'         fundingagency != "Dedup",
+#'         funding_agency != "Dedup",
 #'         standardizeddisaggregate == "Total Numerator") %>%
-#'  group_by(operatingunit, fundingagency, fiscal_year, indicator) %>%
+#'  group_by(operatingunit, funding_agency, fiscal_year, indicator) %>%
 #'  summarise(across(where(is.double), sum, na.rm = TRUE)) %>%
 #'  ungroup()
 #'

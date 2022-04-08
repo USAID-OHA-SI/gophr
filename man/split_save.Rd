@@ -9,7 +9,7 @@ split_save(df, group_var, folderpath, filename_stub, include_date = FALSE)
 \arguments{
 \item{df}{dataframe to split}
 
-\item{group_var}{grouping variable to split the dataset by, eg operatingunit, fundingagency}
+\item{group_var}{grouping variable to split the dataset by, eg operatingunit, funding_agency}
 
 \item{folderpath}{directory where you want to store the files}
 
