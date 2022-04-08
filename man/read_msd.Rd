@@ -4,7 +4,12 @@
 \alias{read_msd}
 \title{Import ICPI MER Structured Datasets .txt into R and covert to .rds}
 \usage{
-read_msd(file, save_rds = FALSE, remove_txt = FALSE)
+read_msd(
+  file,
+  save_rds = FALSE,
+  remove_txt = FALSE,
+  convert_to_old_names = FALSE
+)
 }
 \arguments{
 \item{file}{enter the full path to the MSD/FSD file}
@@ -12,6 +17,8 @@ read_msd(file, save_rds = FALSE, remove_txt = FALSE)
 \item{save_rds}{save the Structured Dataset as an rds file, default = FALSE}
 
 \item{remove_txt}{should the txt file be removed, default = FALSE}
+
+\item{convert_to_old_names}{replace FY22Q2 naming convention with old? default = F}
 }
 \description{
 `read_msd` imports a stored ICPI MER/ER Structured Datasets and

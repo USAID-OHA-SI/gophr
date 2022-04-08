@@ -1,6 +1,6 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
-Version: 3.0.3
+Version: 3.0.4
 Authors@R: c(
     person("Aaron", "Chafetz", ,"achafetz@usaid.gov", c("aut", "cre")),
     person("Baboyma", "Kagniniwa", , "bkagniniwa@usaid.gov", c("aut"))
