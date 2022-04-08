@@ -31,6 +31,12 @@
     <loc>/reference/color_achievement.html</loc>
   </url>
   <url>
+    <loc>/reference/convert_coltype.html</loc>
+  </url>
+  <url>
+    <loc>/reference/convert_names.html</loc>
+  </url>
+  <url>
     <loc>/reference/convert_oldformat.html</loc>
   </url>
   <url>
@@ -44,6 +50,9 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/process_msd.html</loc>
   </url>
   <url>
     <loc>/reference/read_msd.html</loc>
