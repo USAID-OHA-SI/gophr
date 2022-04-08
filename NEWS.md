@@ -1,5 +1,5 @@
 # gophr 3.0.4
-* update MSD names to reflect new structure as of FY22Q2 in `read_msd` (2022-04-08)
+* update MSD names to reflect new structure as of FY22Q2 in `read_msd` and `rename_official` (2022-04-08)
 * allow user to keep old names when importing MSD in `read_msd` in order to allow old code to run without error (2022-04-08)
 * clean up back end of `read_msd` to be more efficient (2022-04-08)
 
