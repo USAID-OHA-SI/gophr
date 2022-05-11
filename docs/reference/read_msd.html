@@ -18,7 +18,7 @@ coverts it from a .txt to an .Rds to significantly limit file size."><meta prope
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.4</span>
       </span>
     </div>
 
@@ -61,7 +61,12 @@ coverts it from a .txt to an .Rds to significantly limit file size.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_msd</span><span class="op">(</span><span class="va">file</span>, save_rds <span class="op">=</span> <span class="cn">FALSE</span>, remove_txt <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_msd</span><span class="op">(</span>
+  <span class="va">file</span>,
+  save_rds <span class="op">=</span> <span class="cn">FALSE</span>,
+  remove_txt <span class="op">=</span> <span class="cn">FALSE</span>,
+  convert_to_old_names <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -72,6 +77,8 @@ coverts it from a .txt to an .Rds to significantly limit file size.</p>
 <dd><p>save the Structured Dataset as an rds file, default = FALSE</p></dd>
 <dt>remove_txt</dt>
 <dd><p>should the txt file be removed, default = FALSE</p></dd>
+<dt>convert_to_old_names</dt>
+<dd><p>replace FY22Q2 naming convention with old? default = F</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>

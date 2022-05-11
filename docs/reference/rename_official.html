@@ -26,7 +26,7 @@ prompted each time to enter your password to acces DATIM."><meta property="og:im
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.4</span>
       </span>
     </div>
 
@@ -77,13 +77,19 @@ prompted each time to enter your password to acces DATIM.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rename_official</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rename_official</span><span class="op">(</span><span class="va">df</span>, <span class="va">datim_user</span>, <span class="va">datim_pwd</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>identify the MER Structured Data Set to clean</p></dd>
+<dt>datim_user</dt>
+<dd><p>DATIM username; if missing will look for stored credentials
+first and then prompt for them if not found</p></dd>
+<dt>datim_pwd</dt>
+<dd><p>DATIM password; if missing will look for stored credentials
+first and then prompt for them if not found</p></dd>
 </dl></div>
 
     <div id="ref-examples">

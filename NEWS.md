@@ -1,3 +1,8 @@
+# gophr 3.0.4
+* update MSD names to reflect new structure as of FY22Q2 in `read_msd` and `rename_official` (2022-04-08)
+* allow user to keep old names when importing MSD in `read_msd` in order to allow old code to run without error (2022-04-08)
+* clean up back end of `read_msd` to be more efficient (2022-04-08)
+
 # gophr 3.0.3
 * allow user to provide DATIM user name and password to `rename_official`, which previously (v3.0.2) look for stored credentials or prompted every time. (2022-03-15)
 * update `rename_offical` to include `fundingagency` to work within [`tameDP`](https://usaid-oha-si.github.io/tameDP/). (2022-03-15)
