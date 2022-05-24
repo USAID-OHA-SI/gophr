@@ -1,4 +1,5 @@
 # gophr 3.0.4
+* setup GitHub Actions to refresh site automatically. (2022-05-24)
 * add a list of cascade indicators, `cascade_ind` that can be used to approximate the 90/95s as well as linkage and VLC. (2022-05-24)
 * include `TX_CURR_Lag1` and `TX_CURR_Lag2` as part of `snapshot_ind` (2022-05-24)
 * update MSD names to reflect new structure as of FY22Q2 in `read_msd` and `rename_official` (2022-04-08)

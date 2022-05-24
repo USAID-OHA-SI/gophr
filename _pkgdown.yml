@@ -1,3 +1,4 @@
+url: https://usaid-oha-si.github.io/gophr/
 navbar:
   structure:
     left:
@@ -21,7 +22,6 @@ navbar:
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/USAID-OHA-SI/gophr/
-
 reference:
 - title: Structure
   contents:
@@ -29,19 +29,14 @@ reference:
   - reshape_msd
   - rename_official
   - split_save
-
 - title: Achievement
   contents:
   - adorn_achievement
   - calc_achievement
-
 - title: Utilities
-  contents:
-  - identifypd
-
+  contents: identifypd
 - title: Data
   contents:
   - snapshot_ind
   - cascade_ind
-
 
