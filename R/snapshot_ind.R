@@ -12,3 +12,19 @@
 #' }
 
 "snapshot_ind"
+
+
+#' MER Clinical Cascade indicators
+#'
+#' List of indicators in the MER that comprise the clinical cascade. These
+#' indicators are needed for calculating the 90s/95s plus linkage and viral load
+#' coverage.
+#'
+#' @usage data(cascade_ind)
+#'
+#' @format A list of clinical cascade indicators
+#' \describe{
+#'   \item{cascade_ind}{indicator names}
+#' }
+
+"cascade_ind"

@@ -16,6 +16,18 @@ snapshot_ind <- c("AGYW_PREV",
 
 usethis::use_data(snapshot_ind, overwrite = TRUE)
 
+#Clinical Cascade Indicators
+cascade_ind <- c("HTS_TST",
+                 "HTS_TST_POS",
+                 "TX_NEW",
+                 "TX_NET_NEW",
+                 "TX_CURR",
+                 "TX_PVLS_D",
+                 "TX_PVLS",
+                 "TX_CURR_Lag2")
+
+usethis::use_data(cascade_ind, overwrite = TRUE)
+
 
 ## PEPFAR country list
 
