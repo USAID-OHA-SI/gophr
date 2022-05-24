@@ -33,6 +33,7 @@ usethis::use_data(cascade_ind, overwrite = TRUE)
 
 library(tidyverse)
 library(glamr)
+library(gophr)
 
 curr_fy <- source_info(return = "fiscal_year")
 
