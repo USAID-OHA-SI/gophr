@@ -6,6 +6,8 @@ snapshot_ind <- c("AGYW_PREV",
                   "PrEP_CURR",
                   "OVC_HIVSTAT",
                   "TX_CURR",
+                  "TX_CURR_Lag1",
+                  "TX_CURR_Lag2",
                   "TX_ML",
                   "TX_TB_D", #only TX_TB denom, not num
                   "TX_PVLS",
@@ -14,11 +16,24 @@ snapshot_ind <- c("AGYW_PREV",
 
 usethis::use_data(snapshot_ind, overwrite = TRUE)
 
+#Clinical Cascade Indicators
+cascade_ind <- c("HTS_TST",
+                 "HTS_TST_POS",
+                 "TX_NEW",
+                 "TX_NET_NEW",
+                 "TX_CURR",
+                 "TX_PVLS_D",
+                 "TX_PVLS",
+                 "TX_CURR_Lag2")
+
+usethis::use_data(cascade_ind, overwrite = TRUE)
+
 
 ## PEPFAR country list
 
 library(tidyverse)
 library(glamr)
+library(gophr)
 
 curr_fy <- source_info(return = "fiscal_year")
 
