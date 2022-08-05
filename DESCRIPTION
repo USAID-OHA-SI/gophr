@@ -1,6 +1,6 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
-Version: 3.0.4
+Version: 3.1.0
 Authors@R: c(
     person("Aaron", "Chafetz", ,"achafetz@usaid.gov", c("aut", "cre")),
     person("Baboyma", "Kagniniwa", , "bkagniniwa@usaid.gov", c("aut"))
@@ -24,7 +24,10 @@ Imports:
     tidyr,
     tools,
     usethis,
-    vroom
+    vroom,
+    googlesheets4,
+    crayon,
+    glue
 Suggests: testthat
 Remotes: USAID-OHA-SI/glamr
 Encoding: UTF-8
