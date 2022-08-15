@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1.0</span>
       </span>
     </div>
 
@@ -65,13 +65,41 @@
         </td>
         <td><p>Reshape MSD</p></td>
       </tr><tr><td>
-          <p><code><a href="rename_official.html">rename_official()</a></code> </p>
+          <p><code><a href="pluck_totals.html">pluck_totals()</a></code> </p>
         </td>
-        <td><p>Apply the latest mechanism and partner names from DATIM</p></td>
+        <td><p>Filter for Only Totals in MSD</p></td>
       </tr><tr><td>
           <p><code><a href="split_save.html">split_save()</a></code> </p>
         </td>
         <td><p>Export a single dataset into multiple files by group</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="tidying">Tidying <a href="#tidying" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="clean_agency.html">clean_agency()</a></code> </p>
+        </td>
+        <td><p>Clean data from funding_agency column
+
+`clean_agency` converts all funding agency names to upper case removes
+the HHS prefix for those agencies
+and moves State and USAID subsidiaries under their parent agencies</p></td>
+      </tr><tr><td>
+          <p><code><a href="clean_column.html">clean_column()</a></code> </p>
+        </td>
+        <td><p>Clean column data</p></td>
+      </tr><tr><td>
+          <p><code><a href="clean_indicator.html">clean_indicator()</a></code> </p>
+        </td>
+        <td><p>Clean indicators (apply _D suffix)</p></td>
+      </tr><tr><td>
+          <p><code><a href="clean_psnu.html">clean_psnu()</a></code> </p>
+        </td>
+        <td><p>Clean PSNU column data</p></td>
+      </tr><tr><td>
+          <p><code><a href="rename_official.html">rename_official()</a></code> </p>
+        </td>
+        <td><p>Apply the latest mechanism and partner names from DATIM</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="achievement">Achievement <a href="#achievement" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -85,6 +113,38 @@
         </td>
         <td><p>Calculate Achievement</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="financial">Financial <a href="#financial" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="remove_mo.html">remove_mo()</a></code> </p>
+        </td>
+        <td><p>Remove M&amp;O funding</p></td>
+      </tr><tr><td>
+          <p><code><a href="remove_sch.html">remove_sch()</a></code> </p>
+        </td>
+        <td><p>Remove Supply Chain Funding</p></td>
+      </tr><tr><td>
+          <p><code><a href="remove_centralsupport.html">remove_centralsupport()</a></code> </p>
+        </td>
+        <td><p>Remove Central Support Reporting</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="mechanism-handling">Mechanism Handling <a href="#mechanism-handling" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="apply_partner_type.html">apply_partner_type()</a></code> </p>
+        </td>
+        <td><p>Apply partner type (local/international)</p></td>
+      </tr><tr><td>
+          <p><code><a href="browse_knownissues.html">browse_knownissues()</a></code> </p>
+        </td>
+        <td><p>Browse Known Issues</p></td>
+      </tr><tr><td>
+          <p><code><a href="resolve_knownissues.html">resolve_knownissues()</a></code> </p>
+        </td>
+        <td><p>Resolve Known Issues</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="utilities">Utilities <a href="#utilities" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
@@ -92,6 +152,10 @@
           <p><code><a href="identifypd.html">identifypd()</a></code> </p>
         </td>
         <td><p>Extract Current Reporting Period</p></td>
+      </tr><tr><td>
+          <p><code><a href="source_info.html">source_info()</a></code> </p>
+        </td>
+        <td><p>Extract MSD Source Information</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="data">Data <a href="#data" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -117,7 +181,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

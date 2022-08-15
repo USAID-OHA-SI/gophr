@@ -18,7 +18,7 @@ coverts it from a .txt to an .Rds to significantly limit file size."><meta prope
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1.0</span>
       </span>
     </div>
 
@@ -61,24 +61,31 @@ coverts it from a .txt to an .Rds to significantly limit file size.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">read_msd</span><span class="op">(</span>
-  <span class="va">file</span>,
-  save_rds <span class="op">=</span> <span class="cn">FALSE</span>,
-  remove_txt <span class="op">=</span> <span class="cn">FALSE</span>,
-  convert_to_old_names <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_msd</span><span class="op">(</span></span>
+<span>  <span class="va">file</span>,</span>
+<span>  save_rds <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_txt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  convert_to_old_names <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>file</dt>
 <dd><p>enter the full path to the MSD/FSD file</p></dd>
+
+
 <dt>save_rds</dt>
 <dd><p>save the Structured Dataset as an rds file, default = FALSE</p></dd>
+
+
 <dt>remove_txt</dt>
 <dd><p>should the txt file be removed, default = FALSE</p></dd>
+
+
 <dt>convert_to_old_names</dt>
 <dd><p>replace FY22Q2 naming convention with old? default = F</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -92,15 +99,15 @@ being read in via `read_msd`</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co">#convert Q1 clean PSNU file from txt to Rds</span></span>
-<span class="r-in"><span class="co">#read in file for use</span></span>
-<span class="r-in"> <span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"</span></span>
-<span class="r-in"> <span class="va">df_psnu</span> <span class="op">&lt;-</span> <span class="fu">read_msd</span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">#convert to RDS and delete the original txt file</span></span>
-<span class="r-in"> <span class="fu">read_msd</span><span class="op">(</span><span class="va">path</span>, save_rds <span class="op">=</span> <span class="cn">TRUE</span>, remove_txt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">#convert Q1 clean PSNU file from txt to Rds</span></span></span>
+<span class="r-in"><span><span class="co">#read in file for use</span></span></span>
+<span class="r-in"><span> <span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"</span></span></span>
+<span class="r-in"><span> <span class="va">df_psnu</span> <span class="op">&lt;-</span> <span class="fu">read_msd</span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#convert to RDS and delete the original txt file</span></span></span>
+<span class="r-in"><span> <span class="fu">read_msd</span><span class="op">(</span><span class="va">path</span>, save_rds <span class="op">=</span> <span class="cn">TRUE</span>, remove_txt <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -115,7 +122,7 @@ being read in via `read_msd`</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

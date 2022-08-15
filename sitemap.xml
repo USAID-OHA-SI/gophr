@@ -19,10 +19,19 @@
     <loc>https://usaid-oha-si.github.io/gophr/news/index.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/add_var.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/adorn_achievement.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/apply_partner_type.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/assign_quarter.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/browse_knownissues.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/calc_achievement.html</loc>
@@ -31,7 +40,25 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/cascade_ind.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/clean_agency.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/clean_column.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/clean_indicator.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/clean_knownissues.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/clean_psnu.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/color_achievement.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/complete_exclude_vars.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/convert_coltype.html</loc>
@@ -46,19 +73,46 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/extract_datim_names.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/flag_knownissues.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/get_knownissues.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/gs_id_knownissues.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/identifypd.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/note_knownissues.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/pluck_totals.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/print_knownissues.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/process_msd.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/read_msd.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/remove_centralsupport.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/remove_mo.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/remove_sch.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/rename_msd.html</loc>
@@ -70,10 +124,22 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/reshape_msd.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/resolve_knownissues.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/snapshot_ind.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/source_info.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/split_save.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/squish_knownissues.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/validate_structure.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/var_exists.html</loc>
