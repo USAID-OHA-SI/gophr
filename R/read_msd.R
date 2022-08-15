@@ -63,7 +63,7 @@ process_msd <- function(file,
   vars_genie <- c("dataelementuid", "categoryoptioncombouid",
                   "approvallevel", "approvalleveldescription")
   vars_keep <- setdiff(names(df), vars_genie)
-  df <- dplyr::select(df, all_of(vars_keep))
+  df <- dplyr::select(df, dplyr::all_of(vars_keep))
 
   #adjust pipeline issue with tab and space in two rows
   if("cop_budget_pipeline" %in% names(df))

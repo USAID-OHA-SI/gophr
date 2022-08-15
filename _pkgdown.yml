@@ -27,14 +27,39 @@ reference:
   contents:
   - read_msd
   - reshape_msd
-  - rename_official
+  - pluck_totals
   - split_save
+
+- title: Tidying
+  contents:
+  - clean_agency
+  - clean_column
+  - clean_indicator
+  - clean_psnu
+  - rename_official
+
 - title: Achievement
   contents:
   - adorn_achievement
   - calc_achievement
+
+- title: Financial
+  contents:
+  - remove_mo
+  - remove_sch
+  - remove_centralsupport
+
+- title: Mechanism Handling
+  contents:
+  - apply_partner_type
+  - browse_knownissues
+  - resolve_knownissues
+
 - title: Utilities
-  contents: identifypd
+  contents:
+  - identifypd
+  - source_info
+
 - title: Data
   contents:
   - snapshot_ind

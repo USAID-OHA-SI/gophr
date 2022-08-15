@@ -1,3 +1,7 @@
+# gophr 3.1.0
+* Migrate MSD/FSD related function from `glamr` to `gophr`: `apply_partner_type`, `browse_knownissues`, `clean_agency`, `clean_column`, `clean_indicator`, `clean_psnu`, `pluck_totals`, `remove_centralsupport`, `remove_mo`, `remove_sch`, `resolve_knownissues`, `source_info`
+ [2022-08-05]
+
 # gophr 3.0.4
 * setup GitHub Actions to refresh site automatically. (2022-05-24)
 * add a list of cascade indicators, `cascade_ind` that can be used to approximate the 90/95s as well as linkage and VLC. (2022-05-24)
