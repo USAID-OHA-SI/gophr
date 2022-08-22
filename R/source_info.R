@@ -76,13 +76,15 @@ source_info <- function(path, type, return = "source"){
   if(file_type == "Frozen") {
     #frozen
     info <- glamr::pepfar_data_calendar %>%
+      dplyr::select(-msd_release) %>%
       dplyr::filter(as.Date(entry_close) <= file_date) %>%
       dplyr::slice_tail() %>%
       dplyr::mutate(period = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
   } else if(file_type == "Daily") {
     #daily
-    info <- pepfar_data_calendar %>%
+    info <- glamr::pepfar_data_calendar %>%
+      dplyr::select(-msd_release) %>%
       tidyr::pivot_longer(dplyr::starts_with("entry"),
                           names_to = "datim_status",
                           names_prefix = "entry_",
@@ -91,12 +93,12 @@ source_info <- function(path, type, return = "source"){
                     date = as.Date(date)) %>%
       dplyr::filter(date <= as.Date(file_date)) %>%
       dplyr::slice_tail() %>%
-      dplyr::mutate(type = "provisional",
-                    period = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}Q{quarter}"),
+      dplyr::mutate(period = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
   } else {
     #MSD/FSD/NAT_SUBNAT
-    info <- pepfar_data_calendar %>%
+    info <- glamr::pepfar_data_calendar %>%
+      dplyr::select(-msd_release) %>%
       dplyr::mutate(entry_close = stringr::str_remove_all(entry_close, "-")) %>%
       dplyr::filter(entry_close <= file_date) %>%
       dplyr::slice_tail() %>%
