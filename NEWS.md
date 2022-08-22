@@ -1,4 +1,5 @@
 # gophr 3.1.0
+* Resolve misidentified "provisional" status of Daily Genie files downloaded after DATIM close [2022-08-22]
 * Migrate MSD/FSD related function from `glamr` to `gophr`: `apply_partner_type`, `browse_knownissues`, `clean_agency`, `clean_column`, `clean_indicator`, `clean_psnu`, `pluck_totals`, `remove_centralsupport`, `remove_mo`, `remove_sch`, `resolve_knownissues`, `source_info`
  [2022-08-05]
 
