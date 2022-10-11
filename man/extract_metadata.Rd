@@ -14,8 +14,14 @@ default = "OU_IM_FY19", other examples include: "PSNU_IM", "NAT_SUBNAT",
 "PSNU", "Financial"}
 }
 \value{
-list of information related to what is being asked in `return`
+dataframe of information related to what is being asked in `return`
 }
 \description{
 Extract MSD Source Information
 }
+\seealso{
+Other metadata: 
+\code{\link{get_metadata}()},
+\code{\link{source_info}()}
+}
+\concept{metadata}

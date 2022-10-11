@@ -1,7 +1,7 @@
 #' Extract MSD Source Information
 #'
 #' This function is used primarily to extract the data from the source file of
-#' a MER Structured Dataset, MER NAT_SUBNAT StructuredDataset, Financial
+#' a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
 #' Structure Dataset, or DATIM Genie export. It can also be used to extact
 #' information from the filename about the fiscal year, quarter, or period.
 #'
@@ -13,6 +13,7 @@
 #'
 #' @return vector of information related to what is being asked in `return`
 #' @export
+#' @family metadata
 #'
 #' @examples
 #' \dontrun{
@@ -53,6 +54,49 @@ source_info <- function(path, type, return = "source"){
 
 }
 
+#' Extract MSD Meta Data
+#'
+#' This function is used to extract meta data as a list from the source file of
+#' a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
+#' Structure Dataset, or DATIM Genie export. It creates a list object, metadata,
+#' in the global environment containing the source, current fiscal year, current
+#' period, current quarter, as well as a caption.
+#'
+#' @param path path to the folder containing MSDs or specific MSD file
+#' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
+#' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"
+#' @param caption_note additional information to include in the footer
+#'
+#' @return vector of information related to what is being asked in `return`
+#' @export
+#' @family metadata
+#'
+get_metadata <- function(path, type, caption_note){
+
+  #extra all file metadata
+  info <- extract_metadata(path, type)
+
+  id <- ifelse(exists('ref_id'),
+               glue::glue(' | Ref id: {ref_id}'), "")
+
+
+  cap <- ifelse(!missing(caption_note) | !is.null(caption_note),
+                glue::glue(' | {caption_note}'), "")
+
+  metadata <<- info %>%
+    dplyr::mutate(caption = glue::glue("Source: {source}{id}{cap}")) %>%
+    dplyr::select(curr_pd = period,
+                  curr_fy = fiscal_year,
+                  curr_qtr = quarter,
+                  source,
+                  caption) %>%
+    as.list()
+
+  usethis::ui_info("{usethis::ui_field('metadata')} is now stored as a global \\
+                   object and metadata items can be accessed via \\
+                   {usethis::ui_code('metadata$...')}")
+
+}
 
 #' Extract MSD Source Information
 #'
@@ -61,8 +105,9 @@ source_info <- function(path, type, return = "source"){
 #'  default = "OU_IM_FY19", other examples include: "PSNU_IM", "NAT_SUBNAT",
 #'  "PSNU", "Financial"
 #'
-#' @return list of information related to what is being asked in `return`
-
+#' @return dataframe of information related to what is being asked in `return`
+#' @family metadata
+#'
 extract_metadata <- function(path, type){
 
   if(missing(path) && is.null(getOption("path_msd")))
@@ -127,4 +172,6 @@ extract_metadata <- function(path, type){
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
 
   }
+
+  return(info)
 }

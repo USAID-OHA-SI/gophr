@@ -20,7 +20,7 @@ vector of information related to what is being asked in `return`
 }
 \description{
 This function is used primarily to extract the data from the source file of
-a MER Structured Dataset, MER NAT_SUBNAT StructuredDataset, Financial
+a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
 Structure Dataset, or DATIM Genie export. It can also be used to extact
 information from the filename about the fiscal year, quarter, or period.
 }
@@ -52,3 +52,9 @@ df_viz \%>\%
   geom_col() +
   labs(caption = glue("Source: {source_info()}")) }
 }
+\seealso{
+Other metadata: 
+\code{\link{extract_metadata}()},
+\code{\link{get_metadata}()}
+}
+\concept{metadata}
