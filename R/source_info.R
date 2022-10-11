@@ -1,4 +1,3 @@
-
 #' Extract MSD Source Information
 #'
 #' This function is used primarily to extract the data from the source file of
@@ -43,6 +42,28 @@
 #'   geom_col() +
 #'   labs(caption = glue("Source: {source_info()}")) }
 source_info <- function(path, type, return = "source"){
+
+  #extra all file metadata
+  info <- extract_metadata(path, type)
+
+  #extract key element
+  info <- info[[return]]
+
+  return(info)
+
+}
+
+
+#' Extract MSD Source Information
+#'
+#' @param path path to the folder containing MSDs or specific MSD file
+#' @param type not required unless providing a folder in `path`;
+#'  default = "OU_IM_FY19", other examples include: "PSNU_IM", "NAT_SUBNAT",
+#'  "PSNU", "Financial"
+#'
+#' @return list of information related to what is being asked in `return`
+
+extract_metadata <- function(path, type){
 
   if(missing(path) && is.null(getOption("path_msd")))
     stop("No path to a file or folder was provided.")
@@ -106,12 +127,4 @@ source_info <- function(path, type, return = "source"){
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
 
   }
-
-  #extract key element
-  info <- info[[return]]
-
-  return(info)
-
 }
-
-
