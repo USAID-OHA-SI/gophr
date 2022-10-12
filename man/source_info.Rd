@@ -13,7 +13,7 @@ source_info(path, type, return = "source")
 other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"}
 
 \item{return}{from the info, what should be returned; default = "source"
-other options are: "period", "fiscal_year", "quarter"}
+other options are: "period", "fiscal_year", "fiscal_year_label","quarter"}
 }
 \value{
 vector of information related to what is being asked in `return`

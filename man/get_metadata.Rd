@@ -66,7 +66,7 @@ df_viz \%>\%
             vjust = -.5) +
   facet_wrap(~fct_reorder2(mech_code, period, targets)) +
   labs(title = glue("Upward trend in TX_NEW results thru {metadata$curr_qtr} quarters") \%>\% toupper,
-       subtitle = glue("{cntry} | FY{str_sub(metadata$curr_fy, 3, 4)} cumulative mechanism results"),
+       subtitle = glue("{cntry} | {metadata$curr_fy_lab} cumulative mechanism results"),
        x = NULL, y = NULL,
        caption = glue("{metadata$caption}")) }
 

@@ -9,7 +9,7 @@
 #' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
 #' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"
 #' @param return from the info, what should be returned; default = "source"
-#' other options are: "period", "fiscal_year", "quarter"
+#' other options are: "period", "fiscal_year", "fiscal_year_label","quarter"
 #'
 #' @return vector of information related to what is being asked in `return`
 #' @export
@@ -113,7 +113,7 @@ source_info <- function(path, type, return = "source"){
 #'             vjust = -.5) +
 #'   facet_wrap(~fct_reorder2(mech_code, period, targets)) +
 #'   labs(title = glue("Upward trend in TX_NEW results thru {metadata$curr_qtr} quarters") %>% toupper,
-#'        subtitle = glue("{cntry} | FY{str_sub(metadata$curr_fy, 3, 4)} cumulative mechanism results"),
+#'        subtitle = glue("{cntry} | {metadata$curr_fy_lab} cumulative mechanism results"),
 #'        x = NULL, y = NULL,
 #'        caption = glue("{metadata$caption}")) }
 #'
@@ -133,6 +133,7 @@ get_metadata <- function(path, type, caption_note){
     dplyr::mutate(caption = glue::glue("Source: {source}{id}{cap}")) %>%
     dplyr::select(curr_pd = period,
                   curr_fy = fiscal_year,
+                  curr_fy_lab = fiscal_year_label,
                   curr_qtr = quarter,
                   source,
                   caption) %>%
@@ -192,7 +193,8 @@ extract_metadata <- function(path, type){
       dplyr::select(-msd_release) %>%
       dplyr::filter(as.Date(entry_close) <= file_date) %>%
       dplyr::slice_tail() %>%
-      dplyr::mutate(period = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}Q{quarter}"),
+      dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
+                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
   } else if(file_type == "Daily") {
     #daily
@@ -206,7 +208,8 @@ extract_metadata <- function(path, type){
                     date = as.Date(date)) %>%
       dplyr::filter(date <= as.Date(file_date)) %>%
       dplyr::slice_tail() %>%
-      dplyr::mutate(period = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}Q{quarter}"),
+      dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
+                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
   } else {
     #MSD/FSD/NAT_SUBNAT
@@ -215,7 +218,8 @@ extract_metadata <- function(path, type){
       dplyr::mutate(entry_close = stringr::str_remove_all(entry_close, "-")) %>%
       dplyr::filter(entry_close <= file_date) %>%
       dplyr::slice_tail() %>%
-      dplyr::mutate(period = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}Q{quarter}"),
+      dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
+                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
 
   }
