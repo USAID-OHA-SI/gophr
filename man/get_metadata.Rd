@@ -15,7 +15,7 @@ other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"}
 \item{caption_note}{additional information to include in the footer}
 }
 \value{
-vector of information related to what is being asked in `return`
+list of meta data information about the source dataset
 }
 \description{
 This function is used to extract meta data as a list from the source file of
@@ -23,6 +23,52 @@ a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
 Structure Dataset, or DATIM Genie export. It creates a list object, metadata,
 in the global environment containing the source, current fiscal year, current
 period, current quarter, as well as a caption.
+}
+\examples{
+\dontrun{
+ get_metadata() #works if you have stored path to the MSD folder via glamr::set_paths()
+ metadata$curr_fy }
+
+\dontrun{
+library(tidyverse)
+library(glamr)
+library(gophr)
+library(glue)
+
+ref_id <- "1bdf4c4e"
+
+get_metadata(caption_note = "Created by: The Dream Team")
+
+cntry <- "Saturn"
+
+df <- si_path() \%>\%
+  return_latest("OU_IM") \%>\%
+  read_msd()
+
+df_viz <- df \%>\%
+  filter(operatingunit == cntry,
+         fiscal_year == metadata$curr_fy,
+         indicator == "TX_NEW",
+         standardizeddisaggregate == "Total Numerator")
+
+df_viz <- df_viz \%>\%
+  group_by(fiscal_year, indicator, mech_code) \%>\%
+  summarise(across(c(targets, starts_with("qtr")), sum, na.rm = TRUE),
+            .groups = "drop")
+
+df_viz <- reshape_msd(df_viz, "quarters")
+
+df_viz \%>\%
+  ggplot(aes(period, results_cumulative)) +
+  geom_col() +
+  geom_text(data = . \%>\% filter(., period == metadata$curr_pd),
+            aes(label = results_cumulative),
+            vjust = -.5) +
+  facet_wrap(~fct_reorder2(mech_code, period, targets)) +
+  labs(title = glue("Upward trend in TX_NEW results thru {metadata$curr_qtr} quarters") \%>\% toupper,
+       subtitle = glue("{cntry} | FY{str_sub(metadata$curr_fy, 3, 4)} cumulative mechanism results"),
+       x = NULL, y = NULL,
+       caption = glue("{metadata$caption}")) }
 }
 \seealso{
 Other metadata: 

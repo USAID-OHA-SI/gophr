@@ -38,8 +38,8 @@ library(glamr)
 library(glue)
 
 df <- si_path() \%>\%
-  return_latest("OU_IM_FY19") \%>\%
-  read_rds()
+  return_latest("OU_IM") \%>\%
+  read_msd()
 
 df_viz <- df \%>\%
   filter(operatingunit == "Saturn",
