@@ -69,6 +69,7 @@ df_viz \%>\%
        subtitle = glue("{cntry} | FY{str_sub(metadata$curr_fy, 3, 4)} cumulative mechanism results"),
        x = NULL, y = NULL,
        caption = glue("{metadata$caption}")) }
+
 }
 \seealso{
 Other metadata: 

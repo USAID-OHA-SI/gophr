@@ -25,3 +25,4 @@ Other metadata:
 \code{\link{source_info}()}
 }
 \concept{metadata}
+\keyword{internal}

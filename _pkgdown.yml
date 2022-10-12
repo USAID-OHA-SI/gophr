@@ -58,6 +58,7 @@ reference:
 - title: Utilities
   contents:
   - identifypd
+  - get_metadata
   - source_info
 
 - title: Data

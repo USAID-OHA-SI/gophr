@@ -116,7 +116,7 @@ source_info <- function(path, type, return = "source"){
 #'        subtitle = glue("{cntry} | FY{str_sub(metadata$curr_fy, 3, 4)} cumulative mechanism results"),
 #'        x = NULL, y = NULL,
 #'        caption = glue("{metadata$caption}")) }
-
+#'
 get_metadata <- function(path, type, caption_note){
 
   #extra all file metadata
@@ -153,6 +153,7 @@ get_metadata <- function(path, type, caption_note){
 #'
 #' @return dataframe of information related to what is being asked in `return`
 #' @family metadata
+#' @keywords internal
 #'
 extract_metadata <- function(path, type){
 
