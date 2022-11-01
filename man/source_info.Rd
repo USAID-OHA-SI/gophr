@@ -13,14 +13,14 @@ source_info(path, type, return = "source")
 other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"}
 
 \item{return}{from the info, what should be returned; default = "source"
-other options are: "period", "fiscal_year", "quarter"}
+other options are: "period", "fiscal_year", "fiscal_year_label","quarter"}
 }
 \value{
 vector of information related to what is being asked in `return`
 }
 \description{
 This function is used primarily to extract the data from the source file of
-a MER Structured Dataset, MER NAT_SUBNAT StructuredDataset, Financial
+a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
 Structure Dataset, or DATIM Genie export. It can also be used to extact
 information from the filename about the fiscal year, quarter, or period.
 }
@@ -38,8 +38,8 @@ library(glamr)
 library(glue)
 
 df <- si_path() \%>\%
-  return_latest("OU_IM_FY19") \%>\%
-  read_rds()
+  return_latest("OU_IM") \%>\%
+  read_msd()
 
 df_viz <- df \%>\%
   filter(operatingunit == "Saturn",
@@ -52,3 +52,9 @@ df_viz \%>\%
   geom_col() +
   labs(caption = glue("Source: {source_info()}")) }
 }
+\seealso{
+Other metadata: 
+\code{\link{extract_metadata}()},
+\code{\link{get_metadata}()}
+}
+\concept{metadata}

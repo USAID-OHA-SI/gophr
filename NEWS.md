@@ -1,3 +1,7 @@
+# gophr 3.1.1
+* Add new function to store metadata in a list object (`get_metadata`), rather than returning one item at at time via `source_info` [2022-10-12]
+* Add additional `return` type for `source_info` of `fiscal_year_label` which returns `FY[XX]` [2022-10-12]
+
 # gophr 3.1.0
 * Resolve misidentified "provisional" status of Daily Genie files downloaded after DATIM close [2022-08-22]
 * Migrate MSD/FSD related function from `glamr` to `gophr`: `apply_partner_type`, `browse_knownissues`, `clean_agency`, `clean_column`, `clean_indicator`, `clean_psnu`, `pluck_totals`, `remove_centralsupport`, `remove_mo`, `remove_sch`, `resolve_knownissues`, `source_info`

@@ -107,9 +107,9 @@ clean_psnu <- function(.data) {
   }
 
 
-#' @title Clean data from funding_agency column
+#' @title Clean data from funding agency column
 #'
-#' `clean_agency` converts all funding agency names to upper case removes
+#' This function converts all funding agency names to upper case removes
 #' the HHS prefix for those agencies
 #' and moves State and USAID subsidiaries under their parent agencies
 #'
