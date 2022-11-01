@@ -73,10 +73,16 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/extract_datim_names.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/extract_metadata.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/flag_knownissues.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/get_knownissues.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/get_metadata.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/gs_id_knownissues.html</loc>
