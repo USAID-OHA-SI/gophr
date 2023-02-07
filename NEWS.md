@@ -1,4 +1,6 @@
 # gophr 3.2.0
+* Replace `read_msd` with `read_psd` to be more inclusive of all of PEFAR's structured datasets [2023-02-07]
+* Allow `read_msd` to read in HRH structured dataset [2023-02-07]
 * Update `metadata` family functions to get source info for HRH datasets [2023-02-07]
 
 # gophr 3.1.1

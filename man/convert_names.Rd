@@ -7,7 +7,7 @@
 convert_names(df, keep_old_names = FALSE)
 }
 \arguments{
-\item{df}{data frame from read_msd()}
+\item{df}{data frame from read_psd()}
 
 \item{keep_old_names}{replace FY22Q2 naming convention with old? default = F}
 }

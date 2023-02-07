@@ -17,7 +17,7 @@ Imports:
     googlesheets4,
     httr,
     knitr,
-    lifecycle
+    lifecycle,
     magrittr,
     purrr,
     readr,

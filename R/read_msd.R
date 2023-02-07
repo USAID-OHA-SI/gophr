@@ -108,7 +108,7 @@ process_psd <- function(file,
 
   #save as rds
   if (save_rds == TRUE){
-    newfile <- rename_msd(file)
+    newfile <- rename_psd(file)
     saveRDS(df, newfile)
   }
 
@@ -120,21 +120,21 @@ process_psd <- function(file,
 }
 
 
-#' Rename MSD file when importing
+#' Rename PSD file when importing
 #'
-#' @param file enter the full path to the MSD/ERSD file,
+#' @param file enter the full path to the PEPFAR Structured Dataset file,
 #' eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
 #'
 #' @keywords internal
 
-rename_msd <- function(file){
+rename_psd <- function(file){
 
   if(stringr::str_detect(file, "Genie")){
     #classify file type
     headers <- vroom::vroom(file, n_max = 0, col_types = readr::cols(.default = "c")) %>%
       names()
     type <- dplyr::case_when(
-      "sitename" %in% headers                           ~ "SITE_IM",
+      "facility" %in% headers                           ~ "SITE_IM",
       !("mech_code" %in% headers)                       ~ "PSNU",
       !("psnu" %in% headers)                            ~ "OU_IM",
       TRUE                                              ~ "PSNU_IM")
@@ -150,9 +150,9 @@ rename_msd <- function(file){
 }
 
 
-#' Convert any old MSDs to new format
+#' Convert any old PSDs to new format
 #'
-#' @param df data frame from read_msd()
+#' @param df data frame from read_psd()
 #' @keywords internal
 
 convert_oldformat <- function(df){
@@ -198,7 +198,7 @@ convert_oldformat <- function(df){
 #' user reads in an older MSD, this function will default switch those names to
 #' the current standard.
 #'
-#' @param df data frame from read_msd()
+#' @param df data frame from read_psd()
 #' @param keep_old_names replace FY22Q2 naming convention with old? default = F
 #'
 #' @keywords internal
@@ -249,7 +249,7 @@ convert_names <- function(df, keep_old_names = FALSE){
 
 #' Convert to specified column types
 #'
-#' @param df data frame from read_msd()
+#' @param df data frame from read_psd()
 #' @keywords internal
 #'
 convert_coltype <- function(df){

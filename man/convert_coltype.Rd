@@ -7,7 +7,7 @@
 convert_coltype(df)
 }
 \arguments{
-\item{df}{data frame from read_msd()}
+\item{df}{data frame from read_psd()}
 }
 \description{
 Convert to specified column types
