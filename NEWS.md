@@ -1,3 +1,9 @@
+# gophr 3.2.0
+* Add `apply_funding_type` for use with FSD or HRH SD to distiguish between service delivery and non-service delivery
+* Replace `read_msd` with `read_psd` to be more inclusive of all of PEFAR's structured datasets [2023-02-07]
+* Allow `read_msd` to read in HRH structured dataset [2023-02-07]
+* Update `metadata` family functions to get source info for HRH datasets [2023-02-07]
+
 # gophr 3.1.1
 * Add new function to store metadata in a list object (`get_metadata`), rather than returning one item at at time via `source_info` [2022-10-12]
 * Add additional `return` type for `source_info` of `fiscal_year_label` which returns `FY[XX]` [2022-10-12]

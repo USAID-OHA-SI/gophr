@@ -7,7 +7,7 @@
 #'
 #' @param path path to the folder containing MSDs or specific MSD file
 #' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
-#' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"
+#' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial", "HRH"
 #' @param return from the info, what should be returned; default = "source"
 #' other options are: "period", "fiscal_year", "fiscal_year_label","quarter"
 #'
@@ -58,9 +58,9 @@ source_info <- function(path, type, return = "source"){
 #'
 #' This function is used to extract meta data as a list from the source file of
 #' a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
-#' Structure Dataset, or DATIM Genie export. It creates a list object, metadata,
-#' in the global environment containing the source, current fiscal year, current
-#' period, current quarter, as well as a caption.
+#' Structure Dataset, HRH Structured Dataset, or DATIM Genie export. It creates
+#' a list object, metadata, in the global environment containing the source,
+#' current fiscal year, current period, current quarter, as well as a caption.
 #'
 #' @param path path to the folder containing MSDs or specific MSD file
 #' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
@@ -150,7 +150,7 @@ get_metadata <- function(path, type, caption_note){
 #' @param path path to the folder containing MSDs or specific MSD file
 #' @param type not required unless providing a folder in `path`;
 #'  default = "OU_IM_FY19", other examples include: "PSNU_IM", "NAT_SUBNAT",
-#'  "PSNU", "Financial"
+#'  "PSNU", "Financial", "HRH"
 #'
 #' @return dataframe of information related to what is being asked in `return`
 #' @family metadata
@@ -179,7 +179,8 @@ extract_metadata <- function(path, type){
   #identify the type of file
   file_type <- dplyr::case_when(stringr::str_detect(file_name, "(Genie|NAT_SUBNAT)") ~ stringr::str_extract(path, "(Frozen|Daily|NAT_SUBNAT)"),
                                 stringr::str_detect(file_name, "Fin.*_Structured_Dataset") ~ "FSD",
-                                stringr::str_detect(file_name, "MER_Structured_Datasets") ~ "MSD")
+                                stringr::str_detect(file_name, "MER_Structured_Datasets") ~ "MSD",
+                                stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
 
   #capture the dataset date for use in figuring out relvant FY period
   file_date <- ifelse(stringr::str_detect(file_name, "Genie"),

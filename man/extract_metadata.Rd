@@ -11,7 +11,7 @@ extract_metadata(path, type)
 
 \item{type}{not required unless providing a folder in `path`;
 default = "OU_IM_FY19", other examples include: "PSNU_IM", "NAT_SUBNAT",
-"PSNU", "Financial"}
+"PSNU", "Financial", "HRH"}
 }
 \value{
 dataframe of information related to what is being asked in `return`

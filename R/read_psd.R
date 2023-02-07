@@ -1,21 +1,45 @@
-#' Import ICPI MER Structured Datasets .txt into R and covert to .rds
+#' Import PEPFAR Structured Datasets .txt into R and covert to .rds
 #'
-#' `read_msd` imports a stored ICPI MER/ER Structured Datasets and
-#' coverts it from a .txt to an .Rds to significantly limit file size.
+#' Deprecated. Use `read_psd` instead.
 #'
-#' The benefit of `read_msd` is that it will read in a MSD, Genie, or Financial
-#' PEPFAR dataset, ensuring the column types are correct. The user has the
+#' @export
+#' @param file enter the full path to the PEPFAR structured dataset file
+#' @param save_rds save the Structured Dataset as an rds file, default = FALSE
+#' @param remove_txt should the txt file be removed, default = FALSE
+#' @param convert_to_old_names replace FY22Q2 naming convention with old?
+#'  default = FALSE
+read_msd <-
+  function(file,
+           save_rds = FALSE,
+           remove_txt = FALSE,
+           convert_to_old_names = FALSE) {
+
+    #depricate
+    lifecycle::deprecate_warn("3.2.0", "read_msd()", "read_psd()")
+
+    read_psd(file, save_rds, remove_txt, convert_to_old_names)
+  }
+
+#' Import PEPFAR Structured Datasets .txt into R and covert to .rds
+#'
+#' `read_psd` imports a stored PEPFAR Structured Datasets and
+#' coverts it from a .txt to an .Rds to significantly limit file size. Files can
+#' be read directly from a zipped file.
+#'
+#' The benefit of `read_psd` is that it will read in a MSD, Genie, Financial or
+#' HRH PEPFAR dataset, ensuring the column types are correct. The user has the
 #' ability to store the txt file as a rds, significantly saving storage space
 #' on the computer (and can then remove the txt file after importing).
 #'
 #' Most of USAID/OHA processes and analyses rely on the use of the MSD file
-#' being read in via `read_msd`
+#' being read in via `read_psd`
 #'
 #' @export
-#' @param file enter the full path to the MSD/FSD file
+#' @param file enter the full path to the PEPFAR structured dataset file
 #' @param save_rds save the Structured Dataset as an rds file, default = FALSE
 #' @param remove_txt should the txt file be removed, default = FALSE
-#' @param convert_to_old_names replace FY22Q2 naming convention with old? default = F
+#' @param convert_to_old_names replace FY22Q2 naming convention with old?
+#'  default = FALSE
 #'
 #' @examples
 #'
@@ -25,9 +49,9 @@
 #'  path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
 #'  df_psnu <- read_msd(path)
 #'#convert to RDS and delete the original txt file
-#'  read_msd(path, save_rds = TRUE, remove_txt = TRUE) }
+#'  read_psd(path, save_rds = TRUE, remove_txt = TRUE) }
 #'
-read_msd <-
+read_psd <-
   function(file,
            save_rds = FALSE,
            remove_txt = FALSE,
@@ -37,22 +61,22 @@ read_msd <-
 
     switch(file_type,
            "already_rds" = readr::read_rds(file),
-           "raw_txt" = process_msd(file,
+           "raw_txt" = process_psd(file,
                                    save_rds = save_rds,
                                    remove_txt = remove_txt,
                                    convert_to_old_names = convert_to_old_names))
 
   }
 
-#' Processing to handle MSD as a zip/txt file
+#' Processing to handle PSD as a zip/txt file
 #'
-#' @param file enter the full path to the MSD/FSD file
+#' @param file enter the full path to the PEPFAR Structured Dataset file
 #' @param save_rds save the Structured Dataset as an rds file, default = FALSE
 #' @param remove_txt should the txt file be removed, default = FALSE
 #'
 #' @keywords internal
 #'
-process_msd <- function(file,
+process_psd <- function(file,
                         save_rds = FALSE,
                         remove_txt = FALSE,
                         convert_to_old_names = FALSE){
@@ -69,18 +93,22 @@ process_msd <- function(file,
   if("cop_budget_pipeline" %in% names(df))
     df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
 
+  #replace - with _ for HRH dataset
+  if("moh-secondment" %in% names(df))
+    df <- dplyr::rename(df, moh_secondment = `moh-secondment`)
+
   #convert old format (pre-FY19Q1 MSD) to match new if applicable
   df <- convert_oldformat(df)
 
   #convert new names to old or old to new (changes introduced in FY22Q2)
   df <- convert_names(df, keep_old_names = convert_to_old_names)
 
-  #covert target/results/budgets to double
+  #covert target/results/budgets/ftes/counts to double
   df <- convert_coltype(df)
 
   #save as rds
   if (save_rds == TRUE){
-    newfile <- rename_msd(file)
+    newfile <- rename_psd(file)
     saveRDS(df, newfile)
   }
 
@@ -92,21 +120,21 @@ process_msd <- function(file,
 }
 
 
-#' Rename MSD file when importing
+#' Rename PSD file when importing
 #'
-#' @param file enter the full path to the MSD/ERSD file,
+#' @param file enter the full path to the PEPFAR Structured Dataset file,
 #' eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
 #'
 #' @keywords internal
 
-rename_msd <- function(file){
+rename_psd <- function(file){
 
   if(stringr::str_detect(file, "Genie")){
     #classify file type
     headers <- vroom::vroom(file, n_max = 0, col_types = readr::cols(.default = "c")) %>%
       names()
     type <- dplyr::case_when(
-      "sitename" %in% headers                           ~ "SITE_IM",
+      "facility" %in% headers                           ~ "SITE_IM",
       !("mech_code" %in% headers)                       ~ "PSNU",
       !("psnu" %in% headers)                            ~ "OU_IM",
       TRUE                                              ~ "PSNU_IM")
@@ -122,9 +150,9 @@ rename_msd <- function(file){
 }
 
 
-#' Convert any old MSDs to new format
+#' Convert any old PSDs to new format
 #'
-#' @param df data frame from read_msd()
+#' @param df data frame from read_psd()
 #' @keywords internal
 
 convert_oldformat <- function(df){
@@ -170,7 +198,7 @@ convert_oldformat <- function(df){
 #' user reads in an older MSD, this function will default switch those names to
 #' the current standard.
 #'
-#' @param df data frame from read_msd()
+#' @param df data frame from read_psd()
 #' @param keep_old_names replace FY22Q2 naming convention with old? default = F
 #'
 #' @keywords internal
@@ -221,7 +249,7 @@ convert_names <- function(df, keep_old_names = FALSE){
 
 #' Convert to specified column types
 #'
-#' @param df data frame from read_msd()
+#' @param df data frame from read_psd()
 #' @keywords internal
 #'
 convert_coltype <- function(df){
@@ -230,10 +258,12 @@ convert_coltype <- function(df){
   df <- df %>%
     dplyr::mutate(dplyr::across(c(dplyr::matches("target"), dplyr::starts_with("qtr"),
                                   dplyr::matches("cumulative"), dplyr::matches("cop_budget"),
-                                  dplyr::matches("_amt")),
-                                as.double))
+                                  dplyr::matches("_amt"), dplyr::matches("annual"),
+                                  dplyr::matches("ftes"), dplyr::matches("months_of_work")),
+                                \(x) as.double(x)))
   #convert year to integer
-  df <- dplyr::mutate(df, fiscal_year = as.integer(fiscal_year))
+  df <- dplyr::mutate(df, dplyr::across(c(fiscal_year, dplyr::matches("individual_count")),
+                                        \(x) as.integer(x)))
 
   return(df)
 }

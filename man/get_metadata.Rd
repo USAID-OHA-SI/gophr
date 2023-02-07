@@ -20,9 +20,9 @@ list of meta data information about the source dataset
 \description{
 This function is used to extract meta data as a list from the source file of
 a MER Structured Dataset, MER NAT_SUBNAT Structured Dataset, Financial
-Structure Dataset, or DATIM Genie export. It creates a list object, metadata,
-in the global environment containing the source, current fiscal year, current
-period, current quarter, as well as a caption.
+Structure Dataset, HRH Structured Dataset, or DATIM Genie export. It creates
+a list object, metadata, in the global environment containing the source,
+current fiscal year, current period, current quarter, as well as a caption.
 }
 \examples{
 \dontrun{

@@ -10,7 +10,7 @@ source_info(path, type, return = "source")
 \item{path}{path to the folder containing MSDs or specific MSD file}
 
 \item{type}{not required unless providing a folder in `path`; default = "OU_IM_FY19"
-other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"}
+other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial", "HRH"}
 
 \item{return}{from the info, what should be returned; default = "source"
 other options are: "period", "fiscal_year", "fiscal_year_label","quarter"}
