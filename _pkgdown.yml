@@ -25,7 +25,7 @@ navbar:
 reference:
 - title: Structure
   contents:
-  - read_msd
+  - read_psd
   - reshape_msd
   - pluck_totals
   - split_save
@@ -45,6 +45,7 @@ reference:
 
 - title: Financial
   contents:
+  - apply_funding_type
   - remove_mo
   - remove_sch
   - remove_centralsupport
