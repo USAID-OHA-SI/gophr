@@ -25,6 +25,9 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/adorn_achievement.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/apply_funding_type.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/apply_partner_type.html</loc>
   </url>
   <url>
@@ -109,7 +112,13 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/process_msd.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/process_psd.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/read_msd.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/read_psd.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/remove_centralsupport.html</loc>
@@ -125,6 +134,9 @@
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/rename_official.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/rename_psd.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/reshape_msd.html</loc>
