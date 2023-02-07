@@ -25,6 +25,7 @@ navbar:
 reference:
 - title: Structure
   contents:
+  - read_msd
   - read_psd
   - reshape_msd
   - pluck_totals
