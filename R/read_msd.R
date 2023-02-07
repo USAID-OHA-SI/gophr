@@ -1,21 +1,45 @@
-#' Import ICPI MER Structured Datasets .txt into R and covert to .rds
+#' Import PEPFAR Structured Datasets .txt into R and covert to .rds
 #'
-#' `read_msd` imports a stored ICPI MER/ER Structured Datasets and
-#' coverts it from a .txt to an .Rds to significantly limit file size.
+#' Deprecated. Use `read_psd` instead.
 #'
-#' The benefit of `read_msd` is that it will read in a MSD, Genie, or Financial
-#' PEPFAR dataset, ensuring the column types are correct. The user has the
+#' @export
+#' @param file enter the full path to the PEPFAR structured dataset file
+#' @param save_rds save the Structured Dataset as an rds file, default = FALSE
+#' @param remove_txt should the txt file be removed, default = FALSE
+#' @param convert_to_old_names replace FY22Q2 naming convention with old?
+#'  default = FALSE
+read_msd <-
+  function(file,
+           save_rds = FALSE,
+           remove_txt = FALSE,
+           convert_to_old_names = FALSE) {
+
+    #depricate
+    lifecycle::deprecate_warn("3.2.0", "read_msd()", "read_psd()")
+
+    read_psd(file, save_rds, remove_txt, convert_to_old_names)
+  }
+
+#' Import PEPFAR Structured Datasets .txt into R and covert to .rds
+#'
+#' `read_psd` imports a stored PEPFAR Structured Datasets and
+#' coverts it from a .txt to an .Rds to significantly limit file size. Files can
+#' be read directly from a zipped file.
+#'
+#' The benefit of `read_psd` is that it will read in a MSD, Genie, Financial or
+#' HRH PEPFAR dataset, ensuring the column types are correct. The user has the
 #' ability to store the txt file as a rds, significantly saving storage space
 #' on the computer (and can then remove the txt file after importing).
 #'
 #' Most of USAID/OHA processes and analyses rely on the use of the MSD file
-#' being read in via `read_msd`
+#' being read in via `read_psd`
 #'
 #' @export
-#' @param file enter the full path to the MSD/FSD file
+#' @param file enter the full path to the PEPFAR structured dataset file
 #' @param save_rds save the Structured Dataset as an rds file, default = FALSE
 #' @param remove_txt should the txt file be removed, default = FALSE
-#' @param convert_to_old_names replace FY22Q2 naming convention with old? default = F
+#' @param convert_to_old_names replace FY22Q2 naming convention with old?
+#'  default = FALSE
 #'
 #' @examples
 #'
@@ -25,9 +49,9 @@
 #'  path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
 #'  df_psnu <- read_msd(path)
 #'#convert to RDS and delete the original txt file
-#'  read_msd(path, save_rds = TRUE, remove_txt = TRUE) }
+#'  read_psd(path, save_rds = TRUE, remove_txt = TRUE) }
 #'
-read_msd <-
+read_psd <-
   function(file,
            save_rds = FALSE,
            remove_txt = FALSE,
@@ -37,22 +61,22 @@ read_msd <-
 
     switch(file_type,
            "already_rds" = readr::read_rds(file),
-           "raw_txt" = process_msd(file,
+           "raw_txt" = process_psd(file,
                                    save_rds = save_rds,
                                    remove_txt = remove_txt,
                                    convert_to_old_names = convert_to_old_names))
 
   }
 
-#' Processing to handle MSD as a zip/txt file
+#' Processing to handle PSD as a zip/txt file
 #'
-#' @param file enter the full path to the MSD/FSD file
+#' @param file enter the full path to the PEPFAR Structured Dataset file
 #' @param save_rds save the Structured Dataset as an rds file, default = FALSE
 #' @param remove_txt should the txt file be removed, default = FALSE
 #'
 #' @keywords internal
 #'
-process_msd <- function(file,
+process_psd <- function(file,
                         save_rds = FALSE,
                         remove_txt = FALSE,
                         convert_to_old_names = FALSE){
