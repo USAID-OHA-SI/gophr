@@ -7,7 +7,7 @@
 rename_official(df, datim_user, datim_pwd)
 }
 \arguments{
-\item{df}{identify the MER Structured Data Set to clean}
+\item{df}{identify the PEPFAR Structured Data Set to clean}
 
 \item{datim_user}{DATIM username; if missing will look for stored credentials
 first and then prompt for them if not found}
@@ -29,5 +29,6 @@ prompted each time to enter your password to acces DATIM.
 }
 \examples{
 \dontrun{
+df_psnu_im <- read_psd(file) \%>\% filter(country == "Saturn")
 df_psnu_im <- rename_official(df_psnu_im) }
 }

@@ -11,7 +11,7 @@
 #' securely on your local machine. If you don't have them stored, you will be
 #' prompted each time to enter your password to acces DATIM.
 #'
-#' @param df identify the MER Structured Data Set to clean
+#' @param df identify the PEPFAR Structured Data Set to clean
 #' @param datim_user DATIM username; if missing will look for stored credentials
 #' first and then prompt for them if not found
 #' @param datim_pwd DATIM password; if missing will look for stored credentials
@@ -21,6 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
+#' df_psnu_im <- read_psd(file) %>% filter(country == "Saturn")
 #' df_psnu_im <- rename_official(df_psnu_im) }
 
 rename_official <- function(df, datim_user, datim_pwd) {
