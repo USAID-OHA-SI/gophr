@@ -9,11 +9,15 @@ Description: This packages contains a number of functions for working with the P
 Depends: R (>= 3.4.2)
 License: MIT + file LICENSE
 Imports: 
+    crayon,
     curl,
     getPass,
     dplyr (>= 1.0.0),
+    glue,
+    googlesheets4,
     httr,
     knitr,
+    lifecycle
     magrittr,
     purrr,
     readr,
@@ -24,10 +28,7 @@ Imports:
     tidyr,
     tools,
     usethis,
-    vroom,
-    googlesheets4,
-    crayon,
-    glue
+    vroom
 Suggests: testthat
 Remotes: 
   USAID-OHA-SI/glamr,
