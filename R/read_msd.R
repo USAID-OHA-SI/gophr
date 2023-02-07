@@ -69,13 +69,17 @@ process_msd <- function(file,
   if("cop_budget_pipeline" %in% names(df))
     df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
 
+  #replace - with _ for HRH dataset
+  if("moh-secondment" %in% names(df))
+    df <- dplyr::rename(df, moh_secondment = `moh-secondment`)
+
   #convert old format (pre-FY19Q1 MSD) to match new if applicable
   df <- convert_oldformat(df)
 
   #convert new names to old or old to new (changes introduced in FY22Q2)
   df <- convert_names(df, keep_old_names = convert_to_old_names)
 
-  #covert target/results/budgets to double
+  #covert target/results/budgets/ftes/counts to double
   df <- convert_coltype(df)
 
   #save as rds
@@ -230,10 +234,12 @@ convert_coltype <- function(df){
   df <- df %>%
     dplyr::mutate(dplyr::across(c(dplyr::matches("target"), dplyr::starts_with("qtr"),
                                   dplyr::matches("cumulative"), dplyr::matches("cop_budget"),
-                                  dplyr::matches("_amt")),
-                                as.double))
+                                  dplyr::matches("_amt"), dplyr::matches("annual"),
+                                  dplyr::matches("ftes"), dplyr::matches("months_of_work")),
+                                \(x) as.double(x)))
   #convert year to integer
-  df <- dplyr::mutate(df, fiscal_year = as.integer(fiscal_year))
+  df <- dplyr::mutate(df, dplyr::across(c(fiscal_year, dplyr::matches("individual_count")),
+                                        \(x) as.integer(x)))
 
   return(df)
 }
