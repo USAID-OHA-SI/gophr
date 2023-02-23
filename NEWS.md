@@ -1,4 +1,5 @@
 # gophr 3.2.0
+* Adjust FY default searches to reflect new start year of MSDs (FY21) [2023-02-23]
 * Add `apply_funding_type` for use with FSD or HRH SD to distiguish between service delivery and non-service delivery
 * Replace `read_msd` with `read_psd` to be more inclusive of all of PEFAR's structured datasets [2023-02-07]
 * Allow `read_msd` to read in HRH structured dataset [2023-02-07]
