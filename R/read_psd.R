@@ -139,8 +139,7 @@ rename_psd <- function(file){
       !("psnu" %in% headers)                            ~ "OU_IM",
       TRUE                                              ~ "PSNU_IM")
     file <- file.path(dirname(file),
-                      paste0("MER_Structured_Dataset_GENIE", type,
-                             ifelse(type == "NAT_SUBNAT", "_FY15-22", "_FY20-22"), stringr::str_remove_all(Sys.Date(), "-"),".txt"))
+                      paste0("MER_Structured_Dataset_GENIE_FY22-23_", stringr::str_remove_all(Sys.Date(), "-"),".txt"))
   }
 
   file <- stringr::str_replace(file, "(zip|txt)$", "rds")

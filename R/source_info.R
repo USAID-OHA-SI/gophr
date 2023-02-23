@@ -6,8 +6,9 @@
 #' information from the filename about the fiscal year, quarter, or period.
 #'
 #' @param path path to the folder containing MSDs or specific MSD file
-#' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
-#' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial", "HRH"
+#' @param type not required unless providing a folder in `path`;
+#'   default = "OU_IM_FY21"; other examples include: "PSNU_IM", "NAT_SUBNAT",
+#'   "PSNU", "Financial", "HRH"
 #' @param return from the info, what should be returned; default = "source"
 #' other options are: "period", "fiscal_year", "fiscal_year_label","quarter"
 #'
@@ -149,7 +150,7 @@ get_metadata <- function(path, type, caption_note){
 #'
 #' @param path path to the folder containing MSDs or specific MSD file
 #' @param type not required unless providing a folder in `path`;
-#'  default = "OU_IM_FY19", other examples include: "PSNU_IM", "NAT_SUBNAT",
+#'  default = "OU_IM_FY21", other examples include: "PSNU_IM", "NAT_SUBNAT",
 #'  "PSNU", "Financial", "HRH"
 #'
 #' @return dataframe of information related to what is being asked in `return`
@@ -168,7 +169,7 @@ extract_metadata <- function(path, type){
     stop("File/folder do not exist or path is not correct.")
 
   if(file.info(path)$isdir && missing(type))
-    type <- "OU_IM_FY20"
+    type <- "OU_IM_FY21"
 
   if(file.info(path)$isdir)
     path <- glamr::return_latest(path, type)
