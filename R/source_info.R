@@ -181,6 +181,7 @@ extract_metadata <- function(path, type){
   file_type <- dplyr::case_when(stringr::str_detect(file_name, "(Genie|NAT_SUBNAT)") ~ stringr::str_extract(path, "(Frozen|Daily|NAT_SUBNAT)"),
                                 stringr::str_detect(file_name, "Fin.*_Structured_Dataset") ~ "FSD",
                                 stringr::str_detect(file_name, "MER_Structured_Datasets") ~ "MSD",
+                                stringr::str_detect(file_name, "MER_Structured_TRAINING_Datasets") ~ "Faux Training MSD",
                                 stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
 
   #capture the dataset date for use in figuring out relvant FY period
@@ -224,6 +225,15 @@ extract_metadata <- function(path, type){
                     period = glue::glue("{fiscal_year_label}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
 
+  }
+
+  #Training dataset
+  if(file_type == "Faux Training MSD"){
+    info <- info %>%
+      dplyr::mutate(fiscal_year = fiscal_year + 37,
+                    fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
+                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
+                    source = glue::glue("{period}{stringr::str_sub(type, end = 1)} Faux Training MSD"))
   }
 
   return(info)
