@@ -261,7 +261,7 @@ convert_coltype <- function(df){
                                   dplyr::matches("ftes"), dplyr::matches("months_of_work")),
                                 \(x) as.double(x)))
   #convert year to integer
-  df <- dplyr::mutate(df, dplyr::across(c(fiscal_year, dplyr::matches("individual_count")),
+  df <- dplyr::mutate(df, dplyr::across(c(dplyr::matches("fiscal_year"), dplyr::matches("individual_count")),
                                         \(x) as.integer(x)))
 
   return(df)
