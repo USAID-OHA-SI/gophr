@@ -1,5 +1,9 @@
 #' Identify PSD Data Stream and Level
 #'
+#' This function is useful as a utility function in this and other packages to
+#' determine the type of file that is read in and determine certain types of
+#' munging handling.
+#'
 #' @param df PSD dataframe
 #'
 #' @return character, PSD data stream and the level
@@ -10,7 +14,7 @@
 #'#read in file for use
 #'  path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
 #'  df <- read_psd(path)
-#'#convert to RDS and delete the original txt file
+#'#identify data stream
 #'  identify_psd(df_psnu) }
 
 identify_psd <- function(df){
