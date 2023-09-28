@@ -60,6 +60,7 @@ reference:
 - title: Utilities
   contents:
   - identifypd
+  - identify_psd
   - get_metadata
   - source_info
 
