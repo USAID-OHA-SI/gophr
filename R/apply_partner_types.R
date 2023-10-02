@@ -11,7 +11,7 @@
 #' @return a df with the partner types provided by USAID.
 #' @export
 #'
-apply_partner_type <-function(df){
+apply_partner_type <- function(df){
 
   if ( !googlesheets4::gs4_has_token())
     stop("Function requires authentication,
@@ -19,7 +19,7 @@ apply_partner_type <-function(df){
 
   sheet_id <-'1tGk1TR8l3WacR8qMIK0AQvFynABijAaLHeIctE1nUoM'
 
-  df_Partners<- googlesheets4::read_sheet(googlesheets4::as_sheets_id(sheet_id))%>%
+  df_Partners<- googlesheets4::read_sheet(googlesheets4::as_sheets_id(sheet_id), sheet = "MechID-PartnerType")%>%
     dplyr::rename(`mech_code`=`Mechanism ID`)%>%
     dplyr::mutate(`mech_code`=as.character(`mech_code`))%>%
     dplyr::rename(`partner_type_usaid`=`Partner Type`)
