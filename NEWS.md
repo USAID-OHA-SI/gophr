@@ -1,4 +1,5 @@
 # gophr 3.2.0
+* Resolve issue with NAs being introduced for `targeted_beneficiaries` in FSD [2023-10-03]
 * Add new function to return the PSD type based on the dataframe names [2023-09-28]
 * Setup proper handling of trainging dataset for `get_metadata` [2023-07-18]
 * Adjust FY default searches to reflect new start year of MSDs (FY21) [2023-02-23]

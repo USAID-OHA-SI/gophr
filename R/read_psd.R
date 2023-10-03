@@ -255,7 +255,7 @@ convert_coltype <- function(df){
 
   #covert target/results/budgets to double
   df <- df %>%
-    dplyr::mutate(dplyr::across(c(dplyr::matches("target"), dplyr::starts_with("qtr"),
+    dplyr::mutate(dplyr::across(c(dplyr::matches("targets"), dplyr::starts_with("qtr"),
                                   dplyr::matches("cumulative"), dplyr::matches("cop_budget"),
                                   dplyr::matches("_amt"), dplyr::matches("annual"),
                                   dplyr::matches("ftes"), dplyr::matches("months_of_work")),
