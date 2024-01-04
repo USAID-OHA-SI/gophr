@@ -1,9 +1,14 @@
+## gophr <img src='man/figures/logo.png' align="right" height="120" />
+
+MER Structured Dataset utilities package
+
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/USAID-OHA-SI/gophr/workflows/R-CMD-check/badge.svg)](https://github.com/USAID-OHA-SI/gophr/actions)
+[![gophr status badge](https://usaid-oha-si.r-universe.dev/badges/gophr)](https://usaid-oha-si.r-universe.dev/gophr)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![:name status badge](https://usaid-oha-si.r-universe.dev/badges/:name)](https://usaid-oha-si.r-universe.dev/)
 <!-- badges: end -->
 
-## gophr <img src='man/figures/logo.png' align="right" height="120" />
-MER Structured Dataset utilities package
 
 ## Overview
 
@@ -12,16 +17,17 @@ The function herewithin are a set of utility functions related to working with t
 
 ## Installation
 
-`gophr` is not on CRAN, so you will have to install it directly from GitHub using `remotes`.
-
-If you do not have `remotes` installed, you will have to run the `install.packages("remotes")` line in the code below as well.
+`gophr` is not on CRAN, so you will have to install it directly from [rOpenSci](https://usaid-oha-si.r-universe.dev/packages) or [GitHub](https://github.com/USAID-OHA-SI/) using the code found below.
 
 ``` r
 ## SETUP
 
-  #install package with vignettes
-    install.packages("remotes")
-    remotes::install_github("USAID-OHA-SI/gophr", build_vignettes = TRUE)
+  #install from rOpenSci
+    install.packages('gophr', repos = c('https://usaid-oha-si.r-universe.dev', 'https://cloud.r-project.org'))
+    
+  #alt: install from GitHub using pak
+    #install.packages("pak")
+    #pak::pak("USAID-OHA-SI/gagglr")
     
   #load the package
     library(gophr)
