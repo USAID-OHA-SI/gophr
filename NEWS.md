@@ -1,4 +1,5 @@
 # gophr 3.2
+* Update `get_metadata` to handle the new fiscal year introduce in FY24Q1i [2024-02-26]
 * Change instructions to install from rOpenSci [2024-01-04]
 * Resolve issue with NAs being introduced for `targeted_beneficiaries` in FSD [2023-10-03]
 * Add new function to return the PSD type based on the dataframe names [2023-09-28]

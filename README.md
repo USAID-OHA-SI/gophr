@@ -32,7 +32,7 @@ The function herewithin are a set of utility functions related to working with t
   #load the package
     library(gophr)
 
-## LIST TYPES OF STYLES INCLUDED WITH PACKAGE
+## LIST OF FUNCTIONS INCLUDED WITH PACKAGE
   ls(package:gophr)
 ```
 
