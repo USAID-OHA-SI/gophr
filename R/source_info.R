@@ -130,7 +130,7 @@ get_metadata <- function(path, type, caption_note){
   cap <- ifelse(!missing(caption_note),
                 glue::glue(' | {caption_note}'), "")
 
-  metadata <<- info %>%
+  metadata <- info %>%
     dplyr::mutate(caption = glue::glue("Source: {source}{id}{cap}")) %>%
     dplyr::select(curr_pd = period,
                   curr_fy = fiscal_year,
@@ -140,9 +140,12 @@ get_metadata <- function(path, type, caption_note){
                   caption) %>%
     as.list()
 
-  usethis::ui_info("{usethis::ui_field('metadata')} is now stored as a global \\
-                   object and metadata items can be accessed via \\
-                   {usethis::ui_code('metadata$...')}")
+  usethis::ui_warn("{usethis::ui_field('metadata')} is NO LONGER (v3.2.3) \\
+                    exported by default as a global object.")
+  usethis::ui_info("You must store the output as an object to use, e.g. \\
+                     {usethis::ui_code('meta <- get_metadata()')}")
+
+  return(metadata)
 
 }
 
@@ -150,7 +153,7 @@ get_metadata <- function(path, type, caption_note){
 #'
 #' @param path path to the folder containing MSDs or specific MSD file
 #' @param type not required unless providing a folder in `path`;
-#'  default = "OU_IM_FY21", other examples include: "PSNU_IM", "NAT_SUBNAT",
+#'  default = "OU_IM_FY2*", other examples include: "PSNU_IM", "NAT_SUBNAT",
 #'  "PSNU", "Financial", "HRH"
 #'
 #' @return dataframe of information related to what is being asked in `return`
