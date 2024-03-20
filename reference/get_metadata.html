@@ -21,7 +21,7 @@ current fiscal year, current period, current quarter, as well as a caption."><me
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
       </span>
     </div>
 
@@ -73,16 +73,17 @@ current fiscal year, current period, current quarter, as well as a caption.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>path</dt>
-<dd><p>path to the folder containing MSDs or specific MSD file</p></dd>
+<dd><p>path to the folder containing MSDs or specific MSD file (default
+relies on glamr::si_path() if available)</p></dd>
 
 
 <dt>type</dt>
-<dd><p>not required unless providing a folder in `path`; default = "OU_IM_FY19"
-other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"</p></dd>
+<dd><p>PSD type: "OU_IM", PSNU_IM", "NAT_SUBNAT", "Financial";
+default = "OU_IM_FY2*"</p></dd>
 
 
 <dt>caption_note</dt>
-<dd><p>additional information to include in the footer</p></dd>
+<dd><p>additional information to include in a viz caption footer</p></dd>
 
 </dl></div>
     <div id="value">
@@ -101,8 +102,8 @@ other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span> <span class="fu">get_metadata</span><span class="op">(</span><span class="op">)</span> <span class="co">#works if you have stored path to the MSD folder via glamr::set_paths()</span></span></span>
-<span class="r-in"><span> <span class="va">metadata</span><span class="op">$</span><span class="va">curr_fy</span> <span class="op">}</span></span></span>
+<span class="r-in"><span> <span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu">get_metadata</span><span class="op">(</span><span class="op">)</span> <span class="co">#works if you have stored path to the MSD folder via glamr::set_paths()</span></span></span>
+<span class="r-in"><span> <span class="va">meta</span><span class="op">$</span><span class="va">curr_fy</span> <span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></span>
@@ -112,7 +113,7 @@ other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ref_id</span> <span class="op">&lt;-</span> <span class="st">"1bdf4c4e"</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">get_metadata</span><span class="op">(</span>caption_note <span class="op">=</span> <span class="st">"Created by: The Dream Team"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu">get_metadata</span><span class="op">(</span>caption_note <span class="op">=</span> <span class="st">"Created by: The Dream Team"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cntry</span> <span class="op">&lt;-</span> <span class="st">"Saturn"</span></span></span>
 <span class="r-in"><span></span></span>
@@ -122,7 +123,7 @@ other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df_viz</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">operatingunit</span> <span class="op">==</span> <span class="va">cntry</span>,</span></span>
-<span class="r-in"><span>         <span class="va">fiscal_year</span> <span class="op">==</span> <span class="va">metadata</span><span class="op">$</span><span class="va">curr_fy</span>,</span></span>
+<span class="r-in"><span>         <span class="va">fiscal_year</span> <span class="op">==</span> <span class="va">meta</span><span class="op">$</span><span class="va">curr_fy</span>,</span></span>
 <span class="r-in"><span>         <span class="va">indicator</span> <span class="op">==</span> <span class="st">"TX_NEW"</span>,</span></span>
 <span class="r-in"><span>         <span class="va">standardizeddisaggregate</span> <span class="op">==</span> <span class="st">"Total Numerator"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -136,14 +137,14 @@ other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"</p></dd>
 <span class="r-in"><span><span class="va">df_viz</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">period</span>, <span class="va">results_cumulative</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu">geom_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">period</span> <span class="op">==</span> <span class="va">metadata</span><span class="op">$</span><span class="va">curr_pd</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">geom_text</span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">period</span> <span class="op">==</span> <span class="va">meta</span><span class="op">$</span><span class="va">curr_pd</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>            <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">results_cumulative</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>            vjust <span class="op">=</span> <span class="op">-</span><span class="fl">.5</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="fu">fct_reorder2</span><span class="op">(</span><span class="va">mech_code</span>, <span class="va">period</span>, <span class="va">targets</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"Upward trend in TX_NEW results thru {metadata$curr_qtr} quarters"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="va">toupper</span>,</span></span>
-<span class="r-in"><span>       subtitle <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{cntry} | {metadata$curr_fy_lab} cumulative mechanism results"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"Upward trend in TX_NEW results thru {meta$curr_qtr} quarters"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="va">toupper</span>,</span></span>
+<span class="r-in"><span>       subtitle <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{cntry} | {meta$curr_fy_lab} cumulative mechanism results"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>       caption <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{metadata$caption}"</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span></span></span>
+<span class="r-in"><span>       caption <span class="op">=</span> <span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">(</span><span class="st">"{meta$caption}"</span><span class="op">)</span><span class="op">)</span> <span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

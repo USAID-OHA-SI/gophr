@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.0</span>
       </span>
     </div>
 
@@ -54,6 +54,11 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="3.3" id="gophr-33">gophr 3.3<a class="anchor" aria-label="anchor" href="#gophr-33"></a></h2>
+<ul><li>Add additional check to PSD file parsing with <code>get_metadata</code> to ensure the naming is correct, namely an ISO date is included in teh file name [2024-03-20]</li>
+<li>Change return with <code>get_metadata</code> exporting a global object to returning a normal object a user must name [2024-03-20]</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="3.2" id="gophr-32">gophr 3.2<a class="anchor" aria-label="anchor" href="#gophr-32"></a></h2>
 <ul><li>Update <code>get_metadata</code> to handle the new fiscal year introduce in FY24Q1i [2024-02-26]</li>
 <li>Change instructions to install from rOpenSci [2024-01-04]</li>
@@ -67,13 +72,10 @@
 <li>Update <code>metadata</code> family functions to get source info for HRH datasets [2023-02-07]</li>
 </ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1.1" id="gophr-311">gophr 3.1.1<a class="anchor" aria-label="anchor" href="#gophr-311"></a></h2>
+<h2 class="page-header" data-toc-text="3.1" id="gophr-31">gophr 3.1<a class="anchor" aria-label="anchor" href="#gophr-31"></a></h2>
 <ul><li>Add new function to store metadata in a list object (<code>get_metadata</code>), rather than returning one item at at time via <code>source_info</code> [2022-10-12]</li>
 <li>Add additional <code>return</code> type for <code>source_info</code> of <code>fiscal_year_label</code> which returns <code>FY[XX]</code> [2022-10-12]</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1.0" id="gophr-310">gophr 3.1.0<a class="anchor" aria-label="anchor" href="#gophr-310"></a></h2>
-<ul><li>Resolve misidentified “provisional” status of Daily Genie files downloaded after DATIM close [2022-08-22]</li>
+<li>Resolve misidentified “provisional” status of Daily Genie files downloaded after DATIM close [2022-08-22]</li>
 <li>Migrate MSD/FSD related function from <code>glamr</code> to <code>gophr</code>: <code>apply_partner_type</code>, <code>browse_knownissues</code>, <code>clean_agency</code>, <code>clean_column</code>, <code>clean_indicator</code>, <code>clean_psnu</code>, <code>pluck_totals</code>, <code>remove_centralsupport</code>, <code>remove_mo</code>, <code>remove_sch</code>, <code>resolve_knownissues</code>, <code>source_info</code> [2022-08-05]</li>
 </ul></div>
     <div class="section level2">
