@@ -72,8 +72,12 @@ test_that("filename has standard date", {
     "MSD_OU_IM_test.zip"
   )
 
-  expect_setequal(grepl("\\d{8}",names),
+  expect_setequal(grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}",names),
                   c(rep(TRUE, 12), rep(FALSE, 1))
   )
 
 })
+
+
+
+

@@ -188,7 +188,7 @@ extract_metadata <- function(path, type){
                                 stringr::str_detect(file_name, "MER_Structured_TRAINING_Datasets") ~ "Faux Training MSD",
                                 stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
 
-  if(!grepl("\\d{8}", file_name))
+  if(!grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}", file_name))
     stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
 
   #capture the dataset date for use in figuring out relvant FY period
