@@ -10,7 +10,7 @@ extract_metadata(path, type)
 \item{path}{path to the folder containing MSDs or specific MSD file}
 
 \item{type}{not required unless providing a folder in `path`;
-default = "OU_IM_FY21", other examples include: "PSNU_IM", "NAT_SUBNAT",
+default = "OU_IM_FY2*", other examples include: "PSNU_IM", "NAT_SUBNAT",
 "PSNU", "Financial", "HRH"}
 }
 \value{

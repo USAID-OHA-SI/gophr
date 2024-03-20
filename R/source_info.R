@@ -63,10 +63,11 @@ source_info <- function(path, type, return = "source"){
 #' a list object, metadata, in the global environment containing the source,
 #' current fiscal year, current period, current quarter, as well as a caption.
 #'
-#' @param path path to the folder containing MSDs or specific MSD file
-#' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
-#' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"
-#' @param caption_note additional information to include in the footer
+#' @param path path to the folder containing MSDs or specific MSD file (default
+#'   relies on glamr::si_path() if available)
+#' @param type PSD type: "OU_IM", PSNU_IM", "NAT_SUBNAT", "Financial";
+#'   default = "OU_IM_FY2*"
+#' @param caption_note additional information to include in a viz caption footer
 #'
 #' @return list of meta data information about the source dataset
 #'
@@ -74,8 +75,8 @@ source_info <- function(path, type, return = "source"){
 #' @family metadata
 #' @examples
 #' \dontrun{
-#'  get_metadata() #works if you have stored path to the MSD folder via glamr::set_paths()
-#'  metadata$curr_fy }
+#'  meta <- get_metadata() #works if you have stored path to the MSD folder via glamr::set_paths()
+#'  meta$curr_fy }
 #'
 #' \dontrun{
 #' library(tidyverse)
@@ -85,7 +86,7 @@ source_info <- function(path, type, return = "source"){
 #'
 #' ref_id <- "1bdf4c4e"
 #'
-#' get_metadata(caption_note = "Created by: The Dream Team")
+#' meta <- get_metadata(caption_note = "Created by: The Dream Team")
 #'
 #' cntry <- "Saturn"
 #'
@@ -95,7 +96,7 @@ source_info <- function(path, type, return = "source"){
 #'
 #' df_viz <- df %>%
 #'   filter(operatingunit == cntry,
-#'          fiscal_year == metadata$curr_fy,
+#'          fiscal_year == meta$curr_fy,
 #'          indicator == "TX_NEW",
 #'          standardizeddisaggregate == "Total Numerator")
 #'
@@ -109,14 +110,14 @@ source_info <- function(path, type, return = "source"){
 #' df_viz %>%
 #'   ggplot(aes(period, results_cumulative)) +
 #'   geom_col() +
-#'   geom_text(data = . %>% filter(., period == metadata$curr_pd),
+#'   geom_text(data = . %>% filter(., period == meta$curr_pd),
 #'             aes(label = results_cumulative),
 #'             vjust = -.5) +
 #'   facet_wrap(~fct_reorder2(mech_code, period, targets)) +
-#'   labs(title = glue("Upward trend in TX_NEW results thru {metadata$curr_qtr} quarters") %>% toupper,
-#'        subtitle = glue("{cntry} | {metadata$curr_fy_lab} cumulative mechanism results"),
+#'   labs(title = glue("Upward trend in TX_NEW results thru {meta$curr_qtr} quarters") %>% toupper,
+#'        subtitle = glue("{cntry} | {meta$curr_fy_lab} cumulative mechanism results"),
 #'        x = NULL, y = NULL,
-#'        caption = glue("{metadata$caption}")) }
+#'        caption = glue("{meta$caption}")) }
 #'
 get_metadata <- function(path, type, caption_note){
 
@@ -130,7 +131,7 @@ get_metadata <- function(path, type, caption_note){
   cap <- ifelse(!missing(caption_note),
                 glue::glue(' | {caption_note}'), "")
 
-  metadata <<- info %>%
+  metadata <- info %>%
     dplyr::mutate(caption = glue::glue("Source: {source}{id}{cap}")) %>%
     dplyr::select(curr_pd = period,
                   curr_fy = fiscal_year,
@@ -140,9 +141,12 @@ get_metadata <- function(path, type, caption_note){
                   caption) %>%
     as.list()
 
-  usethis::ui_info("{usethis::ui_field('metadata')} is now stored as a global \\
-                   object and metadata items can be accessed via \\
-                   {usethis::ui_code('metadata$...')}")
+  usethis::ui_warn("{usethis::ui_field('metadata')} is NO LONGER (v3.2.3) \\
+                    exported by default as a global object.")
+  usethis::ui_info("You must store the output as an object to use, e.g. \\
+                     {usethis::ui_code('meta <- get_metadata()')}")
+
+  return(metadata)
 
 }
 
@@ -150,7 +154,7 @@ get_metadata <- function(path, type, caption_note){
 #'
 #' @param path path to the folder containing MSDs or specific MSD file
 #' @param type not required unless providing a folder in `path`;
-#'  default = "OU_IM_FY21", other examples include: "PSNU_IM", "NAT_SUBNAT",
+#'  default = "OU_IM_FY2*", other examples include: "PSNU_IM", "NAT_SUBNAT",
 #'  "PSNU", "Financial", "HRH"
 #'
 #' @return dataframe of information related to what is being asked in `return`
@@ -169,7 +173,7 @@ extract_metadata <- function(path, type){
     stop("File/folder do not exist or path is not correct.")
 
   if(file.info(path)$isdir && missing(type))
-    type <- "OU_IM_FY22"
+    type <- "OU_IM_FY2"
 
   if(file.info(path)$isdir)
     path <- glamr::return_latest(path, type)
@@ -183,6 +187,9 @@ extract_metadata <- function(path, type){
                                 stringr::str_detect(file_name, "MER_Structured_Datasets") ~ "MSD",
                                 stringr::str_detect(file_name, "MER_Structured_TRAINING_Datasets") ~ "Faux Training MSD",
                                 stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
+
+  if(!grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}", file_name))
+    stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
 
   #capture the dataset date for use in figuring out relvant FY period
   file_date <- ifelse(stringr::str_detect(file_name, "Genie"),

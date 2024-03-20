@@ -1,3 +1,7 @@
+# gophr 3.3
+* Add additional check to PSD file parsing with `get_metadata` to ensure the naming is correct, namely an ISO date is included in teh file name [2024-03-20]
+* Change return with `get_metadata` exporting a global object to returning a normal object a user must name [2024-03-20]
+
 # gophr 3.2
 * Update `get_metadata` to handle the new fiscal year introduce in FY24Q1i [2024-02-26]
 * Change instructions to install from rOpenSci [2024-01-04]
@@ -10,11 +14,9 @@
 * Allow `read_msd` to read in HRH structured dataset [2023-02-07]
 * Update `metadata` family functions to get source info for HRH datasets [2023-02-07]
 
-# gophr 3.1.1
+# gophr 3.1
 * Add new function to store metadata in a list object (`get_metadata`), rather than returning one item at at time via `source_info` [2022-10-12]
 * Add additional `return` type for `source_info` of `fiscal_year_label` which returns `FY[XX]` [2022-10-12]
-
-# gophr 3.1.0
 * Resolve misidentified "provisional" status of Daily Genie files downloaded after DATIM close [2022-08-22]
 * Migrate MSD/FSD related function from `glamr` to `gophr`: `apply_partner_type`, `browse_knownissues`, `clean_agency`, `clean_column`, `clean_indicator`, `clean_psnu`, `pluck_totals`, `remove_centralsupport`, `remove_mo`, `remove_sch`, `resolve_knownissues`, `source_info`
  [2022-08-05]
