@@ -63,10 +63,11 @@ source_info <- function(path, type, return = "source"){
 #' a list object, metadata, in the global environment containing the source,
 #' current fiscal year, current period, current quarter, as well as a caption.
 #'
-#' @param path path to the folder containing MSDs or specific MSD file
-#' @param type not required unless providing a folder in `path`; default = "OU_IM_FY19"
-#' other examples include: "PSNU_IM", "NAT_SUBNAT", "PSNU", "Financial"
-#' @param caption_note additional information to include in the footer
+#' @param path path to the folder containing MSDs or specific MSD file (default
+#'   relies on glamr::si_path() if available)
+#' @param type PSD type: "OU_IM", PSNU_IM", "NAT_SUBNAT", "Financial";
+#'   default = "OU_IM_FY2*"
+#' @param caption_note additional information to include in a viz caption footer
 #'
 #' @return list of meta data information about the source dataset
 #'
@@ -74,8 +75,8 @@ source_info <- function(path, type, return = "source"){
 #' @family metadata
 #' @examples
 #' \dontrun{
-#'  get_metadata() #works if you have stored path to the MSD folder via glamr::set_paths()
-#'  metadata$curr_fy }
+#'  meta <- get_metadata() #works if you have stored path to the MSD folder via glamr::set_paths()
+#'  meta$curr_fy }
 #'
 #' \dontrun{
 #' library(tidyverse)
@@ -85,7 +86,7 @@ source_info <- function(path, type, return = "source"){
 #'
 #' ref_id <- "1bdf4c4e"
 #'
-#' get_metadata(caption_note = "Created by: The Dream Team")
+#' meta <- get_metadata(caption_note = "Created by: The Dream Team")
 #'
 #' cntry <- "Saturn"
 #'
@@ -95,7 +96,7 @@ source_info <- function(path, type, return = "source"){
 #'
 #' df_viz <- df %>%
 #'   filter(operatingunit == cntry,
-#'          fiscal_year == metadata$curr_fy,
+#'          fiscal_year == meta$curr_fy,
 #'          indicator == "TX_NEW",
 #'          standardizeddisaggregate == "Total Numerator")
 #'
@@ -109,14 +110,14 @@ source_info <- function(path, type, return = "source"){
 #' df_viz %>%
 #'   ggplot(aes(period, results_cumulative)) +
 #'   geom_col() +
-#'   geom_text(data = . %>% filter(., period == metadata$curr_pd),
+#'   geom_text(data = . %>% filter(., period == meta$curr_pd),
 #'             aes(label = results_cumulative),
 #'             vjust = -.5) +
 #'   facet_wrap(~fct_reorder2(mech_code, period, targets)) +
-#'   labs(title = glue("Upward trend in TX_NEW results thru {metadata$curr_qtr} quarters") %>% toupper,
-#'        subtitle = glue("{cntry} | {metadata$curr_fy_lab} cumulative mechanism results"),
+#'   labs(title = glue("Upward trend in TX_NEW results thru {meta$curr_qtr} quarters") %>% toupper,
+#'        subtitle = glue("{cntry} | {meta$curr_fy_lab} cumulative mechanism results"),
 #'        x = NULL, y = NULL,
-#'        caption = glue("{metadata$caption}")) }
+#'        caption = glue("{meta$caption}")) }
 #'
 get_metadata <- function(path, type, caption_note){
 
