@@ -172,7 +172,7 @@ extract_metadata <- function(path, type){
     stop("File/folder do not exist or path is not correct.")
 
   if(file.info(path)$isdir && missing(type))
-    type <- "OU_IM_FY22"
+    type <- "OU_IM_FY2"
 
   if(file.info(path)$isdir)
     path <- glamr::return_latest(path, type)
