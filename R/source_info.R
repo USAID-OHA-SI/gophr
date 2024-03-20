@@ -163,9 +163,6 @@ get_metadata <- function(path, type, caption_note){
 #'
 extract_metadata <- function(path, type){
 
-  if(grepl("\\d{8}", path))
-    stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
-
   if(missing(path) && is.null(getOption("path_msd")))
     stop("No path to a file or folder was provided.")
 
@@ -190,6 +187,9 @@ extract_metadata <- function(path, type){
                                 stringr::str_detect(file_name, "MER_Structured_Datasets") ~ "MSD",
                                 stringr::str_detect(file_name, "MER_Structured_TRAINING_Datasets") ~ "Faux Training MSD",
                                 stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
+
+  if(!grepl("\\d{8}", file_name))
+    stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
 
   #capture the dataset date for use in figuring out relvant FY period
   file_date <- ifelse(stringr::str_detect(file_name, "Genie"),
