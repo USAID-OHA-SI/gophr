@@ -163,6 +163,9 @@ get_metadata <- function(path, type, caption_note){
 #'
 extract_metadata <- function(path, type){
 
+  if(grepl("\\d{8}", path))
+    stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
+
   if(missing(path) && is.null(getOption("path_msd")))
     stop("No path to a file or folder was provided.")
 
