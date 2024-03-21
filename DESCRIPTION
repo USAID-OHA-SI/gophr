@@ -1,6 +1,6 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
-Version: 3.3.0
+Version: 3.3.1
 Authors@R: c(
     person("Aaron", "Chafetz", ,"achafetz@usaid.gov", c("aut", "cre")),
     person("Baboyma", "Kagniniwa", , "bkagniniwa@usaid.gov", c("aut"))
@@ -25,7 +25,8 @@ Imports:
     tidyr,
     tools,
     usethis,
-    vroom
+    vroom,
+    jsonlite
 Suggests: 
     testthat (>= 3.0.0)
 Remotes: 

@@ -1,6 +1,7 @@
 # gophr 3.3
+* Clean up dependencies list [2024-03-20]
 * Add additional check to PSD file parsing with `get_metadata` to ensure the naming is correct, namely an ISO date is included in teh file name [2024-03-20]
-* Change return with `get_metadata` exporting a global object to returning a normal object a user must name [2024-03-20]
+* Breaking change - change return with `get_metadata` exporting a global object to returning a normal object a user must name [2024-03-20]
 
 # gophr 3.2
 * Update `get_metadata` to handle the new fiscal year introduce in FY24Q1i [2024-02-26]
