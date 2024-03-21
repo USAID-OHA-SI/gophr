@@ -7,7 +7,7 @@
 apply_funding_type(df)
 }
 \arguments{
-\item{df}{}
+\item{df}{Financial Structured Dataset data frame}
 }
 \value{
 a new column, funding_type

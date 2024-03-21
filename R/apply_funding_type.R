@@ -4,7 +4,7 @@
 #' whether funding or staffing are counted as "service delivery" or "non-service
 #' delivery"
 #'
-#' @param df
+#' @param df Financial Structured Dataset data frame
 #'
 #' @return a new column, funding_type
 #' @export
