@@ -25,7 +25,6 @@ navbar:
 reference:
 - title: Structure
   contents:
-  - read_msd
   - read_psd
   - reshape_msd
   - pluck_totals
@@ -44,6 +43,12 @@ reference:
   - adorn_achievement
   - calc_achievement
 
+- title: Metadata
+  contents:
+  - get_metadata
+  - identifypd
+  - identify_psd
+
 - title: Financial
   contents:
   - apply_funding_type
@@ -57,15 +62,13 @@ reference:
   - browse_knownissues
   - resolve_knownissues
 
-- title: Utilities
-  contents:
-  - identifypd
-  - identify_psd
-  - get_metadata
-  - source_info
-
 - title: Data
   contents:
   - snapshot_ind
   - cascade_ind
+
+- title: Depricated
+  contents:
+  - read_msd
+  - source_info
 
