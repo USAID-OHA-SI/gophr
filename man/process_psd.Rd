@@ -12,11 +12,14 @@ process_psd(
 )
 }
 \arguments{
-\item{file}{enter the full path to the PEPFAR Structured Dataset file}
+\item{file}{enter the full path to the PEPFAR structured dataset file}
 
 \item{save_rds}{save the Structured Dataset as an rds file, default = FALSE}
 
 \item{remove_txt}{should the txt file be removed, default = FALSE}
+
+\item{convert_to_old_names}{replace FY22Q2 naming convention with old?
+default = FALSE}
 }
 \description{
 Processing to handle PSD as a zip/txt file

@@ -15,24 +15,18 @@ read_msd <-
            convert_to_old_names = FALSE) {
 
     #depricate
-    lifecycle::deprecate_warn("3.2.0", "read_msd()", "read_psd()")
-
-    read_psd(file, save_rds, remove_txt, convert_to_old_names)
+    lifecycle::deprecate_stop(when = "3.2.0", "read_msd()", "read_psd()")
   }
 
-#' Import PEPFAR Structured Datasets .txt into R and covert to .rds
+#' Import PEPFAR Structured Datasets to R
 #'
-#' `read_psd` imports a stored PEPFAR Structured Datasets and
-#' coverts it from a .txt to an .Rds to significantly limit file size. Files can
-#' be read directly from a zipped file.
-#'
-#' The benefit of `read_psd` is that it will read in a MSD, Genie, Financial or
+#' `read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
+#' .parquet). The function will read in a MSD, Genie, Financial or
 #' HRH PEPFAR dataset, ensuring the column types are correct. The user has the
 #' ability to store the txt file as a rds, significantly saving storage space
-#' on the computer (and can then remove the txt file after importing).
-#'
-#' Most of USAID/OHA processes and analyses rely on the use of the MSD file
-#' being read in via `read_psd`
+#' on the computer (and can then remove the txt file after importing). Most of
+#' USAID/OHA processes and analyses rely on the use of the MSD file being read
+#' in via `read_psd`
 #'
 #' @export
 #' @param file enter the full path to the PEPFAR structured dataset file
@@ -46,8 +40,8 @@ read_msd <-
 #'\dontrun{
 #'#convert Q1 clean PSNU file from txt to Rds
 #'#read in file for use
-#'  path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
-#'  df_psnu <- read_msd(path)
+#'  path <- "~/Data/MER_Structured_Datasets_OU_IM_FY22-24_20240315_v2_1.zip"
+#'  df_psnu <- read_psd(path)
 #'#convert to RDS and delete the original txt file
 #'  read_psd(path, save_rds = TRUE, remove_txt = TRUE) }
 #'
@@ -70,9 +64,7 @@ read_psd <-
 
 #' Processing to handle PSD as a zip/txt file
 #'
-#' @param file enter the full path to the PEPFAR Structured Dataset file
-#' @param save_rds save the Structured Dataset as an rds file, default = FALSE
-#' @param remove_txt should the txt file be removed, default = FALSE
+#' @inheritParams read_psd
 #'
 #' @keywords internal
 #'
@@ -80,8 +72,14 @@ process_psd <- function(file,
                         save_rds = FALSE,
                         remove_txt = FALSE,
                         convert_to_old_names = FALSE){
+  #file type
+  file_type <- ifelse(tools::file_ext(file) == "parquet", "parquet", "tsv")
+
   #import
-  df <- vroom::vroom(file, delim = "\t", col_types = c(.default = "c"))
+  df <- switch(file_type,
+               "parquet" = handle_parquet(file),
+               "tsv" = vroom::vroom(file, delim = "\t", col_types = c(.default = "c"))
+  )
 
   #drop Genie variables
   vars_genie <- c("dataelementuid", "categoryoptioncombouid",
@@ -122,8 +120,7 @@ process_psd <- function(file,
 
 #' Rename PSD file when importing
 #'
-#' @param file enter the full path to the PEPFAR Structured Dataset file,
-#' eg "~/ICPI/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
+#' @inheritParams read_psd
 #'
 #' @keywords internal
 
@@ -266,3 +263,24 @@ convert_coltype <- function(df){
 
   return(df)
 }
+
+
+#' Read a parquet file
+#'
+#' @inheritParams read_psd
+#' @keywords internal
+#'
+handle_parquet <- function(file){
+
+  if(!requireNamespace("arrow", quietly = TRUE))
+    usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Install {usethis::ui_field('arrow')} from CRAN before proceeding.")
+
+  df <- arrow::read_parquet(file)
+
+  df <- dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
+
+  return(df)
+}
+
+
+
