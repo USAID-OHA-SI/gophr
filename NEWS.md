@@ -1,5 +1,6 @@
 # gophr 4.0
-* Fully depricate `read_msd()` [2024-03-28]
+* Update `read_psd` to handle .parquet files which are stored on PEPFAR Posit Workbench [2024-03-08]
+* Fully depricate `read_msd` [2024-03-28]
 
 # gophr 3.3
 * Clean up dependencies list [2024-03-20]
