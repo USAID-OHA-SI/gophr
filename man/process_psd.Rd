@@ -4,13 +4,13 @@
 \alias{process_psd}
 \title{Processing to handle PSD as a zip/txt file}
 \usage{
-process_psd(file, export_format, remove_base_file = FALSE)
+process_psd(file, export_format = export_format, remove_base_file = FALSE)
 }
 \arguments{
 \item{file}{enter the full path to the PEPFAR structured dataset file}
 
 \item{export_format}{if desired, save the PSD in another compressed format,
-either "rds" or "parquet", default = not reexported}
+either "rds" or "parquet", default = "none"}
 
 \item{remove_base_file}{should original base file be removed if exporting in
 another compressed format? default = FALSE}

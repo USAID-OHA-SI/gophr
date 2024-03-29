@@ -32,7 +32,7 @@ read_msd <-
 #'
 #' @param file enter the full path to the PEPFAR structured dataset file
 #' @param export_format if desired, save the PSD in another compressed format,
-#'   either "rds" or "parquet", default = not reexported
+#'   either "rds" or "parquet", default = "none"
 #' @param remove_base_file should original base file be removed if exporting in
 #'   another compressed format? default = FALSE
 #'
@@ -46,7 +46,7 @@ read_msd <-
 #'
 read_psd <-
   function(file,
-           export_format,
+           export_format = "none",
            remove_base_file = FALSE){
 
     file_type <- ifelse(tools::file_ext(file) == "rds", "already_rds", "raw_txt")
@@ -66,7 +66,7 @@ read_psd <-
 #' @keywords internal
 #'
 process_psd <- function(file,
-                        export_format,
+                        export_format = export_format,
                         remove_base_file = FALSE){
   #file type
   file_type <- ifelse(tools::file_ext(file) == "parquet", "parquet", "tsv")
@@ -84,13 +84,13 @@ process_psd <- function(file,
   df <- convert_coltype(df)
 
   #save as rds
-  if (export_format == "rds"){
+  if(export_format == "rds"){
     newfile <- rename_psd(file)
     saveRDS(df, newfile)
   }
 
   #save as parquet
-  if (export_format == "parquet"){
+  if(export_format == "parquet"){
     if(!requireNamespace("arrow", quietly = TRUE))
       usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Install {usethis::ui_field('arrow')} from CRAN before proceeding.")
     newfile <- rename_psd(file)
