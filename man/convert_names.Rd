@@ -2,20 +2,14 @@
 % Please edit documentation in R/read_psd.R
 \name{convert_names}
 \alias{convert_names}
-\title{Convert variables back to old names if desired}
+\title{Convert variables for alignment}
 \usage{
-convert_names(df, keep_old_names = FALSE)
+convert_names(df)
 }
 \arguments{
 \item{df}{data frame from read_psd()}
-
-\item{keep_old_names}{replace FY22Q2 naming convention with old? default = F}
 }
 \description{
-With the new changes to names introduced in FY22Q2, a user may have a desire
-to keep the old naming convention in order to run old code without errors. To
-do so, the user would specify `keep_old_names = TRUE`. Alternatively, if a
-user reads in an older MSD, this function will default switch those names to
-the current standard.
+Convert variables for alignment
 }
 \keyword{internal}

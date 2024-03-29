@@ -4,10 +4,12 @@
 \alias{rename_psd}
 \title{Rename PSD file when importing}
 \usage{
-rename_psd(file)
+rename_psd(file, ext)
 }
 \arguments{
 \item{file}{enter the full path to the PEPFAR structured dataset file}
+
+\item{ext}{new file extention}
 }
 \description{
 Rename PSD file when importing

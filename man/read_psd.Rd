@@ -4,22 +4,16 @@
 \alias{read_psd}
 \title{Import PEPFAR Structured Datasets to R}
 \usage{
-read_psd(
-  file,
-  save_rds = FALSE,
-  remove_txt = FALSE,
-  convert_to_old_names = FALSE
-)
+read_psd(file, export_format, remove_base_file = FALSE)
 }
 \arguments{
 \item{file}{enter the full path to the PEPFAR structured dataset file}
 
-\item{save_rds}{save the Structured Dataset as an rds file, default = FALSE}
+\item{export_format}{if desired, save the PSD in another compressed format,
+either "rds" or "parquet", default = not reexported}
 
-\item{remove_txt}{should the txt file be removed, default = FALSE}
-
-\item{convert_to_old_names}{replace FY22Q2 naming convention with old?
-default = FALSE}
+\item{remove_base_file}{should original base file be removed if exporting in
+another compressed format? default = FALSE}
 }
 \description{
 `read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
@@ -36,8 +30,6 @@ in via `read_psd`
 #convert Q1 clean PSNU file from txt to Rds
 #read in file for use
  path <- "~/Data/MER_Structured_Datasets_OU_IM_FY22-24_20240315_v2_1.zip"
- df_psnu <- read_psd(path)
-#convert to RDS and delete the original txt file
- read_psd(path, save_rds = TRUE, remove_txt = TRUE) }
+ df_psnu <- read_psd(path) }
 
 }
