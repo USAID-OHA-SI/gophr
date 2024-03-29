@@ -1,3 +1,6 @@
+# gophr 4.0
+* Fully depricate `read_msd()` [2024-03-28]
+
 # gophr 3.3
 * Clean up dependencies list [2024-03-20]
 * Add additional check to PSD file parsing with `get_metadata` to ensure the naming is correct, namely an ISO date is included in teh file name [2024-03-20]
