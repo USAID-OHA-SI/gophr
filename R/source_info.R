@@ -45,6 +45,8 @@
 #'   labs(caption = glue("Source: {source_info()}")) }
 source_info <- function(path, type, return = "source"){
 
+  lifecycle::deprecate_soft("4.0.0", "source_info()", "get_metadata()")
+
   #extra all file metadata
   info <- extract_metadata(path, type)
 
