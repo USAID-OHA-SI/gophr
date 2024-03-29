@@ -1,4 +1,5 @@
 # gophr 4.0
+* Remove outdated parameters from `read_psd` and allow to export as .rds or .parquet [2024-03-08]
 * Update `read_psd` to handle .parquet files which are stored on PEPFAR Posit Workbench [2024-03-08]
 * Fully depricate `read_msd` [2024-03-28]
 
