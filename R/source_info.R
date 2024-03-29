@@ -165,20 +165,13 @@ get_metadata <- function(path, type, caption_note){
 #'
 extract_metadata <- function(path, type){
 
-  if(missing(path) && is.null(getOption("path_msd")))
-    stop("No path to a file or folder was provided.")
-
-  if(missing(path))
-    path <- glamr::si_path()
-
-  if(!file.exists(path))
-    stop("File/folder do not exist or path is not correct.")
-
-  if(file.info(path)$isdir && missing(type))
-    type <- "OU_IM_FY2"
-
-  if(file.info(path)$isdir)
-    path <- glamr::return_latest(path, type)
+  r_env <- ifelse(grepl("rstudio-server.*datim.org",
+                        as.list(Sys.info())$nodename),
+                  "data mart", "local")
+  #extract file path
+  path <- switch(r_env,
+                 "local" = extract_path_local(path, type),
+                 "data mart" = extract_path_s3(path, type))
 
   #strip out full filepath to just keep name
   file_name <- basename(path)
@@ -190,25 +183,16 @@ extract_metadata <- function(path, type){
                                 stringr::str_detect(file_name, "MER_Structured_TRAINING_Datasets") ~ "Faux Training MSD",
                                 stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
 
-  if(!grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}", file_name) && !grepl("Recent", file_name))
+  if(!grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}", file_name))
     stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
 
   #capture the dataset date for use in figuring out relvant FY period
-  file_date <- ifelse(stringr::str_detect(file_name, "Genie|Recent"),
-                      file.info(path)$ctime %>% format("%Y-%m-%d"),
-                      stringr::str_extract(file_name, "[:digit:]{8}"))
+  file_date <- dplyr::case_when(stringr::str_detect(file_name, "Genie") ~ file.info(path)$ctime %>% format("%Y-%m-%d") %>% as.character,
+                                stringr::str_detect(file_name, "Recent") ~ stringr::str_extract(file_name, "\\d{4}-\\d{2}-\\d{2}"),
+                                TRUE ~ stringr::str_extract(file_name, "[:digit:]{8}") %>% as.Date("%Y%m%d") %>% as.character)
 
   #depending on the type, create a dataframe with relevant info
-  if(file_type == "Frozen") {
-    #frozen
-    info <- glamr::pepfar_data_calendar %>%
-      dplyr::select(-msd_release) %>%
-      dplyr::filter(as.Date(entry_close) <= file_date) %>%
-      dplyr::slice_tail() %>%
-      dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
-                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
-                    source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
-  } else if(file_type == "Daily") {
+  if(file_type == "Daily") {
     #daily
     info <- glamr::pepfar_data_calendar %>%
       dplyr::select(-msd_release) %>%
@@ -224,15 +208,17 @@ extract_metadata <- function(path, type){
                     period = glue::glue("{fiscal_year_label}Q{quarter}"),
                     source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
   } else {
-    #MSD/FSD/NAT_SUBNAT
+    #MSD/FSD/NAT_SUBNAT/Genie Frozen
     info <- glamr::pepfar_data_calendar %>%
       dplyr::select(-msd_release) %>%
-      dplyr::mutate(entry_close = stringr::str_remove_all(entry_close, "-")) %>%
       dplyr::filter(entry_close <= file_date) %>%
       dplyr::slice_tail() %>%
       dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
                     period = glue::glue("{fiscal_year_label}Q{quarter}"),
-                    source = glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
+                    source = ifelse(file_type == "Frozen",
+                                    glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"),
+                                    glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
+                    )
 
   }
 
@@ -246,4 +232,61 @@ extract_metadata <- function(path, type){
   }
 
   return(info)
+}
+
+
+#' Extract MSD path locally
+#'
+#' @inheritParams extract_metadata
+#'
+#' @keywords internal
+#'
+extract_path_local <- function(path, type){
+
+  if(missing(path) && is.null(getOption("path_msd")))
+    stop("No path to a file or folder was provided.")
+
+  if(missing(path))
+    path <- glamr::si_path()
+
+  if(!file.exists(path))
+    stop("File/folder do not exist or path is not correct.")
+
+  if(file.info(path)$isdir && missing(type))
+    type <- "OU_IM_FY2"
+
+  if(file.info(path)$isdir)
+    path <- glamr::return_latest(path, type)
+
+  return(path)
+}
+
+
+#' Extract MSD path on s3 from Data Mart
+#'
+#' @inheritParams extract_metadata
+#'
+#' @keywords internal
+#'
+extract_path_s3 <- function(path, type){
+
+  if(!requireNamespace("grabr", quietly = TRUE))
+    usethis::ui_stop("Package {usethis::ui_field('grabr')} is required, see - https://usaid-oha-si.github.io/grabr/")
+
+  if(missing(path) && missing(type))
+    type <- "OU_IM_Recent"
+
+  suppressWarnings(
+    path <- grabr::s3_objects(bucket = Sys.getenv("S3_READ"),
+                      prefix = NULL,
+                      access_key = Sys.getenv("AWS_ACCESS_KEY_ID"),
+                      secret_key = Sys.getenv("AWS_SECRET_ACCESS_KEY")) %>%
+      dplyr::filter(stringr::str_detect(key, {{type}})) %>%
+      dplyr::slice_head(n = 1) %>%
+      dplyr::mutate(key_date = stringr::str_replace(key, "_Recent\\.", glue::glue("_Recent-{substr(last_modified, 1, 10)}\\."))) %>%
+      dplyr::pull(key_date)
+  )
+
+
+  return(path)
 }
