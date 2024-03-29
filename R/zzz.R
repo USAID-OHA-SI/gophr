@@ -45,6 +45,8 @@ utils::globalVariables(
     "interaction_type",
     "Is there a specific quarter affected?",
     "Is there an OPU open/pending at this time?",
+    "key",
+    "key_date",
     "Mech ID",
     "mech_code",
     "mech_id",
