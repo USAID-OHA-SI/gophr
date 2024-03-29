@@ -1,4 +1,5 @@
 # gophr 4.0
+* Align handling of Frozen Genie for `get_metdata` with other file formats [2024-03-29]
 * Add handling to `get_metdata` for file names on PEPFAR Posit Workbench that include "Recent" instead of the FYs, DATIM close, and version [2024-03-28] 
 * Soft depricate `source_info` as thsi can be pulled from `get_metadata()$source` [2024-03-08]
 * Remove outdated parameters from `read_psd` and allow to export as .rds or .parquet [2024-03-08]
