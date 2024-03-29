@@ -28,6 +28,7 @@ Imports:
     vroom,
     jsonlite
 Suggests: 
+    arrow,
     testthat (>= 3.0.0)
 Remotes: 
   USAID-OHA-SI/glamr,
