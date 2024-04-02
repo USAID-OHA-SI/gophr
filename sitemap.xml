@@ -70,13 +70,16 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/convert_names.html</loc>
   </url>
   <url>
-    <loc>https://usaid-oha-si.github.io/gophr/reference/convert_oldformat.html</loc>
-  </url>
-  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/extract_datim_names.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/extract_metadata.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/extract_path_local.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/extract_path_s3.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/flag_knownissues.html</loc>
@@ -89,6 +92,9 @@
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/gs_id_knownissues.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/handle_psd_format.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/identify_psd.html</loc>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.0</span>
       </span>
     </div>
 
@@ -53,6 +53,16 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="4.0" id="gophr-40">gophr 4.0<a class="anchor" aria-label="anchor" href="#gophr-40"></a></h2>
+<ul><li>Improve <code>read_psd</code> to handle local paths as well as s3 paths to work on PEPFAR Posit Workbench [2024-04-02]</li>
+<li>Align handling of Frozen Genie for <code>get_metdata</code> with other file formats [2024-03-29]</li>
+<li>Add handling to <code>get_metdata</code> for file names on PEPFAR Posit Workbench that include “Recent” instead of the FYs, DATIM close, and version [2024-03-28]</li>
+<li>Soft depricate <code>source_info</code> as thsi can be pulled from <code>get_metadata()$source</code> [2024-03-08]</li>
+<li>Remove outdated parameters from <code>read_psd</code> and allow to export as .rds or .parquet [2024-03-08]</li>
+<li>Update <code>read_psd</code> to handle .parquet files which are stored on PEPFAR Posit Workbench [2024-03-08]</li>
+<li>Fully depricate <code>read_msd</code> [2024-03-28]</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.3" id="gophr-33">gophr 3.3<a class="anchor" aria-label="anchor" href="#gophr-33"></a></h2>
 <ul><li>Clean up dependencies list [2024-03-20]</li>

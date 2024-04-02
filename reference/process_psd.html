@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.0</span>
       </span>
     </div>
 
@@ -59,26 +59,23 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">process_psd</span><span class="op">(</span></span>
-<span>  <span class="va">file</span>,</span>
-<span>  save_rds <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  remove_txt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  convert_to_old_names <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">process_psd</span><span class="op">(</span><span class="va">file</span>, export_format <span class="op">=</span> <span class="va">export_format</span>, remove_base_file <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>file</dt>
-<dd><p>enter the full path to the PEPFAR Structured Dataset file</p></dd>
+<dd><p>enter the full path to the PEPFAR structured dataset file</p></dd>
 
 
-<dt>save_rds</dt>
-<dd><p>save the Structured Dataset as an rds file, default = FALSE</p></dd>
+<dt>export_format</dt>
+<dd><p>if desired, save the PSD in another compressed format,
+either "rds" or "parquet", default = "none"</p></dd>
 
 
-<dt>remove_txt</dt>
-<dd><p>should the txt file be removed, default = FALSE</p></dd>
+<dt>remove_base_file</dt>
+<dd><p>should original base file be removed if exporting in
+another compressed format? default = FALSE</p></dd>
 
 </dl></div>
 
