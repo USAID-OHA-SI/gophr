@@ -2,47 +2,35 @@
 % Please edit documentation in R/read_psd.R
 \name{read_psd}
 \alias{read_psd}
-\title{Import PEPFAR Structured Datasets .txt into R and covert to .rds}
+\title{Import PEPFAR Structured Datasets to R}
 \usage{
-read_psd(
-  file,
-  save_rds = FALSE,
-  remove_txt = FALSE,
-  convert_to_old_names = FALSE
-)
+read_psd(file, export_format = "none", remove_base_file = FALSE)
 }
 \arguments{
 \item{file}{enter the full path to the PEPFAR structured dataset file}
 
-\item{save_rds}{save the Structured Dataset as an rds file, default = FALSE}
+\item{export_format}{if desired, save the PSD in another compressed format,
+either "rds" or "parquet", default = "none"}
 
-\item{remove_txt}{should the txt file be removed, default = FALSE}
-
-\item{convert_to_old_names}{replace FY22Q2 naming convention with old?
-default = FALSE}
+\item{remove_base_file}{should original base file be removed if exporting in
+another compressed format? default = FALSE}
 }
 \description{
-`read_psd` imports a stored PEPFAR Structured Datasets and
-coverts it from a .txt to an .Rds to significantly limit file size. Files can
-be read directly from a zipped file.
-}
-\details{
-The benefit of `read_psd` is that it will read in a MSD, Genie, Financial or
+`read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
+.parquet). The function will read in a MSD, Genie, Financial or
 HRH PEPFAR dataset, ensuring the column types are correct. The user has the
-ability to store the txt file as a rds, significantly saving storage space
-on the computer (and can then remove the txt file after importing).
-
-Most of USAID/OHA processes and analyses rely on the use of the MSD file
-being read in via `read_psd`
+ability to store the txt file as a rds or parquet file, significantly saving
+storage space on the computer (and can then remove the txt file after
+importing). Most of USAID/OHA processes and analyses rely on the use of
+the MSD file being read in via `read_psd`. This function can be used in the
+PDAP space in addition to working locally.
 }
 \examples{
 
 \dontrun{
 #convert Q1 clean PSNU file from txt to Rds
 #read in file for use
- path <- "~/Data/ICPI_MER_Structured_Dataset_PSNU_20180323_v2_1.txt"
- df_psnu <- read_msd(path)
-#convert to RDS and delete the original txt file
- read_psd(path, save_rds = TRUE, remove_txt = TRUE) }
+ path <- "~/Data/MER_Structured_Datasets_OU_IM_FY22-24_20240315_v2_1.zip"
+ df_psnu <- read_psd(path) }
 
 }
