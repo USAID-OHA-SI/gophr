@@ -92,7 +92,7 @@ process_psd <- function(file,
   #save as parquet
   if(export_format == "parquet"){
     if(!requireNamespace("arrow", quietly = TRUE))
-      usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Install {usethis::ui_field('arrow')} from CRAN before proceeding.")
+      usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Restart session and install {usethis::ui_field('arrow')} from CRAN before proceeding.")
     newfile <- rename_psd(file)
     arrow::write_parquet(df, newfile)
   }
