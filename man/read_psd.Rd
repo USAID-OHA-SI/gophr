@@ -19,10 +19,11 @@ another compressed format? default = FALSE}
 `read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
 .parquet). The function will read in a MSD, Genie, Financial or
 HRH PEPFAR dataset, ensuring the column types are correct. The user has the
-ability to store the txt file as a rds, significantly saving storage space
-on the computer (and can then remove the txt file after importing). Most of
-USAID/OHA processes and analyses rely on the use of the MSD file being read
-in via `read_psd`
+ability to store the txt file as a rds or parquet file, significantly saving
+storage space on the computer (and can then remove the txt file after
+importing). Most of USAID/OHA processes and analyses rely on the use of
+the MSD file being read in via `read_psd`. This function can be used in the
+PDAP space in addition to working locally.
 }
 \examples{
 

@@ -23,10 +23,11 @@ read_msd <-
 #' `read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
 #' .parquet). The function will read in a MSD, Genie, Financial or
 #' HRH PEPFAR dataset, ensuring the column types are correct. The user has the
-#' ability to store the txt file as a rds, significantly saving storage space
-#' on the computer (and can then remove the txt file after importing). Most of
-#' USAID/OHA processes and analyses rely on the use of the MSD file being read
-#' in via `read_psd`
+#' ability to store the txt file as a rds or parquet file, significantly saving
+#' storage space on the computer (and can then remove the txt file after
+#' importing). Most of USAID/OHA processes and analyses rely on the use of
+#' the MSD file being read in via `read_psd`. This function can be used in the
+#' PDAP space in addition to working locally.
 #'
 #' @export
 #'
@@ -68,14 +69,21 @@ read_psd <-
 process_psd <- function(file,
                         export_format = export_format,
                         remove_base_file = FALSE){
-  #file type
-  file_type <- ifelse(tools::file_ext(file) == "parquet", "parquet", "tsv")
+
+  #location
+  file_location <- ifelse(grepl("rstudio-server.*datim.org",
+                                as.list(Sys.info())$nodename),
+                                "pdap", "local")
+
+  if(!requireNamespace("aws.s3", quietly = TRUE))
+    usethis::ui_stop("Package {usethis::ui_field('aws.s3')} is required for importing on PDAP. Restart session and install - {usethis::ui_code('install.packages(\\'aws.s3\\')')}")
 
   #import
-  df <- switch(file_type,
-               "parquet" = handle_parquet(file),
-               "tsv" = vroom::vroom(file, delim = "\t", col_types = c(.default = "c"))
-  )
+  df <- switch(file_location,
+               "local" = handle_psd_format(file),
+               "pdap" = aws.s3::s3read_using(handle_psd_format,
+                                                 bucket = Sys.getenv("S3_READ"),
+                                                 object = file))
 
   #convert new names to old or old to new (changes introduced in FY22Q2)
   df <- convert_names(df)
@@ -92,7 +100,7 @@ process_psd <- function(file,
   #save as parquet
   if(export_format == "parquet"){
     if(!requireNamespace("arrow", quietly = TRUE))
-      usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Restart session and install {usethis::ui_field('arrow')} from CRAN before proceeding.")
+      usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Restart session and install - {usethis::ui_code('install.packages(\\'arrow\\')')}")
     newfile <- rename_psd(file)
     arrow::write_parquet(df, newfile)
   }
@@ -187,22 +195,35 @@ convert_coltype <- function(df){
 }
 
 
-#' Read a parquet file
+#' Read a tsv and parquet file
 #'
 #' @inheritParams read_psd
 #' @keywords internal
 #'
-handle_parquet <- function(file){
+handle_psd_format <- function(file){
 
-  if(!requireNamespace("arrow", quietly = TRUE))
-    usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Install {usethis::ui_field('arrow')} from CRAN before proceeding.")
+  #file type
+  file_type <- sub(".*\\.(.*)$", "\\1", file)
 
-  df <- arrow::read_parquet(file)
+  #check that the file will be parsed
+  acceptable_types <- c("zip", "txt", "parquet")
+  if(!file_type %in% acceptable_types)
+    usethis::ui_stop("The {usethis::ui_value('file')} provided, {usethis::ui_path(basename(file))}, does not match any of the accepted file formats - {usethis::ui_field(acceptable_types)}")
 
-  df <- dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
+  #import tsv format
+  if(file_type %in% c("zip","txt")){
+    df <- vroom::vroom(file, delim = "\t", col_types = c(.default = "c"))
+    return(df)
+  }
 
-  return(df)
+  #check that arrow is installed if handling parquet
+  if(file_type == "parquet" && !requireNamespace("arrow", quietly = TRUE))
+    usethis::ui_stop("Package {usethis::ui_field('arrow')} is required to read a .parquet file. Restart session and install - {usethis::ui_code('install.packages(\\'arrow\\')')}")
+
+  #import parquet and convert all cols to character
+  if(file_type == "parquet"){
+    df <- arrow::read_parquet(file)
+    df <- dplyr::mutate(df, dplyr::across(dplyr::everything(), as.character))
+    return(df)
+  }
 }
-
-
-
