@@ -1,4 +1,5 @@
 # gophr 4.0
+* Resolve bug with `read_psd`, missing second condition about location in an if statement about location [2024-04-09]
 * Improve `read_psd` to handle local paths as well as s3 paths to work on PEPFAR Posit Workbench [2024-04-02]
 * Align handling of Frozen Genie for `get_metdata` with other file formats [2024-03-29]
 * Add handling to `get_metdata` for file names on PEPFAR Posit Workbench that include "Recent" instead of the FYs, DATIM close, and version [2024-03-28] 
