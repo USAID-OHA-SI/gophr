@@ -75,7 +75,7 @@ process_psd <- function(file,
                                 as.list(Sys.info())$nodename),
                                 "pdap", "local")
 
-  if(!requireNamespace("aws.s3", quietly = TRUE))
+  if(file_location == "pdap" && !requireNamespace("aws.s3", quietly = TRUE))
     usethis::ui_stop("Package {usethis::ui_field('aws.s3')} is required for importing on PDAP. Restart session and install - {usethis::ui_code('install.packages(\\'aws.s3\\')')}")
 
   #import
