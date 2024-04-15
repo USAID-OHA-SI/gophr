@@ -1,6 +1,8 @@
 # gophr 4.0
+* Change the delimiter for PDAP txt files as they are separated with a character delimiter (`'|'`) instead of a tab (`'\t'`) [2024-04-15]
+* Resolve bug with `get_metadata` when working on PDAP when an explicit path is provided [2024-04-15]
 * Improve `read_psd` to handle local paths as well as s3 paths to work on PEPFAR Posit Workbench [2024-04-02]
-* Align handling of Frozen Genie for `get_metdata` with other file formats [2024-03-29]
+* Align handling of Frozen Genie for `get_metadata` with other file formats [2024-03-29]
 * Add handling to `get_metdata` for file names on PEPFAR Posit Workbench that include "Recent" instead of the FYs, DATIM close, and version [2024-03-28] 
 * Soft depricate `source_info` as thsi can be pulled from `get_metadata()$source` [2024-03-08]
 * Remove outdated parameters from `read_psd` and allow to export as .rds or .parquet [2024-03-08]
