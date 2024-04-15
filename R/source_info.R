@@ -276,16 +276,20 @@ extract_path_s3 <- function(path, type){
   if(missing(path) && missing(type))
     type <- "OU_IM_Recent"
 
+  search_key <- ifelse(!missing(path), path, type)
+
   suppressWarnings(
-    path <- grabr::s3_objects(bucket = Sys.getenv("S3_READ"),
-                      prefix = NULL,
-                      access_key = Sys.getenv("AWS_ACCESS_KEY_ID"),
-                      secret_key = Sys.getenv("AWS_SECRET_ACCESS_KEY")) %>%
-      dplyr::filter(stringr::str_detect(key, {{type}})) %>%
-      dplyr::slice_head(n = 1) %>%
-      dplyr::mutate(key_date = stringr::str_replace(key, "_Recent\\.", glue::glue("_Recent-{substr(last_modified, 1, 10)}\\."))) %>%
-      dplyr::pull(key_date)
+    assets <- grabr::s3_objects(bucket = Sys.getenv("S3_READ"),
+                                prefix = NULL,
+                                access_key = Sys.getenv("AWS_ACCESS_KEY_ID"),
+                                secret_key = Sys.getenv("AWS_SECRET_ACCESS_KEY"))
   )
+
+  path <- assets %>%
+    dplyr::filter(stringr::str_detect(key, {{search_key}})) %>%
+    dplyr::slice_head(n = 1) %>%
+    dplyr::mutate(key_date = stringr::str_replace(key, "_Recent\\.", glue::glue("_Recent-{substr(last_modified, 1, 10)}\\."))) %>%
+    dplyr::pull(key_date)
 
 
   return(path)

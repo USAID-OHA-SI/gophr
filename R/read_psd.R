@@ -205,6 +205,13 @@ handle_psd_format <- function(file){
   #file type
   file_type <- sub(".*\\.(.*)$", "\\1", file)
 
+  #location
+  file_location <- ifelse(grepl("rstudio-server.*datim.org",
+                                as.list(Sys.info())$nodename),
+                          "pdap", "local")
+  #txt delimiter
+  d <- ifelse(file_type == "txt" & file_location == "pdap", "|", "\t")
+
   #check that the file will be parsed
   acceptable_types <- c("zip", "txt", "parquet")
   if(!file_type %in% acceptable_types)
@@ -212,7 +219,7 @@ handle_psd_format <- function(file){
 
   #import tsv format
   if(file_type %in% c("zip","txt")){
-    df <- vroom::vroom(file, delim = "\t", col_types = c(.default = "c"))
+    df <- vroom::vroom(file, delim = d, col_types = c(.default = "c"))
     return(df)
   }
 
