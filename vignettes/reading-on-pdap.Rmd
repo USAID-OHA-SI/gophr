@@ -24,7 +24,7 @@ Starting in FY24 GHSD/PRIME made a number of Posit Workbench licenses available 
 
 ## Install necessary packages
 
-Before starting, make sure you download the necessary packages. You will note that the install code looks slightly different as we need to specify to look in the OHA/SI CRAN-like repository first as our packages are not stored on CRAN.
+Before starting, make sure you download the necessary packages. You will note that the install code looks slightly different as we need to specify to look in the [OHA/SI CRAN-like repository](https://usaid-oha-si.r-universe.dev/packages) first as our packages are not stored on rOpenSci not CRAN.
 
 ```{r install}
 pkgs <- c("gagglr", "gophr", "glamr", "grabr",
@@ -106,6 +106,48 @@ df_msd <- read_psd(path_msd)
 
 And that's it. You can now run with your normal code now that you have read in the data.
 
+### Standard Workflow Snippet
+
+Below is the [standard snippet](https://gist.github.com/achafetz/366595c418ae1872f880db6ad5bbd132#file-snippet-r) we start our flows with, which now work across local and PEPFAR Posit Workbench environments. For more information on snippet, you can [check out this RStudio guide](https://docs.posit.co/ide/user/ide/guide/productivity/snippets.html). 
+
+```{r snippet}
+# PROJECT:  xYz
+# PURPOSE:  Analyze X and its effect on Y
+# AUTHOR:   S.Power | USAID
+# REF ID:   cad2fd48 
+# LICENSE:  MIT
+# DATE:     2024-01-01
+# UPDATED: 
+
+# DEPENDENCIES ------------------------------------------------------------
+  
+  #general
+  library(tidyverse)
+  library(glue)
+  library(gagglr) ##install.packages('gagglr', repos = c('https://usaid-oha-si.r-universe.dev', 'https://cloud.r-project.org'))
+  
+
+# GLOBAL VARIABLES --------------------------------------------------------
+  
+  ref_id <- "cad2fd48"  #a reference to be places in viz captions 
+  
+  path_msd <-  si_path() %>% return_latest("OU_IM")
+  
+  meta <- get_metadata(path_msd)  #extract MSD metadata
+  
+  
+# IMPORT ------------------------------------------------------------------
+  
+  df_msd <- read_psd(path_msd)
+  
+
+# MUNGE -------------------------------------------------------------------
+
+  df_msd
+
+# VIZ ---------------------------------------------------------------------
+  
+```
 
 
 
