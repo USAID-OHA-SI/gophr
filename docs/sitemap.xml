@@ -4,6 +4,12 @@
     <loc>https://usaid-oha-si.github.io/gophr/404.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/articles/reading-on-pdap.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/authors.html</loc>
   </url>
   <url>
@@ -79,6 +85,12 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/extract_metadata.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/extract_path_local.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/extract_path_s3.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/flag_knownissues.html</loc>
   </url>
   <url>
@@ -91,7 +103,13 @@
     <loc>https://usaid-oha-si.github.io/gophr/reference/gs_id_knownissues.html</loc>
   </url>
   <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/handle_psd_format.html</loc>
+  </url>
+  <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/identifypd.html</loc>
+  </url>
+  <url>
+    <loc>https://usaid-oha-si.github.io/gophr/reference/identify_psd.html</loc>
   </url>
   <url>
     <loc>https://usaid-oha-si.github.io/gophr/reference/index.html</loc>

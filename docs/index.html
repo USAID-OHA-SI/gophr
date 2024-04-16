@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.3</span>
       </span>
     </div>
 
@@ -54,6 +54,18 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/reading-on-pdap.html">Reading in a PSD on PEPFAR Posit Workbench</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
@@ -79,11 +91,12 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-
 <div class="section level2">
 <h2 id="gophr-">gophr <img src="reference/figures/logo.png" align="right" height="120"><a class="anchor" aria-label="anchor" href="#gophr-"></a>
 </h2>
 <p>MER Structured Dataset utilities package</p>
+<!-- badges: start -->
+
 </div>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -93,19 +106,21 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>gophr</code> is not on CRAN, so you will have to install it directly from GitHub using <code>remotes</code>.</p>
-<p>If you do not have <code>remotes</code> installed, you will have to run the <code>install.packages("remotes")</code> line in the code below as well.</p>
+<p><code>gophr</code> is not on CRAN, so you will have to install it directly from <a href="https://usaid-oha-si.r-universe.dev/packages" class="external-link">rOpenSci</a> or <a href="https://github.com/USAID-OHA-SI/" class="external-link">GitHub</a> using the code found below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## SETUP</span></span>
 <span></span>
-<span>  <span class="co">#install package with vignettes</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span>    <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"USAID-OHA-SI/gophr"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="co">#install from rOpenSci</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'gophr'</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'https://usaid-oha-si.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="co">#alt: install from GitHub using pak</span></span>
+<span>    <span class="co">#install.packages("pak")</span></span>
+<span>    <span class="co">#pak::pak("USAID-OHA-SI/gagglr")</span></span>
 <span>    </span>
 <span>  <span class="co">#load the package</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://usaid-oha-si.github.io/gophr/">gophr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">## LIST TYPES OF STYLES INCLUDED WITH PACKAGE</span></span>
+<span><span class="co">## LIST OF FUNCTIONS INCLUDED WITH PACKAGE</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/ls.html" class="external-link">ls</a></span><span class="op">(</span><span class="va">package</span><span class="op">:</span><span class="va">gophr</span><span class="op">)</span></span></code></pre></div>
 <hr>
 <p><em>Disclaimer: The findings, interpretation, and conclusions expressed herein are those of the authors and do not necessarily reflect the views of United States Agency for International Development. All errors remain our own.</em></p>
@@ -142,6 +157,9 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/USAID-OHA-SI/gophr/actions" class="external-link"><img src="https://github.com/USAID-OHA-SI/gophr/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://usaid-oha-si.r-universe.dev/gophr" class="external-link"><img src="https://usaid-oha-si.r-universe.dev/badges/gophr" alt="gophr status badge"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://usaid-oha-si.r-universe.dev/" class="external-link"><img src="https://usaid-oha-si.r-universe.dev/badges/:name" alt=":name status badge"></a></li>
 </ul>
 </div>
 

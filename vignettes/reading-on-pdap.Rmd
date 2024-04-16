@@ -1,8 +1,8 @@
 ---
-title: "Reading in a PSD on PDAP"
+title: "Reading in a PSD on PEPFAR Posit Workbench"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Reading in a PSD on PDAP}
+  %\VignetteIndexEntry{Reading in a PSD on PEPFAR Posit Workbench}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

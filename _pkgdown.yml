@@ -25,7 +25,7 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: Reading in a PSD on PDAP
+      - text: Reading in a PSD on PEPFAR Posit Workbench
         href: articles/reading-on-pdap.html
 
 reference:
