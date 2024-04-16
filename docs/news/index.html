@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.3</span>
       </span>
     </div>
 
@@ -31,6 +31,16 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/reading-on-pdap.html">Reading in a PSD on PEPFAR Posit Workbench</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -54,20 +64,43 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.2.0" id="gophr-320">gophr 3.2.0<a class="anchor" aria-label="anchor" href="#gophr-320"></a></h2>
-<ul><li>Add <code>apply_funding_type</code> for use with FSD or HRH SD to distiguish between service delivery and non-service delivery</li>
+<h2 class="page-header" data-toc-text="4.0" id="gophr-40">gophr 4.0<a class="anchor" aria-label="anchor" href="#gophr-40"></a></h2>
+<ul><li>Add vignette on how to access data in PDAP [2024-04-15]</li>
+<li>Change the delimiter for PDAP txt files as they are separated with a character delimiter (<code>'|'</code>) instead of a tab (<code>'\t'</code>) [2024-04-15]</li>
+<li>Resolve bug with <code>get_metadata</code> when working on PDAP when an explicit path is provided [2024-04-15]</li>
+<li>Resolve bug with <code>read_psd</code>, missing second condition about location in an if statement about location [2024-04-09]</li>
+<li>Improve <code>read_psd</code> to handle local paths as well as s3 paths to work on PEPFAR Posit Workbench [2024-04-02]</li>
+<li>Align handling of Frozen Genie for <code>get_metadata</code> with other file formats [2024-03-29]</li>
+<li>Add handling to <code>get_metdata</code> for file names on PEPFAR Posit Workbench that include “Recent” instead of the FYs, DATIM close, and version [2024-03-28]</li>
+<li>Soft depricate <code>source_info</code> as thsi can be pulled from <code>get_metadata()$source</code> [2024-03-08]</li>
+<li>Remove outdated parameters from <code>read_psd</code> and allow to export as .rds or .parquet [2024-03-08]</li>
+<li>Update <code>read_psd</code> to handle .parquet files which are stored on PEPFAR Posit Workbench [2024-03-08]</li>
+<li>Fully depricate <code>read_msd</code> [2024-03-28]</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.3" id="gophr-33">gophr 3.3<a class="anchor" aria-label="anchor" href="#gophr-33"></a></h2>
+<ul><li>Clean up dependencies list [2024-03-20]</li>
+<li>Add additional check to PSD file parsing with <code>get_metadata</code> to ensure the naming is correct, namely an ISO date is included in teh file name [2024-03-20]</li>
+<li>Breaking change - change return with <code>get_metadata</code> exporting a global object to returning a normal object a user must name [2024-03-20]</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="3.2" id="gophr-32">gophr 3.2<a class="anchor" aria-label="anchor" href="#gophr-32"></a></h2>
+<ul><li>Update <code>get_metadata</code> to handle the new fiscal year introduce in FY24Q1i [2024-02-26]</li>
+<li>Change instructions to install from rOpenSci [2024-01-04]</li>
+<li>Resolve issue with NAs being introduced for <code>targeted_beneficiaries</code> in FSD [2023-10-03]</li>
+<li>Add new function to return the PSD type based on the dataframe names [2023-09-28]</li>
+<li>Setup proper handling of trainging dataset for <code>get_metadata</code> [2023-07-18]</li>
+<li>Adjust FY default searches to reflect new start year of MSDs (FY21) [2023-02-23]</li>
+<li>Add <code>apply_funding_type</code> for use with FSD or HRH SD to distiguish between service delivery and non-service delivery</li>
 <li>Replace <code>read_msd</code> with <code>read_psd</code> to be more inclusive of all of PEFAR’s structured datasets [2023-02-07]</li>
 <li>Allow <code>read_msd</code> to read in HRH structured dataset [2023-02-07]</li>
 <li>Update <code>metadata</code> family functions to get source info for HRH datasets [2023-02-07]</li>
 </ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1.1" id="gophr-311">gophr 3.1.1<a class="anchor" aria-label="anchor" href="#gophr-311"></a></h2>
+<h2 class="page-header" data-toc-text="3.1" id="gophr-31">gophr 3.1<a class="anchor" aria-label="anchor" href="#gophr-31"></a></h2>
 <ul><li>Add new function to store metadata in a list object (<code>get_metadata</code>), rather than returning one item at at time via <code>source_info</code> [2022-10-12]</li>
 <li>Add additional <code>return</code> type for <code>source_info</code> of <code>fiscal_year_label</code> which returns <code>FY[XX]</code> [2022-10-12]</li>
-</ul></div>
-    <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1.0" id="gophr-310">gophr 3.1.0<a class="anchor" aria-label="anchor" href="#gophr-310"></a></h2>
-<ul><li>Resolve misidentified “provisional” status of Daily Genie files downloaded after DATIM close [2022-08-22]</li>
+<li>Resolve misidentified “provisional” status of Daily Genie files downloaded after DATIM close [2022-08-22]</li>
 <li>Migrate MSD/FSD related function from <code>glamr</code> to <code>gophr</code>: <code>apply_partner_type</code>, <code>browse_knownissues</code>, <code>clean_agency</code>, <code>clean_column</code>, <code>clean_indicator</code>, <code>clean_psnu</code>, <code>pluck_totals</code>, <code>remove_centralsupport</code>, <code>remove_mo</code>, <code>remove_sch</code>, <code>resolve_knownissues</code>, <code>source_info</code> [2022-08-05]</li>
 </ul></div>
     <div class="section level2">

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.3</span>
       </span>
     </div>
 
@@ -31,6 +31,16 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/reading-on-pdap.html">Reading in a PSD on PEPFAR Posit Workbench</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -57,13 +67,9 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="read_msd.html">read_msd()</a></code> </p>
-        </td>
-        <td><p>Import PEPFAR Structured Datasets .txt into R and covert to .rds</p></td>
-      </tr><tr><td>
           <p><code><a href="read_psd.html">read_psd()</a></code> </p>
         </td>
-        <td><p>Import PEPFAR Structured Datasets .txt into R and covert to .rds</p></td>
+        <td><p>Import PEPFAR Structured Datasets to R</p></td>
       </tr><tr><td>
           <p><code><a href="reshape_msd.html">reshape_msd()</a></code> </p>
         </td>
@@ -83,11 +89,7 @@
       </tr></tbody><tbody><tr><td>
           <p><code><a href="clean_agency.html">clean_agency()</a></code> </p>
         </td>
-        <td><p>Clean data from funding agency column
-
-This function converts all funding agency names to upper case removes
-the HHS prefix for those agencies
-and moves State and USAID subsidiaries under their parent agencies</p></td>
+        <td><p>Clean data from funding agency column</p></td>
       </tr><tr><td>
           <p><code><a href="clean_column.html">clean_column()</a></code> </p>
         </td>
@@ -116,6 +118,22 @@ and moves State and USAID subsidiaries under their parent agencies</p></td>
           <p><code><a href="calc_achievement.html">calc_achievement()</a></code> </p>
         </td>
         <td><p>Calculate Achievement</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="metadata">Metadata <a href="#metadata" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="get_metadata.html">get_metadata()</a></code> </p>
+        </td>
+        <td><p>Extract MSD Meta Data</p></td>
+      </tr><tr><td>
+          <p><code><a href="identifypd.html">identifypd()</a></code> </p>
+        </td>
+        <td><p>Extract Current Reporting Period</p></td>
+      </tr><tr><td>
+          <p><code><a href="identify_psd.html">identify_psd()</a></code> </p>
+        </td>
+        <td><p>Identify PSD Data Stream and Level</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="financial">Financial <a href="#financial" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -153,22 +171,6 @@ and moves State and USAID subsidiaries under their parent agencies</p></td>
         </td>
         <td><p>Resolve Known Issues</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
-          <h2 id="utilities">Utilities <a href="#utilities" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr></tbody><tbody><tr><td>
-          <p><code><a href="identifypd.html">identifypd()</a></code> </p>
-        </td>
-        <td><p>Extract Current Reporting Period</p></td>
-      </tr><tr><td>
-          <p><code><a href="get_metadata.html">get_metadata()</a></code> </p>
-        </td>
-        <td><p>Extract MSD Meta Data</p></td>
-      </tr><tr><td>
-          <p><code><a href="source_info.html">source_info()</a></code> </p>
-        </td>
-        <td><p>Extract MSD Source Information</p></td>
-      </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="data">Data <a href="#data" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
         </th>
@@ -180,6 +182,18 @@ and moves State and USAID subsidiaries under their parent agencies</p></td>
           <p><code><a href="cascade_ind.html">cascade_ind</a></code> </p>
         </td>
         <td><p>MER Clinical Cascade indicators</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="depricated">Depricated <a href="#depricated" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="read_msd.html">read_msd()</a></code> </p>
+        </td>
+        <td><p>Import PEPFAR Structured Datasets .txt into R and covert to .rds</p></td>
+      </tr><tr><td>
+          <p><code><a href="source_info.html">source_info()</a></code> </p>
+        </td>
+        <td><p>Extract MSD Source Information</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

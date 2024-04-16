@@ -1,0 +1,154 @@
+---
+title: "Reading in a PSD on PEPFAR Posit Workbench"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reading in a PSD on PEPFAR Posit Workbench}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  echo = TRUE,
+  eval = FALSE
+)
+```
+
+## Introduction
+
+Starting in FY24 GHSD/PRIME made a number of Posit Workbench licenses available to scope capabilities and potential projects. Working on Workbench is very similar to working locally, but one of the main difference comes from how data accessed in the first place. We have adapted some our of OHA workflow functions to work seamlessly across environments to (1) reduce the friction of use and (2) allow you to pick up your work in any location. 
+
+[PEPFAR Workbench](https://statedev.okta.com/) is accessible through the Okta portal. The GHSD/PRIME team has developed a [reference guide](https://github.com/pepfar-datim/pdaprules/blob/main/vignettes/package_vignette_developers.Rmd) and [video tutorial](https://pepfar.sharepoint.com/:f:/r/sites/ICPI/Shared%20Documents/Clusters/OCB/Resources/R-Studio%20Onboarding%20Video?csf=1&web=1&e=WDDgh2) for getting started with PEPFAR Workbench.
+
+## Install necessary packages
+
+Before starting, make sure you download the necessary packages. You will note that the install code looks slightly different as we need to specify to look in the [OHA/SI CRAN-like repository](https://usaid-oha-si.r-universe.dev/packages) first as our packages are not stored on rOpenSci not CRAN.
+
+```{r install}
+pkgs <- c("gagglr", "gophr", "glamr", "grabr",
+          "tidyverse", "aws.s3")
+install.packages(pkgs, repos = c('https://usaid-oha-si.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+#Load packages
+```{r setup}
+library(tidyverse)
+library(aws.s3)
+library(gagglr) #like tidyverse, this loads the other OHA functions
+```
+
+
+## How does this work
+
+One of the benefit of working with Posit Workbench is that you don't need to manually download all the PEPFAR Structured Datasets (PSDs) you use from PEPFAR Panorama twice a quarter. Instead PRIME loads these datasets from iHub to an AWS S3 bucket that you are given access to when you Workbench account is provisioned. You will use the AWS keys you are given with the provisioning of your account that are stored as Environment Variables in your Workbench instance.
+
+```{r creds, eval = FALSE}
+#AWS buckets where data are stored
+Sys.getenv("S3_READ") #PSD data from iHub loaded twice a quarter
+Sys.getenv("S3_WRITE") #an agency specific bucket/folder that you have access to add to
+
+#AWS credentials (don't share these)
+Sys.getenv("AWS_ACCESS_KEY_ID")
+Sys.getenv("AWS_SECRET_ACCESS_KEY")
+```
+
+To access data on AWS, you can use the `aws.s3` package. Once you pass in the bucket and your credentials which are stored as Environment Variables, `get_bucket_df` will return a data frame of all the PSDs available in the `Key` column.
+
+```{r id_assets}
+assets <- get_bucket_df(bucket = Sys.getenv("S3_READ"), 
+              key = Sys.getenv("AWS_ACCESS_KEY_ID"), 
+              secret = Sys.getenv("AWS_SECRET_ACCESS_KEY")) |>
+  as_tibble()
+```
+If we wanted to use the OUxIM dataset, we could then filter down the files to just the one that matches  "OU_IM_Recent.txt", extract the path (`Key`) and then run this through another `aws.s3` function to read the file from the cloud bucket.
+
+```{r s3_base_read}
+path <- assets |>
+  filter(stringr::str_detect(Key, "OU_IM_Recent.txt")) |>
+  pull(Key)
+
+df_msd <- s3read_using(FUN = read_delim,  
+                       delim = "|", col_types = cols(.default = "c"), 
+                       bucket = Sys.getenv("S3_READ"),
+                       object = path)
+```
+
+**NOTE** There are a few things to note about the files on s3. 
+  - 1. File names do not match the files produced for Panorama. Instead of having the fiscal years covered, DATIM close date, and version (indicating initial or clean), the PSD files on s3 replace this information with simply "Recent"
+  - 1. While files may be stored as `.txt` files like the ones you are used to seeing zipped from Panorama, instead of having a tab delimiter as historically has been done (`'\t'`), these files use a character delimiter, `'|'`.
+  - 1. Each file name is stored as two different file types, `.txt` and `.parquet`, so you need to be explicit about which you want to use (we recommend `.parquet` as they are quicker to load in).
+  
+## Enter OHA functions
+
+While this process is not terribly onerous, it does require a bit more thought and likely some copying and pasting from an existing script. Furthermore, the workflow varies a bit from our [standard workflow](https://gist.github.com/achafetz/366595c418ae1872f880db6ad5bbd132#file-snippet-r-L149-L181), making it a bit difficult to bounce back and forth between your local environment and Workbench. We have updated our standard script setup to work seamlessly between these two states.
+
+One of the first things we do when we start off a standard script to work with a PSD is to identify it's path using two functions from `glamr`: `si_path()` and `return_latest()`. These two function locally allow us to easily collaborate and avoid the need to hard code any file paths in, as our PSDs are typically stored in a central folder on our computer and not within each project. The `si_path()` function locally need to be set first, where you pass in the path to your data folder one time and from there on out can use it across your scripts. On PEPFAR Workbench, the standard path is by default set to the `S3_READ` bucket and just works; it recognizes when you are on the PEPFAR Workbench server and handles it accordingly. The same is similar with `return_latest()`, which looks at the folder path and provides the latest file that matches the pattern your provide. By default it searches for "OU_IM" locally and when it recognizes you are working from PEPFAR Workbench, it looks for "OU_IM_Recent" if not path or pattern are provided. As a result, you can just run the following code on either your local machine or Workbench environment and it will work as intended. Note that in s3, there are both `.txt` and `.parquet` files and adding these extensions to your pattern parameter will help your search.
+
+```{r si_path}
+#we recommend using the parquet file
+path_msd <-  si_path() %>% return_latest("OU_IM.*parquet")
+```
+
+Next up, we typically extract the meta data information from the file to have on hand for inclusion in captions, filtering for the current fiscal year, etc, etc. When working with `get_metadata()` from `gophr`, the function locally extracts the information from the file name, e.g. "MER_Structured_Datasets_PSNU_IM_FY22-24_20240315_v2_1". However on s3, this same file is stored as "MER_Structured_Datasets_PSNU_IM_Recent". So instead of extracting this information from the name, we need to extract this from from the information stored in the s3 bucket about when it was uploaded and map that against the PEPFPAR Data Calendar (`glamr::pepfar_data_calendar`). This is also done on the fly by `gophr` based on the environment and you, the user, don't have to do anything differently.
+
+```{r meta}
+meta <- get_metadata(path_msd) 
+```
+
+Last and not least is loading the data into your session. We saw earlier that this require a slightly different approach with both using `aws.s3::s3read_using()` and required a different delimiter if reading in the `.txt` file. With `read_psd` from `gophr`, the PSD file will be read in from the path, whether it is a `.txt`, `.zip` or `.parquet` and whether you are working locally or on Workbench. This function does the heavy lift for you behind the scene, making your life easier and allows you to use the same code regardless of the environment you are in.
+
+```{r read_psd}
+df_msd <- read_psd(path_msd)
+
+```
+
+And that's it. You can now run with your normal code now that you have read in the data.
+
+### Standard Workflow Snippet
+
+Below is the [standard snippet](https://gist.github.com/achafetz/366595c418ae1872f880db6ad5bbd132#file-snippet-r) we start our flows with, which now work across local and PEPFAR Posit Workbench environments. For more information on snippet, you can [check out this RStudio guide](https://docs.posit.co/ide/user/ide/guide/productivity/snippets.html). 
+
+```{r snippet}
+# PROJECT:  xYz
+# PURPOSE:  Analyze X and its effect on Y
+# AUTHOR:   S.Power | USAID
+# REF ID:   cad2fd48 
+# LICENSE:  MIT
+# DATE:     2024-01-01
+# UPDATED: 
+
+# DEPENDENCIES ------------------------------------------------------------
+  
+  #general
+  library(tidyverse)
+  library(glue)
+  library(gagglr) ##install.packages('gagglr', repos = c('https://usaid-oha-si.r-universe.dev', 'https://cloud.r-project.org'))
+  
+
+# GLOBAL VARIABLES --------------------------------------------------------
+  
+  ref_id <- "cad2fd48"  #a reference to be places in viz captions 
+  
+  path_msd <-  si_path() %>% return_latest("OU_IM")
+  
+  meta <- get_metadata(path_msd)  #extract MSD metadata
+  
+  
+# IMPORT ------------------------------------------------------------------
+  
+  df_msd <- read_psd(path_msd)
+  
+
+# MUNGE -------------------------------------------------------------------
+
+  df_msd
+
+# VIZ ---------------------------------------------------------------------
+  
+```
+
+
+
+  

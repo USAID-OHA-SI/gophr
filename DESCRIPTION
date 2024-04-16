@@ -1,6 +1,6 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
-Version: 4.0.2
+Version: 4.0.3
 Authors@R: c(
     person("Aaron", "Chafetz", ,"achafetz@usaid.gov", c("aut", "cre")),
     person("Baboyma", "Kagniniwa", , "bkagniniwa@usaid.gov", c("aut"))
@@ -30,6 +30,8 @@ Imports:
 Suggests: 
     arrow,
     aws.s3,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Remotes: 
   USAID-OHA-SI/glamr,
@@ -41,3 +43,4 @@ RoxygenNote: 7.3.1
 URL: https://usaid-oha-si.github.io/gophr/
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+VignetteBuilder: knitr

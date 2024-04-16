@@ -1,4 +1,5 @@
 # gophr 4.0
+* Add vignette on how to access data in PDAP [2024-04-15]
 * Change the delimiter for PDAP txt files as they are separated with a character delimiter (`'|'`) instead of a tab (`'\t'`) [2024-04-15]
 * Resolve bug with `get_metadata` when working on PDAP when an explicit path is provided [2024-04-15]
 * Resolve bug with `read_psd`, missing second condition about location in an if statement about location [2024-04-09]
