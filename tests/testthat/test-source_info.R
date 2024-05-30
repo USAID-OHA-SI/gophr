@@ -15,11 +15,13 @@
 #     "MER_Structured_TRAINING_Datasets_PSNU_IM_FY59-61_20240215_v1_1.zip",
 #     "Genie-SiteByIMs-Western-Hemisphere-Region-Daily-2024-02-22.zip",
 #     "Genie-OUByIMs-Tanzania-Frozen-2024-02-16.zip",
+#     "PDAPWave-PSNUByIMs-Tanzania-Frozen-2024-05-30.zip",
+#     "PDAPWave-PSNUByIMs-Tanzania-Daily-2024-05-30.zip",
 #     "MSD_OU_IM_test.zip"
 #   )
 #
 #   expect_setequal(grepl("Structured_.*Datasets",names),
-#                   c(rep(TRUE, 10), rep(FALSE, 3))
+#                   c(rep(TRUE, 14), rep(FALSE, 3))
 #                   )
 #
 # })
@@ -42,11 +44,13 @@ test_that("filename has standard fy and date", {
     "MER_Structured_TRAINING_Datasets_PSNU_IM_FY59-61_20240215_v1_1.zip",
     "Genie-SiteByIMs-Western-Hemisphere-Region-Daily-2024-02-22.zip",
     "Genie-OUByIMs-Tanzania-Frozen-2024-02-16.zip",
+    "PDAPWave-PSNUByIMs-Tanzania-Frozen-2024-05-30.zip",
+    "PDAPWave-PSNUByIMs-Tanzania-Daily-2024-05-30.zip",
     "MSD_OU_IM_test.zip"
   )
 
   expect_setequal(grepl("(FY|COP)\\d{2}-\\d{2}_\\d{8}",names),
-                  c(rep(TRUE, 12), rep(FALSE, 1))
+                  c(rep(TRUE, 14), rep(FALSE, 1))
   )
 
 })
@@ -69,11 +73,13 @@ test_that("filename has standard date", {
     "MER_Structured_TRAINING_Datasets_PSNU_IM_FY59-61_20240215_v1_1.zip",
     "Genie-SiteByIMs-Western-Hemisphere-Region-Daily-2024-02-22.zip",
     "Genie-OUByIMs-Tanzania-Frozen-2024-02-16.zip",
+    "PDAPWave-PSNUByIMs-Tanzania-Frozen-2024-05-30.zip",
+    "PDAPWave-PSNUByIMs-Tanzania-Daily-2024-05-30.zip",
     "MSD_OU_IM_test.zip"
   )
 
   expect_setequal(grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}",names),
-                  c(rep(TRUE, 12), rep(FALSE, 1))
+                  c(rep(TRUE, 14), rep(FALSE, 1))
   )
 
 })

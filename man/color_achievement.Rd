@@ -10,8 +10,6 @@ color_achievement(df, curr_qtr = NULL)
 \item{df}{MSD dataframe}
 
 \item{curr_qtr}{if wide MSD, need to specify the curren period, defaults to Q4}
-
-\item{input_type}{whether to handle 'achievement' or 'achievement_qtrly'}
 }
 \value{
 dataframe with achievement colors and labels

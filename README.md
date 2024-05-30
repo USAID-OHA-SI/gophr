@@ -23,7 +23,7 @@ The function herewithin are a set of utility functions related to working with t
 ## SETUP
 
   #install from rOpenSci
-    install.packages('gophr', repos = c('https://usaid-oha-si.r-universe.dev', 'https://cloud.r-project.org'))
+    install.packages('gophr', repos = c('https://usaid-oha-si.r-universe.dev', getOption("repos")))
     
   #alt: install from GitHub using pak
     #install.packages("pak")

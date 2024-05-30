@@ -130,7 +130,7 @@ get_metadata <- function(path, type, caption_note){
                glue::glue(' | Ref id: {ref_id}'), "")
 
 
-  cap <- ifelse(!missing(caption_note),
+  cap <- ifelse(!(missing(caption_note) || is.null(caption_note)),
                 glue::glue(' | {caption_note}'), "")
 
   metadata <- info %>%
@@ -177,50 +177,52 @@ extract_metadata <- function(path, type){
   file_name <- basename(path)
 
   #identify the type of file
-  file_type <- dplyr::case_when(stringr::str_detect(file_name, "(Genie|NAT_SUBNAT)") ~ stringr::str_extract(path, "(Frozen|Daily|NAT_SUBNAT)"),
+  file_type <- dplyr::case_when(stringr::str_detect(file_name, "NAT_SUBNAT") ~ "NAT_SUBNAT",
+                                stringr::str_detect(file_name, "Genie") ~ "DATIM Genie",
+                                stringr::str_detect(file_name, "PDAPWave") ~ "PDAP Wave",
                                 stringr::str_detect(file_name, "Fin.*_Structured_Dataset") ~ "FSD",
                                 stringr::str_detect(file_name, "MER_Structured_Datasets") ~ "MSD",
                                 stringr::str_detect(file_name, "MER_Structured_TRAINING_Datasets") ~ "Faux Training MSD",
                                 stringr::str_detect(file_name, "HRH_Structured_Datasets") ~ "HRH")
+  if(is.na(file_type))
+    usethis::ui_stop("Filename does not match PSD structure. Unable to parse.")
 
-  if(!grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}", file_name))
-    stop("ISO date not found in filepath. Check file matches typical PSD naming convention")
+  #add date if missing from the file name (!! may be problematic, ie email old file, download, has download date a created date)
+  if(!grepl("\\d{8}|\\d{4}-\\d{2}-\\d{2}", file_name)){
+    cdate <- file.info(path)$ctime %>% format('%Y-%m-%d') %>% as.character
+    file_name <- stringr::str_replace(file_name, glue::glue("\\.({tools::file_ext(file_name)})"), glue::glue("-{cdate}.\\1"))
+    usethis::ui_info("ISO date not found in filepath. Assuming the pull date is the same as the file creation date - {usethis::ui_field(cdate)}")
+  }
 
-  #capture the dataset date for use in figuring out relvant FY period
-  file_date <- dplyr::case_when(stringr::str_detect(file_name, "Genie") ~ file.info(path)$ctime %>% format("%Y-%m-%d") %>% as.character,
-                                stringr::str_detect(file_name, "Recent") ~ stringr::str_extract(file_name, "\\d{4}-\\d{2}-\\d{2}"),
+  #capture the dataset date for use in figuring out relevant FY period
+  file_date <- dplyr::case_when(stringr::str_detect(file_name, "Genie|Wave|Recent") ~ stringr::str_extract(file_name, "\\d{4}-\\d{2}-\\d{2}"),
                                 TRUE ~ stringr::str_extract(file_name, "[:digit:]{8}") %>% as.Date("%Y%m%d") %>% as.character)
 
-  #depending on the type, create a dataframe with relevant info
-  if(file_type == "Daily") {
-    #daily
-    info <- glamr::pepfar_data_calendar %>%
-      dplyr::select(-msd_release) %>%
-      tidyr::pivot_longer(dplyr::starts_with("entry"),
-                          names_to = "datim_status",
-                          names_prefix = "entry_",
-                          values_to = "date") %>%
-      dplyr::mutate(type = ifelse(datim_status == "open", "provisional", type),
-                    date = as.Date(date)) %>%
-      dplyr::filter(date <= as.Date(file_date)) %>%
-      dplyr::slice_tail() %>%
-      dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
-                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
-                    source = glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"))
-  } else {
-    #MSD/FSD/NAT_SUBNAT/Genie Frozen
-    info <- glamr::pepfar_data_calendar %>%
-      dplyr::select(-msd_release) %>%
-      dplyr::filter(entry_close <= file_date) %>%
-      dplyr::slice_tail() %>%
-      dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
-                    period = glue::glue("{fiscal_year_label}Q{quarter}"),
-                    source = ifelse(file_type == "Frozen",
-                                    glue::glue("{period}{stringr::str_sub(type, end = 1)} DATIM Genie [{file_date}]"),
-                                    glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}"))
-                    )
+  #calendar of DATIM close windows
+  info <- glamr::pepfar_data_calendar %>%
+    dplyr::select(-msd_release) %>%
+    tidyr::pivot_longer(dplyr::starts_with("entry"),
+                        names_to = "datim_status",
+                        names_prefix = "entry_",
+                        values_to = "date") %>%
+    dplyr::mutate(type = ifelse(datim_status == "open", "provisional", type),
+                  date = as.Date(date))
 
-  }
+  #drop provisional window if not using DAILY pull from Genie/PDAP Wave
+  if(stringr::str_detect(file_name, "Daily", negate = TRUE))
+    info <- dplyr::filter(info, type != "provisional")
+
+  #identify the pull date for the caption if using Genie or PDAP Wave
+  pull_date <- ifelse(file_type %in% c("DATIM Genie", "PDAP Wave"),
+                          glue::glue(" [{file_date}]"), "")
+
+  #use the file date to identify the PEPFAR reporting period
+  info <- info %>%
+    dplyr::filter(date <= as.Date(file_date)) %>%
+    dplyr::slice_tail() %>%
+    dplyr::mutate(fiscal_year_label = glue::glue("FY{stringr::str_sub(fiscal_year, -2)}"),
+                  period = glue::glue("{fiscal_year_label}Q{quarter}"),
+                  source = glue::glue("{period}{stringr::str_sub(type, end = 1)} {file_type}{pull_date}"))
 
   #Training dataset
   if(file_type == "Faux Training MSD"){
@@ -243,16 +245,16 @@ extract_metadata <- function(path, type){
 #'
 extract_path_local <- function(path, type){
 
-  if(missing(path) && is.null(getOption("path_msd")))
+  if((missing(path) || is.null(path)) && is.null(getOption("path_msd")))
     stop("No path to a file or folder was provided.")
 
-  if(missing(path))
+  if((missing(path) || is.null(path)))
     path <- glamr::si_path()
 
   if(!file.exists(path))
     stop("File/folder do not exist or path is not correct.")
 
-  if(file.info(path)$isdir && missing(type))
+  if(file.info(path)$isdir && (missing(type) || is.null(type)))
     type <- "OU_IM_FY2"
 
   if(file.info(path)$isdir)
@@ -273,10 +275,10 @@ extract_path_s3 <- function(path, type){
   if(!requireNamespace("grabr", quietly = TRUE))
     usethis::ui_stop("Package {usethis::ui_field('grabr')} is required, see - https://usaid-oha-si.github.io/grabr/")
 
-  if(missing(path) && missing(type))
+  if((missing(path) || is.null(path)) && (missing(type) || is.null(type)))
     type <- "OU_IM_Recent"
 
-  search_key <- ifelse(!missing(path), path, type)
+  search_key <- ifelse(!(missing(path) || is.null(path)), path, type)
 
   suppressWarnings(
     assets <- grabr::s3_objects(bucket = Sys.getenv("S3_READ"),
