@@ -117,7 +117,6 @@ calc_achievement <- function(df){
 #'
 #' @param df MSD dataframe
 #' @param curr_qtr if wide MSD, need to specify the curren period, defaults to Q4
-#' @param input_type whether to handle 'achievement' or 'achievement_qtrly'
 #'
 #' @return dataframe with achievement colors and labels
 #' @keywords internal
