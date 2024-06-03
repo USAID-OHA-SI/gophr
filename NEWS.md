@@ -1,4 +1,6 @@
 # gophr 4.0
+* Add handing to `get_metadata` when working with country files on PEPFAR Posit Workbnech (AWS) [2024-06-03]
+* Adjust `get_metadata` to allow it to work with PDAP Wave frozen files [2024-04-30] 
 * Add vignette on how to access data in PDAP [2024-04-15]
 * Change the delimiter for PDAP txt files as they are separated with a character delimiter (`'|'`) instead of a tab (`'\t'`) [2024-04-15]
 * Resolve bug with `get_metadata` when working on PDAP when an explicit path is provided [2024-04-15]
