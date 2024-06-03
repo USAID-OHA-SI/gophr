@@ -290,7 +290,7 @@ extract_path_s3 <- function(path, type){
   path <- assets %>%
     dplyr::filter(stringr::str_detect(key, {{search_key}})) %>%
     dplyr::slice_head(n = 1) %>%
-    dplyr::mutate(key_date = stringr::str_replace(key, "_Recent\\.", glue::glue("_Recent-{substr(last_modified, 1, 10)}\\."))) %>%
+    dplyr::mutate(key_date = stringr::str_replace(key, "_Recent(\\.|_)", glue::glue("_Recent-{substr(last_modified, 1, 10)}\\1"))) %>%
     dplyr::pull(key_date)
 
 
