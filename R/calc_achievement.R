@@ -8,6 +8,8 @@
 #' @param df data frame as standrd MSD or one from reshape_msd()
 #' @param qtr if using standard MSD, need to provide the most recent quarter,
 #' ideally using identifypd(df_msd, pd_type = "quarter")
+#' @param classic use the original OHA achievement color palette (pre July 2024),
+#'  default = FALSE
 #'
 #' @return data frame with achievement values, labels, and colors
 #' @family achievement
@@ -34,7 +36,7 @@
 #' df_msd_agg %>%
 #'  reshape_msd("quarters", qtrs_keep_cumulative = TRUE) %>%
 #'  adorn_achievement() }
-adorn_achievement <- function(df, qtr = NULL){
+adorn_achievement <- function(df, qtr = NULL, classic = FALSE){
 
   #make sure key variables exist
   if(var_missing(df, c("period", "fiscal_year")))
@@ -45,7 +47,7 @@ adorn_achievement <- function(df, qtr = NULL){
     df <- calc_achievement(df)
 
   #apply binned color and labels
-  df_achv <- color_achievement(df, qtr)
+  df_achv <- color_achievement(df, qtr, classic)
 
   return(df_achv)
 }
@@ -117,11 +119,13 @@ calc_achievement <- function(df){
 #'
 #' @param df MSD dataframe
 #' @param curr_qtr if wide MSD, need to specify the curren period, defaults to Q4
+#' @param classic use the original OHA achievement color palette (pre July 2024),
+#'  default = FALSE
 #'
 #' @return dataframe with achievement colors and labels
 #' @keywords internal
 #'
-color_achievement <- function(df, curr_qtr = NULL){
+color_achievement <- function(df, curr_qtr = NULL, classic = FALSE){
 
   #flag the use of q4 if curr_qtr is not provided
   if(is.null(curr_qtr) && var_missing(df, "period")){
@@ -146,17 +150,32 @@ color_achievement <- function(df, curr_qtr = NULL){
   #apply labels and colors based on quarterly goal
   df <- df %>%
     dplyr::mutate(qtr_goal = ifelse(indicator %in% snapshot_ind, 1, 1*(qtr/4)),
+                  achv_desc = dplyr::case_when(is.na(achv_value) ~ NA_character_,
+                                               achv_value <= qtr_goal-.25 ~ "Concerned",
+                                               achv_value <= qtr_goal-.1 ~ "At Risk",
+                                               achv_value <= qtr_goal+.1 ~ "On Target",
+                                               TRUE ~ "Above Target"),
                   achv_label = dplyr::case_when(is.na(achv_value) ~ NA_character_,
                                                 achv_value <= qtr_goal-.25 ~ glue::glue("<{100*(qtr_goal-.25)}%") %>% as.character,
                                                 achv_value <= qtr_goal-.1 ~ glue::glue("{100*(qtr_goal-.25)}-{100*(qtr_goal-.11)}%") %>% as.character,
                                                 achv_value <= qtr_goal+.1 ~ glue::glue("{100*(qtr_goal-.1)}-{100*(qtr_goal+.1)}%") %>% as.character,
-                                                TRUE ~ glue::glue("+{100*(qtr_goal+.1)}%") %>% as.character),
-                  achv_color = dplyr::case_when(is.na(achv_value) ~ NA_character_,
-                                                achv_value <= qtr_goal-.25 ~ "#ff939a", #old_rose_light
-                                                achv_value <= qtr_goal-.1 ~ "#ffcaa2", #burnt_sienna_light
-                                                achv_value <= qtr_goal+.1 ~ "#5BB5D5", #scooter_medium
-                                                TRUE ~ "#e6e6e6"))  %>% #trolley_grey_light
+                                                TRUE ~ glue::glue("+{100*(qtr_goal+.1)}%") %>% as.character)
+    ) %>%
     dplyr::select(-c(achv_value, qtr_goal, qtr))
+
+  #import colors from data to use for achievement
+  df_color <- achv_color_map
+
+  #determine what colors to use based on classic TRUE/FALSE
+  if(classic == TRUE)
+      df_color <- dplyr::mutate(df_color, achv_color = achv_color_classic)
+
+  #join colors to df to apply colors based on quarterly goal
+  df <- dplyr::left_join(df,
+                         df_color %>%
+                           dplyr::select(achv_desc, achv_color),
+                         by = "achv_desc")
+
 
   return(df)
 }
