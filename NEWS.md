@@ -1,3 +1,6 @@
+# gophr 4.1
+* Update `adorn_achievement` to map directly to the new achievement colors and add a parameter to allow users to use the older version, `classic = TRUE` [2024-07-01]
+
 # gophr 4.0
 * Add handing to `get_metadata` when working with country files on PEPFAR Posit Workbnech (AWS) [2024-06-03]
 * Adjust `get_metadata` to allow it to work with PDAP Wave frozen files [2024-04-30] 
@@ -15,7 +18,7 @@
 
 # gophr 3.3
 * Clean up dependencies list [2024-03-20]
-* Add additional check to PSD file parsing with `get_metadata` to ensure the naming is correct, namely an ISO date is included in teh file name [2024-03-20]
+* Add additional check to PSD file parsing with `get_metadata` to ensure the naming is correct, namely an ISO date is included in the file name [2024-03-20]
 * Breaking change - change return with `get_metadata` exporting a global object to returning a normal object a user must name [2024-03-20]
 
 # gophr 3.2
