@@ -28,3 +28,21 @@
 #' }
 
 "cascade_ind"
+
+#' OHA Achievement Colors
+#'
+#' A tibble of the OHA Colors associated with different target achievement
+#' thresholds - 'At Risk', 'Concerned', 'On Target', and 'Above Target'. This
+#' table includes  the current mapping as well as the original/classic one.
+#' These colors are used in association with `adorn_achievement`.
+#'
+#' @usage data(achv_color_map)
+#'
+#' @format A data frame with three variables and 4 rows
+#' \describe{
+#'   \item{achv_desc}{description of each achievement level}
+#'   \item{achv_color}{hex code of the associated color to the achievement level}
+#'   \item{achv_color_classic}{classic/original hex code of the associated color to the achievement level}
+#' }
+
+"achv_color_map"
