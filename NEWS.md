@@ -1,5 +1,6 @@
 # gophr 4.1
 * Update `adorn_achievement` to map directly to the new achievement colors and add a parameter to allow users to use the older version, `classic = TRUE` [2024-07-01]
+* Adds a new column to the dataframe as a result of `adorn_achievment`, `achv_desc` which is the legend description - 'Concerned', 'At Risk', 'On Target', or 'Above Target' [2024-07-01]
 
 # gophr 4.0
 * Add handing to `get_metadata` when working with country files on PEPFAR Posit Workbnech (AWS) [2024-06-03]
