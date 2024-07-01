@@ -70,6 +70,7 @@ reference:
 
 - title: Data
   contents:
+  - achv_color_map
   - snapshot_ind
   - cascade_ind
 
