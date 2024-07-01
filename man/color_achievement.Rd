@@ -4,12 +4,15 @@
 \alias{color_achievement}
 \title{Color and label achievement}
 \usage{
-color_achievement(df, curr_qtr = NULL)
+color_achievement(df, curr_qtr = NULL, classic = FALSE)
 }
 \arguments{
 \item{df}{MSD dataframe}
 
 \item{curr_qtr}{if wide MSD, need to specify the curren period, defaults to Q4}
+
+\item{classic}{use the original OHA achievement color palette (pre July 2024),
+default = FALSE}
 }
 \value{
 dataframe with achievement colors and labels

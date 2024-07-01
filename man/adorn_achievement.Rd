@@ -4,13 +4,16 @@
 \alias{adorn_achievement}
 \title{Adorn Achievement - Percent and Color}
 \usage{
-adorn_achievement(df, qtr = NULL)
+adorn_achievement(df, qtr = NULL, classic = FALSE)
 }
 \arguments{
 \item{df}{data frame as standrd MSD or one from reshape_msd()}
 
 \item{qtr}{if using standard MSD, need to provide the most recent quarter,
 ideally using identifypd(df_msd, pd_type = "quarter")}
+
+\item{classic}{use the original OHA achievement color palette (pre July 2024),
+default = FALSE}
 }
 \value{
 data frame with achievement values, labels, and colors

@@ -51,3 +51,17 @@ lst_ous <- df_msd %>%
 
 
 usethis::use_data(lst_ous, overwrite = TRUE, internal = TRUE)
+
+
+
+
+# Achievement colors ------------------------------------------------------
+
+
+achv_color_map <- tibble::tibble(achv_desc = c("Concerned", "At Risk", "On Target", "Above Target"),
+                                 achv_color = glitr::si_palettes$siei_achv,
+                                 achv_color_classic = glitr::si_palettes$siei_classic_achv)
+
+
+usethis::use_data(achv_color_map, overwrite = TRUE)
+
