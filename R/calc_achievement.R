@@ -176,6 +176,12 @@ color_achievement <- function(df, curr_qtr = NULL, classic = FALSE){
                            dplyr::select(achv_desc, achv_color),
                          by = "achv_desc")
 
+  #make achv_desc an ordered factor
+  df <- df %>%
+    dplyr::mutate(achv_desc = factor(achv_desc,
+                                     c("Concerned", "At Risk", "On Target",
+                                    "Above Target")))
+
 
   return(df)
 }
