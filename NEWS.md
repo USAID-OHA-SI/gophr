@@ -1,4 +1,6 @@
 # gophr 4.1
+* Allow `get_metadata` to work for paths that are in either `S3_READ` or `S3_WRITE` for PEPFAR Posit Workbench [2024-07-08]
+* Add an internal function for identifying whether the user is working locally or on PEPFAR Posit Workbench [2024-07-08]
 * Make `achv_desc`, the new output of `adorn_achievement` an ordered factor for ordering purposes [2024-07-02]
 * Update `adorn_achievement` to map directly to the new achievement colors and add a parameter to allow users to use the older version, `classic = TRUE` [2024-07-01]
 * Adds a new column to the dataframe as a result of `adorn_achievment`, `achv_desc` which is the legend description - 'Concerned', 'At Risk', 'On Target', or 'Above Target' [2024-07-01]
