@@ -165,13 +165,12 @@ get_metadata <- function(path, type, caption_note){
 #'
 extract_metadata <- function(path, type){
 
-  r_env <- ifelse(grepl("rstudio-server.*datim.org",
-                        as.list(Sys.info())$nodename),
-                  "data mart", "local")
+  r_env <- get_pdap_loc()
+
   #extract file path
   path <- switch(r_env,
                  "local" = extract_path_local(path, type),
-                 "data mart" = extract_path_s3(path, type))
+                 "pdap" = extract_path_s3(path, type))
 
   #strip out full filepath to just keep name
   file_name <- basename(path)
@@ -280,9 +279,17 @@ extract_path_s3 <- function(path, type){
 
   search_key <- ifelse(!(missing(path) || is.null(path)), path, type)
 
+  pdap_bucket <- ifelse(grepl("^usaid/", path), Sys.getenv("S3_WRITE"), Sys.getenv("S3_READ"))
+
+  if(grepl("^usaid/", path)){
+    pdap_prefix <- "usaid/"
+  } else {
+    pdap_prefix <- NULL
+  }
+
   suppressWarnings(
-    assets <- grabr::s3_objects(bucket = Sys.getenv("S3_READ"),
-                                prefix = NULL,
+    assets <- grabr::s3_objects(bucket = pdap_bucket,
+                                prefix = pdap_prefix,
                                 access_key = Sys.getenv("AWS_ACCESS_KEY_ID"),
                                 secret_key = Sys.getenv("AWS_SECRET_ACCESS_KEY"))
   )

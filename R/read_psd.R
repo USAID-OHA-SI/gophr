@@ -71,19 +71,17 @@ process_psd <- function(file,
                         remove_base_file = FALSE){
 
   #location
-  file_location <- ifelse(grepl("rstudio-server.*datim.org",
-                                as.list(Sys.info())$nodename),
-                                "pdap", "local")
+  file_location <- get_pdap_loc()
 
-  if(file_location == "pdap" && !requireNamespace("aws.s3", quietly = TRUE))
-    usethis::ui_stop("Package {usethis::ui_field('aws.s3')} is required for importing on PDAP. Restart session and install - {usethis::ui_code('install.packages(\\'aws.s3\\')')}")
+  #identify which bucket to use if on PDAP
+  pdap_bucket <- locate_bucket(file)
 
   #import
   df <- switch(file_location,
                "local" = handle_psd_format(file),
                "pdap" = aws.s3::s3read_using(handle_psd_format,
-                                                 bucket = Sys.getenv("S3_READ"),
-                                                 object = file))
+                                             bucket = pdap_bucket,
+                                             object = file))
 
   #convert new names to old or old to new (changes introduced in FY22Q2)
   df <- convert_names(df)
@@ -206,9 +204,8 @@ handle_psd_format <- function(file){
   file_type <- sub(".*\\.(.*)$", "\\1", file)
 
   #location
-  file_location <- ifelse(grepl("rstudio-server.*datim.org",
-                                as.list(Sys.info())$nodename),
-                          "pdap", "local")
+  file_location <- get_pdap_loc()
+
   #txt delimiter
   d <- ifelse(file_type == "txt" & file_location == "pdap", "|", "\t")
 
