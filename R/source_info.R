@@ -280,7 +280,12 @@ extract_path_s3 <- function(path, type){
   search_key <- ifelse(!(missing(path) || is.null(path)), path, type)
 
   pdap_bucket <- ifelse(grepl("^usaid/", path), Sys.getenv("S3_WRITE"), Sys.getenv("S3_READ"))
-  pdap_prefix <- ifelse(grepl("^usaid/", path), "usaid/", NULL)
+
+  if(grepl("^usaid/", path)){
+    pdap_prefix <- "usaid/"
+  } else {
+    pdap_prefix <- NULL
+  }
 
   suppressWarnings(
     assets <- grabr::s3_objects(bucket = pdap_bucket,
