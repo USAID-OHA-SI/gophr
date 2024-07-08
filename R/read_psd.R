@@ -71,9 +71,7 @@ process_psd <- function(file,
                         remove_base_file = FALSE){
 
   #location
-  file_location <- ifelse(grepl("rstudio-server.*datim.org",
-                                as.list(Sys.info())$nodename),
-                                "pdap", "local")
+  file_location <- get_location()
 
   if(file_location == "pdap" && !requireNamespace("aws.s3", quietly = TRUE))
     usethis::ui_stop("Package {usethis::ui_field('aws.s3')} is required for importing on PDAP. Restart session and install - {usethis::ui_code('install.packages(\\'aws.s3\\')')}")
@@ -206,9 +204,8 @@ handle_psd_format <- function(file){
   file_type <- sub(".*\\.(.*)$", "\\1", file)
 
   #location
-  file_location <- ifelse(grepl("rstudio-server.*datim.org",
-                                as.list(Sys.info())$nodename),
-                          "pdap", "local")
+  file_location <- get_location()
+
   #txt delimiter
   d <- ifelse(file_type == "txt" & file_location == "pdap", "|", "\t")
 

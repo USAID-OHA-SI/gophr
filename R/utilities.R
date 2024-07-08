@@ -16,3 +16,12 @@ var_missing <- function(df, vars){
   !any(vars %in% names(df))
 }
 
+#' Get location
+#' Identify where a user is working - locally or on workbench
+#'
+#' @keywords internal
+get_location <- function(){
+  ifelse(grepl("rstudio-server.*datim.org",
+               as.list(Sys.info())$nodename),
+         "pdap", "local")
+}

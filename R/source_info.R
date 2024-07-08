@@ -165,13 +165,12 @@ get_metadata <- function(path, type, caption_note){
 #'
 extract_metadata <- function(path, type){
 
-  r_env <- ifelse(grepl("rstudio-server.*datim.org",
-                        as.list(Sys.info())$nodename),
-                  "data mart", "local")
+  r_env <- get_pdap_loc()
+
   #extract file path
   path <- switch(r_env,
                  "local" = extract_path_local(path, type),
-                 "data mart" = extract_path_s3(path, type))
+                 "pdap" = extract_path_s3(path, type))
 
   #strip out full filepath to just keep name
   file_name <- basename(path)
