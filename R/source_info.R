@@ -279,9 +279,12 @@ extract_path_s3 <- function(path, type){
 
   search_key <- ifelse(!(missing(path) || is.null(path)), path, type)
 
+  pdap_bucket <- ifelse(grepl("^usaid/", file), Sys.getenv("S3_WRITE"), Sys.getenv("S3_READ"))
+  pdap_prefix <- ifelse(grepl("^usaid/", file), "usaid/", NULL)
+
   suppressWarnings(
-    assets <- grabr::s3_objects(bucket = Sys.getenv("S3_READ"),
-                                prefix = NULL,
+    assets <- grabr::s3_objects(bucket = pdap_bucket,
+                                prefix = pdap_prefix,
                                 access_key = Sys.getenv("AWS_ACCESS_KEY_ID"),
                                 secret_key = Sys.getenv("AWS_SECRET_ACCESS_KEY"))
   )
