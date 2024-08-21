@@ -36,6 +36,9 @@ read_msd <-
 #'   either "rds" or "parquet", default = "none"
 #' @param remove_base_file should original base file be removed if exporting in
 #'   another compressed format? default = FALSE
+#' @param retain_genie_cols should Genie specific columns (`dataelementuid`,
+#'   `categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) be
+#'   retained in the output dataset? default = FALSE
 #'
 #' @examples
 #'
@@ -48,7 +51,8 @@ read_msd <-
 read_psd <-
   function(file,
            export_format = "none",
-           remove_base_file = FALSE){
+           remove_base_file = FALSE,
+           retain_genie_cols = FALSE){
 
     file_type <- ifelse(tools::file_ext(file) == "rds", "already_rds", "raw_txt")
 
@@ -56,7 +60,8 @@ read_psd <-
            "already_rds" = readr::read_rds(file),
            "raw_txt" = process_psd(file,
                                    export_format = export_format,
-                                   remove_base_file = remove_base_file))
+                                   remove_base_file = remove_base_file,
+                                   retain_genie_cols = retain_genie_cols))
 
   }
 
@@ -68,7 +73,8 @@ read_psd <-
 #'
 process_psd <- function(file,
                         export_format = export_format,
-                        remove_base_file = FALSE){
+                        remove_base_file = FALSE,
+                        retain_genie_cols = FALSE){
 
   #location
   file_location <- get_pdap_loc()
@@ -84,7 +90,7 @@ process_psd <- function(file,
                                              object = file))
 
   #convert new names to old or old to new (changes introduced in FY22Q2)
-  df <- convert_names(df)
+  df <- convert_names(df, retain_genie_cols)
 
   #covert target/results/budgets/ftes/counts to double
   df <- convert_coltype(df)
@@ -145,20 +151,19 @@ rename_psd <- function(file, ext){
 #'
 #'
 #' @param df data frame from read_psd()
+#' @inheritParams read_psd
 #'
 #' @keywords internal
 #'
-convert_names <- function(df){
+convert_names <- function(df, retain_genie_cols){
 
   #drop Genie variables
-  vars_genie <- c("dataelementuid", "categoryoptioncombouid",
-                  "approvallevel", "approvalleveldescription")
-  vars_keep <- setdiff(names(df), vars_genie)
-  df <- dplyr::select(df, dplyr::all_of(vars_keep))
-
-  #adjust pipeline issue with tab and space in two rows
-  if("cop_budget_pipeline" %in% names(df))
-    df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
+  if(retain_genie_cols == TRUE){
+    vars_genie <- c("dataelementuid", "categoryoptioncombouid",
+                    "approvallevel", "approvalleveldescription")
+    vars_keep <- setdiff(names(df), vars_genie)
+    df <- dplyr::select(df, dplyr::all_of(vars_keep))
+  }
 
   #replace - with _ for HRH dataset
   if("moh-secondment" %in% names(df))
@@ -188,6 +193,10 @@ convert_coltype <- function(df){
   #convert year to integer
   df <- dplyr::mutate(df, dplyr::across(c(dplyr::matches("fiscal_year"), dplyr::matches("individual_count")),
                                         \(x) as.integer(x)))
+
+  #adjust pipeline issue with tab and space in two rows
+  if("cop_budget_pipeline" %in% names(df))
+    df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
 
   return(df)
 }

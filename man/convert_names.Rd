@@ -4,10 +4,14 @@
 \alias{convert_names}
 \title{Convert variables for alignment}
 \usage{
-convert_names(df)
+convert_names(df, retain_genie_cols)
 }
 \arguments{
 \item{df}{data frame from read_psd()}
+
+\item{retain_genie_cols}{should Genie specific columns (`dataelementuid`,
+`categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) be
+retained in the output dataset? default = FALSE}
 }
 \description{
 Convert variables for alignment

@@ -4,7 +4,12 @@
 \alias{process_psd}
 \title{Processing to handle PSD as a zip/txt file}
 \usage{
-process_psd(file, export_format = export_format, remove_base_file = FALSE)
+process_psd(
+  file,
+  export_format = export_format,
+  remove_base_file = FALSE,
+  retain_genie_cols = FALSE
+)
 }
 \arguments{
 \item{file}{enter the full path to the PEPFAR structured dataset file}
@@ -14,6 +19,10 @@ either "rds" or "parquet", default = "none"}
 
 \item{remove_base_file}{should original base file be removed if exporting in
 another compressed format? default = FALSE}
+
+\item{retain_genie_cols}{should Genie specific columns (`dataelementuid`,
+`categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) be
+retained in the output dataset? default = FALSE}
 }
 \description{
 Processing to handle PSD as a zip/txt file
