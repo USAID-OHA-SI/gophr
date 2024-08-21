@@ -24,7 +24,7 @@ PDAP space in addition to working locally."><meta property="og:image" content="h
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gophr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1.3</span>
       </span>
     </div>
 
@@ -83,7 +83,12 @@ PDAP space in addition to working locally.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_psd</span><span class="op">(</span><span class="va">file</span>, export_format <span class="op">=</span> <span class="st">"none"</span>, remove_base_file <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">read_psd</span><span class="op">(</span></span>
+<span>  <span class="va">file</span>,</span>
+<span>  export_format <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  remove_base_file <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  retain_genie_cols <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -102,6 +107,12 @@ either "rds" or "parquet", default = "none"</p></dd>
 <dt id="arg-remove-base-file">remove_base_file<a class="anchor" aria-label="anchor" href="#arg-remove-base-file"></a></dt>
 <dd><p>should original base file be removed if exporting in
 another compressed format? default = FALSE</p></dd>
+
+
+<dt id="arg-retain-genie-cols">retain_genie_cols<a class="anchor" aria-label="anchor" href="#arg-retain-genie-cols"></a></dt>
+<dd><p>should Genie specific columns (`dataelementuid`,
+`categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) be
+retained in the output dataset? default = FALSE</p></dd>
 
 </dl></div>
 
