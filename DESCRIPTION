@@ -1,6 +1,6 @@
 Package: gophr
 Title: Utility functions related to working with the MER Structured Dataset
-Version: 4.1.2
+Version: 4.1.3
 Authors@R: c(
     person("Aaron", "Chafetz", ,"achafetz@usaid.gov", c("aut", "cre")),
     person("Baboyma", "Kagniniwa", , "bkagniniwa@usaid.gov", c("aut"))
@@ -39,7 +39,7 @@ Remotes:
   USAID-OHA-SI/grabr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 URL: https://usaid-oha-si.github.io/gophr/
 Config/testthat/edition: 3
 Config/testthat/parallel: true
