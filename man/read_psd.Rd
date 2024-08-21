@@ -4,7 +4,12 @@
 \alias{read_psd}
 \title{Import PEPFAR Structured Datasets to R}
 \usage{
-read_psd(file, export_format = "none", remove_base_file = FALSE)
+read_psd(
+  file,
+  export_format = "none",
+  remove_base_file = FALSE,
+  retain_genie_cols = FALSE
+)
 }
 \arguments{
 \item{file}{enter the full path to the PEPFAR structured dataset file}
@@ -14,6 +19,10 @@ either "rds" or "parquet", default = "none"}
 
 \item{remove_base_file}{should original base file be removed if exporting in
 another compressed format? default = FALSE}
+
+\item{retain_genie_cols}{should Genie specific columns (`dataelementuid`,
+`categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) be
+retained in the output dataset? default = FALSE}
 }
 \description{
 `read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
