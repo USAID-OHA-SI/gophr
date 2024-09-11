@@ -1,5 +1,5 @@
 # gophr 4.1
-* Adjust lower bound in achievement case statement to include 10% below target as part of target achievement range [2024-09-11]
+* Adjust lower bound in achievement case statement to include 10% and 25% below target as part of target achievement range [2024-09-11]
 * Include a new parameter to `read_psd` to allow user to retain Genie columns (`dataelementuid`, `categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) that were previously dropped [2024-08-21]
 * Allow `get_metadata` to work for paths that are in either `S3_READ` or `S3_WRITE` for PEPFAR Posit Workbench [2024-07-08]
 * Add an internal function for identifying whether the user is working locally or on PEPFAR Posit Workbench [2024-07-08]
