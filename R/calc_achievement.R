@@ -152,12 +152,12 @@ color_achievement <- function(df, curr_qtr = NULL, classic = FALSE){
     dplyr::mutate(qtr_goal = ifelse(indicator %in% snapshot_ind, 1, 1*(qtr/4)),
                   achv_desc = dplyr::case_when(is.na(achv_value) ~ NA_character_,
                                                achv_value <= qtr_goal-.25 ~ "Concerned",
-                                               achv_value <= qtr_goal-.1 ~ "At Risk",
+                                               achv_value < qtr_goal-.1 ~ "At Risk",
                                                achv_value <= qtr_goal+.1 ~ "On Target",
                                                TRUE ~ "Above Target"),
                   achv_label = dplyr::case_when(is.na(achv_value) ~ NA_character_,
                                                 achv_value <= qtr_goal-.25 ~ glue::glue("<{100*(qtr_goal-.25)}%") %>% as.character,
-                                                achv_value <= qtr_goal-.1 ~ glue::glue("{100*(qtr_goal-.25)}-{100*(qtr_goal-.11)}%") %>% as.character,
+                                                achv_value < qtr_goal-.1 ~ glue::glue("{100*(qtr_goal-.25)}-{100*(qtr_goal-.11)}%") %>% as.character,
                                                 achv_value <= qtr_goal+.1 ~ glue::glue("{100*(qtr_goal-.1)}-{100*(qtr_goal+.1)}%") %>% as.character,
                                                 TRUE ~ glue::glue("+{100*(qtr_goal+.1)}%") %>% as.character)
     ) %>%
