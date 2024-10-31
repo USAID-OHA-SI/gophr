@@ -194,9 +194,9 @@ convert_coltype <- function(df){
   df <- dplyr::mutate(df, dplyr::across(c(dplyr::matches("fiscal_year"), dplyr::matches("individual_count")),
                                         \(x) as.integer(x)))
 
-  #adjust pipeline issue with tab and space in two rows
-  if("cop_budget_pipeline" %in% names(df))
-    df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
+  #adjust pipeline issue with tab and space in two rows [resolved]
+  # if("cop_budget_pipeline" %in% names(df))
+  #   df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
 
   return(df)
 }
