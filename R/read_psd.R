@@ -173,6 +173,10 @@ convert_names <- function(df, retain_genie_cols){
   if(var_exists(df, "implementation_year"))
     df <- dplyr::rename(df, fiscal_year = implementation_year)
 
+  #align FSD naming with MSD
+  if(var_exists(df, "fundingagency"))
+    df <- dplyr::rename(df, funding_agency = fundingagency)
+
   return(df)
 }
 
