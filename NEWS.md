@@ -1,4 +1,5 @@
 # gophr 4.1
+* Allow `read_psd` to handle reading in a PEPFAR DHI dataset [2024-11-14]
 * Remove bug fix for FSD that has been resolved in the dataset itself [2024-10-31]
 * Adjust lower bound in achievement case statement to include 10% and 25% below target as part of target achievement range [2024-09-11]
 * Include a new parameter to `read_psd` to allow user to retain Genie columns (`dataelementuid`, `categoryoptioncombouid`, `approvallevel`, `approvalleveldescription`) that were previously dropped [2024-08-21]
