@@ -21,8 +21,8 @@ read_msd <-
 #' Import PEPFAR Structured Datasets to R
 #'
 #' `read_psd` imports a stored PEPFAR Structured Datasets (.zip, .txt, or
-#' .parquet). The function will read in a MSD, Genie, Financial or
-#' HRH PEPFAR dataset, ensuring the column types are correct. The user has the
+#' .parquet). The function will read in a MSD, Genie, Financial, HRH, or
+#' DHI PEPFAR dataset, ensuring the column types are correct. The user has the
 #' ability to store the txt file as a rds or parquet file, significantly saving
 #' storage space on the computer (and can then remove the txt file after
 #' importing). Most of USAID/OHA processes and analyses rely on the use of
@@ -173,6 +173,17 @@ convert_names <- function(df, retain_genie_cols){
   if(var_exists(df, "implementation_year"))
     df <- dplyr::rename(df, fiscal_year = implementation_year)
 
+  #align FSD naming with MSD
+  if(var_exists(df, "fundingagency"))
+    df <- dplyr::rename(df, funding_agency = fundingagency)
+
+  #align DHI naming with MSD
+  if(var_exists(df, "discrete_system_submission_fiscal_year"))
+    df <- dplyr::rename(df, fiscal_year = discrete_system_submission_fiscal_year)
+
+  if(var_exists(df, "dhi_submission_fiscal_year"))
+    df <- dplyr::rename(df, fiscal_year = dhi_submission_fiscal_year)
+
   return(df)
 }
 
@@ -197,6 +208,25 @@ convert_coltype <- function(df){
   #adjust pipeline issue with tab and space in two rows [resolved]
   # if("cop_budget_pipeline" %in% names(df))
   #   df <- dplyr::mutate(df, cop_budget_pipeline = dplyr::na_if(cop_budget_pipeline, '\t\"'))
+
+  #DHI adjustments
+  df <- dplyr::mutate(df,
+                      dplyr::across(c(dplyr::matches("carried_over_discrete_system"),
+                                      dplyr::matches("system_assigned"),
+                                      dplyr::matches("carried_over_investment"),
+                                      dplyr::matches("submitted_flag")),
+                                    \(x) as.logical(x)),
+                      dplyr::across(c(dplyr::matches("number_of_mechanisms_assigned"),
+                                      dplyr::matches("estimated_total_cost"),
+                                      dplyr::matches("number_of_investments_confirmed"),
+                                      dplyr::matches("uestion_display_order")),
+                                    \(x) as.double(x)),
+                      dplyr::across(c(dplyr::matches("implementation_start_year")),
+                                    \(x) as.integer(x)),
+                      dplyr::across(c(dplyr::matches("discrete_system_submitted_date"),
+                                      dplyr::matches("dhi_submitted_date")),
+                                    \(x) as.Date(x))
+                      )
 
   return(df)
 }
